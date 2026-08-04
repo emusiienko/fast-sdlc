@@ -65,7 +65,7 @@ current vs. history, a folder read via a specific skill, a wiki/external
 system and how to query it, etc.
 -->
 
-### Validated Idea
+### Validated Business Idea
 **location**: `<path>`
 
 ### Requirements
