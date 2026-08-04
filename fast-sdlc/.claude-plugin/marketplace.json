@@ -1,0 +1,13 @@
+{
+  "name": "fast-sdlc",
+  "owner": {
+    "name": "Eugene"
+  },
+  "plugins": [
+    {
+      "name": "fast-sdlc",
+      "source": ".",
+      "description": "Agentic framework for software development — SDLC roles, orchestration, and session flow as Claude Code agents and skills."
+    }
+  ]
+}

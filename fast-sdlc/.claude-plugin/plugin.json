@@ -1,0 +1,8 @@
+{
+  "name": "fast-sdlc",
+  "description": "Agentic framework for software development — SDLC roles, orchestration, and session flow as Claude Code agents and skills.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Eugene"
+  }
+}
