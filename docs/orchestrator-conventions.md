@@ -24,6 +24,7 @@ No deploy script — installing/enabling the plugin is a handful of native Claud
 
 - **Skills**: no manual prefix. The plugin system auto-namespaces skill invocation as `plugin-name:skill-name` at dispatch time — this is separate from the skill's own `name` field, so no collision risk with global `~/.claude/skills/`.
 - **Agents**: manually prefix with `fast-sdlc-` (hyphen, e.g. `fast-sdlc-architect`) — not `fast-sdlc:architect`. The `name` field in an agent's frontmatter cannot contain `:` (reserved for the plugin-scoping mechanism), and a global `~/.claude/agents/<name>.md` with the same base name overrides a same-named plugin agent. The prefix is the only protection until global definitions are retired.
+- **Where the concrete mapping lives**: the role → agent name table is maintained in one place — `sdlc/SKILL.md`, under "Mapping between roles and agents" — not as a standalone file. `orchestration/SKILL.md`'s On Load points to it explicitly, so the orchestrator always resolves the agent name from there instead of spawning a bare role name.
 
 ## 4. SDLC is adapted, not followed literally
 
@@ -34,3 +35,7 @@ This project doesn't have the roles the `sdlc` skill assumes (no architect, no i
 - **`docs/stories/index.md`**: no QA/Reconcile columns (`Auto ✓`, `QA ✓`, `Arch ✓`, `Spec ✓`, `Auto Rec ✓`, `QA Rec ✓`) — just `ID | Title | Type | Priority | Status`.
 - **No Reconcile phase**: there's no architect/spec-writer to reconcile docs against.
 - **`Accepted` stays a hard gate**: dropping Reconcile does not loosen this — it still requires the user's explicit confirmation, same as before.
+
+## 5. ADRs live at the repo root, not under `docs/`
+
+`/adr` (sibling of `docs/`, `fast-sdlc/`) holds this project's own architecture decision records — not `docs/tech_decisions/` (that path is the `sdlc` skill's convention for projects built *using* this plugin, not for this project itself). Currently empty — format and first entries still to be defined.

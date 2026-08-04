@@ -15,6 +15,8 @@ Proxy all source code writing, feature implementation, and code analysis through
 
 Immediately invoke the `sdlc` skill via the Skill tool before doing anything else. This loads the full SDLC process definitions, role descriptions, and document formats required for orchestration.
 
+The exact agent name to spawn for each role is defined in the `sdlc` skill's "Mapping between roles and agents" paragraph — always take the agent name from there, never spawn a bare role name directly.
+
 ---
 
 ## Role
