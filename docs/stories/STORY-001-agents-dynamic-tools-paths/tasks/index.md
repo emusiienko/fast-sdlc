@@ -1,6 +1,6 @@
 | ID | Title | Assignee | Status |
 |----|-------|----------|--------|
-| TASK-001 | Finalize fast-sdlc-project-setup.md format | orchestrator | ToDo |
+| TASK-001 | Finalize fast-sdlc-project-setup.md format | orchestrator | Done |
 | TASK-002 | Define CLAUDE.md Fast SDLC section | orchestrator | ToDo |
 | TASK-003 | Update sdlc skill to support the config | orchestrator | ToDo |
 | TASK-004 | Update orchestration skill to support the config | orchestrator | ToDo |
