@@ -52,7 +52,8 @@ separately, task by task.
 
 ## Task Management
 
-file-based (default) | <external tool + connection details>
+**skill**: `file-based-task-management` (default) | <name of an alternative Task Management skill>
+**location**: `docs/stories/`
 
 ---
 

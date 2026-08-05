@@ -14,3 +14,4 @@
 | TASK-012 | Update fast-sdlc-qa-automation agent | orchestrator | ToDo |
 | TASK-013 | Update fast-sdlc-manual-qa agent | orchestrator | ToDo |
 | TASK-014 | End-to-end test in target project | user | ToDo |
+| TASK-015 | Create file-based-task-management skill | orchestrator | Done |

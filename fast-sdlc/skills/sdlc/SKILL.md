@@ -26,7 +26,7 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 **What's configurable** (not exhaustive):
 - **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows; Outputs: deliverables the role produces)
 - **Configs Folder** — default base for role folders
-- **Task Management** — how tasks are tracked and managed on this project
+- **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
 - **Artifacts** — the form each sdlc artifact takes and how it's managed (the notion of artifact is defined next)
 - Any other project specifics
 
@@ -39,6 +39,7 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 - **Architecture** — the technical design.
 - **API Contract** — the interface between backend and frontend.
 - **Technical Roadmap** (optional) — longer-horizon technical plan.
+- **Implementation Plan** — the technical approach and ordered task breakdown for a single story.
 - **Milestones** — a composition of stories describing a development phase.
 - **Stories** — a scoped unit of work and its lifecycle status.
 - **Tasks** — a story's breakdown into implementable units, with status.
@@ -78,6 +79,14 @@ The user reviews these flags before setting `Accepted`. Stories can reach `Accep
 - `ToDo` — set by **architect** at task creation
 - `In Progress` — set by **implementor** when work begins
 - `Done` — set by **implementor** when complete + Implementation Report filled
+
+### Bug Statuses
+
+- `open` — set by **qa-automation**/**manual-qa** at filing
+- `in-progress` — set by **implementor** when work begins
+- `fixed` — set by **implementor**, awaiting QA verification
+- `resolved` — set by **QA**, confirms the fix
+- `wont-fix` — set by **QA** or the **user**
 
 ---
 
@@ -143,7 +152,7 @@ product-strategist → spec-writer → architect → implementors → qa-automat
 - **Role:** architect
 - **Required:** Yes — once for project setup, then once per story before implementation
 - **Description:** Designs the technical approach and produces an implementation plan per story — the primary context handoff from architect to implementors carrying full reasoning, ordered tasks, and planned ADRs.
-- **Artifacts:** Architecture, API Contract, Technical Roadmap (optional), Tasks
+- **Artifacts:** Architecture, API Contract, Technical Roadmap (optional), Implementation Plan, Tasks
 
 ### 4. Implementation
 - **Role:** backend-developer, devops, frontend-developer
@@ -184,15 +193,29 @@ Run once per project before any work begins. Each role produces a strategy, conv
 
 ---
 
+### Implement Story
+*Applies to: architect (plan), spec-writer (deviation checks), implementors (via Implement Task), qa-automation/manual-qa (QA), architect/spec-writer (Reconcile)*
+
+1. **Plan**: architect produces the Implementation Plan for the story (Technical Roadmap too, if warranted)
+2. **Deviation Check**: if the Implementation Plan diverges from Requirements — spec-writer updates Requirements
+3. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
+4. **Implement**: run Implement Task for each task in the Implementation Plan, in dependency order, until all Tasks are `Done`
+5. **Deviation Check**: if any task's Implementation Report notes a deviation with behavioral impact — spec-writer updates Requirements; if manual-qa is active and its test cases are affected, it updates them
+6. **QA**: qa-automation sets "Automated Tests Passed"; if manual-qa is active, it runs its test cases and sets "Manual QA Passed"
+7. User reviews, sets Story status: `Accepted`
+8. **Reconcile** *(see Reconcile workflow)*
+
+---
+
 ### Implement Task
 *Applies to: backend-developer, devops, frontend-developer*
 
-1. Read: Architecture, own `agent.md` (References), API Contract (if applicable), Stories, Tasks, Technical Roadmap (if exists), `CLAUDE.md`
+1. Read: Architecture, own `agent.md` (References), API Contract (if applicable), Stories, Implementation Plan, Tasks, Technical Roadmap (if exists), `CLAUDE.md`
 2. Update Tasks status: `In Progress`
 3. **Implement** *(overridable — each implementing role expands this step with their own sub-steps and checkpoints; see the role's instructions)*
 4. Fill Implementation Report
 5. Update Tasks status: `Done`
-6. **QA** *(overridable — active QA roles expand this step; see qa-automation and manual-qa instructions. If no QA roles are configured, skip this step.)*
+6. **QA** *(overridable — qa-automation expands this step, if active. Manual QA runs at the Story level, not per-task — see Implement Story.)*
 
 ---
 
@@ -271,17 +294,6 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 
 ---
 
-## ADR Rules
-
-ADR files (`docs/tech_decisions/ADR-NNN-<slug>.md`) are permanent records.
-
-- The body of an ADR is never edited after creation
-- The only permitted edit to an existing ADR: update its `Status` field to `Superseded by ADR-NNN`
-- For revised decisions: create a new ADR and mark the old one superseded
-- ADRs are created only during Reconcile, not during Feature Design (use `implementation_plan.md` "Planned ADRs" section for intentions)
-
----
-
 ## Artifacts Ownership
 
 - **Validated Idea** → **product-strategist** (full)
@@ -291,6 +303,7 @@ ADR files (`docs/tech_decisions/ADR-NNN-<slug>.md`) are permanent records.
 - **Architecture** → **architect** (full)
 - **API Contract** → **architect** (full)
 - **Technical Roadmap** (optional) → **architect**; read-only for all
+- **Implementation Plan** → **architect** (create, per story); read-only for implementors
 - **Tasks** → **architect** (create); implementors: status only
 - **Implementation Report** → **implementor** (full, per task)
 - **Bugs** → **manual-qa** and **qa-automation** (each creates their own)
