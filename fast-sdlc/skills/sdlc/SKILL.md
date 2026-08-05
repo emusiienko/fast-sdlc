@@ -23,6 +23,13 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 
 **Finding it**: check the target project's `CLAUDE.md` for a `### Fast SDLC` section pointing to the config file. If that section is absent, default to `fast-sdlc-project-setup.md` at the repo root.
 
+```markdown
+### Fast SDLC
+Config: `<path to fast-sdlc-project-setup.md>`
+```
+
+**Owner**: orchestrator (created during Project Initiation).
+
 **What's configurable** (not exhaustive):
 - **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows; Outputs: deliverables the role produces)
 - **Configs Folder** — default base for role folders
