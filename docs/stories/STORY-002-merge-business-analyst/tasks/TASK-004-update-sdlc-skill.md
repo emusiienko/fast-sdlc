@@ -1,5 +1,5 @@
 ---
-status: ToDo
+status: Done
 assignee: orchestrator
 story: STORY-002
 ---
@@ -16,18 +16,18 @@ Replace `product-strategist`/`spec-writer` throughout `sdlc/SKILL.md` with `busi
 TASK-001
 
 ## Acceptance Criteria
-- [ ] No remaining mention of `product-strategist` or `spec-writer` as separate roles
-- [ ] Pipeline phase numbering/structure updated consistently
-- [ ] Mapping table has one `business-analyst` row
+- [x] No remaining mention of `product-strategist` or `spec-writer` as separate roles
+- [x] Pipeline phase numbering/structure updated consistently
+- [x] Mapping table has one `business-analyst` row
 
 ## Intended ADR
 
 ---
 ## Implementation Report
 <!-- filled by implementor -->
-**Date**:
-**What was done**:
-**Deviations from plan**:
-**Technical decisions made**:
-**Code locations**:
-**Technical debt noted**:
+**Date**: 2026-08-06
+**What was done**: Replaced every `product-strategist`/`spec-writer` reference in `sdlc/SKILL.md` with `business-analyst` (verified via grep — zero remaining). Roles and the Mapping table merged two entries into one. The Pipeline's phase-by-phase breakdown (`### 1. Discovery`, `### 2. Spec`) was deliberately kept as two separate phase entries — only their `Role:` line changed — since it's organized by phase, not role, and mirrors the Phase A/B structure already inside `fast-sdlc-business-analyst.md`. Setup workflow's two bullets merged into one. Reconcile heading renamed `Spec-Writer Reconcile` → `Business-Analyst Reconcile`. Artifacts Ownership, Implement Story's Deviation Check, and the Face-to-face Callee list updated.
+**Deviations from plan**: None — matched the approved plan exactly.
+**Technical decisions made**: Pipeline phase count intentionally unchanged (still 6 phases) rather than collapsing Discovery+Spec into one phase, for consistency with the agent's own internal structure.
+**Code locations**: `fast-sdlc/fast-sdlc/skills/sdlc/SKILL.md`
+**Technical debt noted**: `orchestration`/`session` skills still reference the old role names — TASK-005/006.

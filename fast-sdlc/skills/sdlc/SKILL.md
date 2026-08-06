@@ -60,7 +60,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 
 ### Story Statuses
 
-- `Planned` — set by **spec-writer** at story creation
+- `Planned` — set by **business-analyst** at story creation
 - `In Progress` — set by **implementor** when first task starts
 - `Pending Approval` — set by **orchestrator** when all tasks are `Done`
 - `Accepted` — set by **user** after review
@@ -78,7 +78,7 @@ The user reviews these flags before setting `Accepted`. Stories can reach `Accep
 
 **Post-`Accepted`**:
 - **Architecture Reconciled** — set by **architect** during Reconcile; architect always runs first
-- **Spec Reconciled** — set by **spec-writer** after Architecture Reconciled is set; triggers archival
+- **Spec Reconciled** — set by **business-analyst** after Architecture Reconciled is set; triggers archival
 - **Automation Reconciled** — set by **qa-automation** after automation tests/scripts are reconciled for this story
 - **Manual QA Reconciled** — set by **manual-qa** after story test cases are merged; prevents double-merge
 
@@ -102,9 +102,7 @@ The user reviews these flags before setting `Accepted`. Stories can reach `Accep
 
 Each phase of the pipeline is owned by a named role. Agents identify themselves by role name and understand their position in the sequence.
 
-- **product-strategist** — Phase 1, Discovery: gatekeeper between "someone had a thought" and "we're going to build this." Validates ideas BEFORE any technical work begins. Does not write code, suggest architectures, or evaluate technical feasibility — only ensures the right problem is being solved.
-
-- **spec-writer** — Phase 2, Spec: bridges product vision and engineering execution. Produces specs that are precise, traceable, unambiguous, and scoped to exactly what's needed. Does not design architecture or write code.
+- **business-analyst** — Phases 1–2, Discovery and Spec: validates ideas before any technical work begins (gatekeeper between "someone had a thought" and "we're going to build this"), then bridges product vision and engineering execution — produces specs that are precise, traceable, unambiguous, and scoped to exactly what's needed. Does not write code, design architecture, or evaluate technical feasibility.
 
 - **architect** — Phase 3, Architecture: designs systems that are simple to build and maintain. Values clarity over cleverness, boring technology over novelty. Produces technical plans and task files — does not write implementation code or IaC.
 
@@ -126,8 +124,7 @@ Use the mapped name whenever spawning an agent for a role.
 
 | Role | Agent name |
 |------|------------|
-| product-strategist | fast-sdlc-product-strategist |
-| spec-writer | fast-sdlc-spec-writer |
+| business-analyst | fast-sdlc-business-analyst |
 | architect | fast-sdlc-architect |
 | backend-developer | fast-sdlc-backend-developer |
 | devops | fast-sdlc-devops |
@@ -141,17 +138,17 @@ Use the mapped name whenever spawning an agent for a role.
 ## Pipeline
 
 ```
-product-strategist → spec-writer → architect → implementors → qa-automation → reconcile
+business-analyst → architect → implementors → qa-automation → reconcile
 ```
 
 ### 1. Discovery
-- **Role:** product-strategist
+- **Role:** business-analyst
 - **Required:** No — skip if the idea is already well-defined
 - **Description:** Validates the business idea with the user before any technical work begins, turning a vague concept into a scoped problem statement with explicit IN/OUT boundaries.
 - **Artifacts:** Validated Idea
 
 ### 2. Spec
-- **Role:** spec-writer
+- **Role:** business-analyst
 - **Required:** Yes
 - **Description:** Transforms the validated idea into engineering-ready specifications: data model, validation rules, and user stories.
 - **Artifacts:** Requirements, Milestones, Stories
@@ -175,9 +172,9 @@ product-strategist → spec-writer → architect → implementors → qa-automat
 - **Artifacts:** Stories, Bugs
 
 ### 6. Reconcile
-- **Role:** architect (first), spec-writer (second) — always sequential
+- **Role:** architect (first), business-analyst (second) — always sequential
 - **Required:** Yes — runs after stories reach `Accepted` or by request
-- **Description:** Closes the documentation loop — architect updates architecture docs and ADRs to match what was actually built, then spec-writer removes delivered scope from Requirements (handing it off to Documentation, if that artifact exists) and archives completed stories.
+- **Description:** Closes the documentation loop — architect updates architecture docs and ADRs to match what was actually built, then business-analyst removes delivered scope from Requirements (handing it off to Documentation, if that artifact exists) and archives completed stories.
 - **Artifacts:** Architecture, API Contract, Requirements, Documentation (optional), Stories
 
 ---
@@ -191,8 +188,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 
 - **Project Config** → `fast-sdlc-project-setup.md`, established first — defines where everything below actually lives
 - **Confirm Artifact Formats** *(applies to every role, for the artifacts whose format it itself defines — not Stories/Tasks/Bugs, whose format is the Task Management skill's concern)* → once Project Config exists: before producing such an artifact for the first time on this project, if the role has a default format for it, present that default and ask whether to use it as-is or customize it; if the role has no default, challenge the user to define one. Do not proceed past this step until the format of every such artifact required by the role is settled. Record the decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
-- **product-strategist** → Validated Idea, own `agent.md` (References)
-- **spec-writer** → Requirements, Milestones, Stories, own `agent.md` (References)
+- **business-analyst** → Validated Idea, Requirements, Milestones, Stories, own `agent.md` (References)
 - **architect** → Architecture, API Contract, Technical Roadmap (optional), `CLAUDE.md`, own `agent.md` (References)
 - **backend-developer** → own `agent.md` (References)
 - **devops** → own `agent.md` (References)
@@ -203,13 +199,13 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ---
 
 ### Implement Story
-*Applies to: architect (plan), spec-writer (deviation checks), implementors (via Implement Task), qa-automation/manual-qa (QA), architect/spec-writer (Reconcile)*
+*Applies to: architect (plan), business-analyst (deviation checks), implementors (via Implement Task), qa-automation/manual-qa (QA), architect/business-analyst (Reconcile)*
 
 1. **Plan**: architect produces the Implementation Plan for the story (Technical Roadmap too, if warranted)
-2. **Deviation Check**: if the Implementation Plan diverges from Requirements — spec-writer updates Requirements
+2. **Deviation Check**: if the Implementation Plan diverges from Requirements — business-analyst updates Requirements
 3. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
 4. **Implement**: run Implement Task for each task in the Implementation Plan, in dependency order, until all Tasks are `Done`
-5. **Deviation Check**: if any task's Implementation Report notes a deviation with behavioral impact — spec-writer updates Requirements; if manual-qa is active and its test cases are affected, it updates them
+5. **Deviation Check**: if any task's Implementation Report notes a deviation with behavioral impact — business-analyst updates Requirements; if manual-qa is active and its test cases are affected, it updates them
 6. **QA**: qa-automation sets "Automated Tests Passed"; if manual-qa is active, it runs its test cases and sets "Manual QA Passed"
 7. User reviews, sets Story status: `Accepted`
 8. **Reconcile** *(see Reconcile workflow)*
@@ -266,7 +262,7 @@ After Bug Fix: QA re-runs Check Story — Execute to verify. If all pass, "Manua
 ---
 
 ### Reconcile
-*Sequential: architect runs first, spec-writer second*
+*Sequential: architect runs first, business-analyst second*
 
 **Architect Reconcile** — trigger: Stories with status `Accepted`
 1. Read the Story + its Tasks' Implementation Reports
@@ -274,7 +270,7 @@ After Bug Fix: QA re-runs Check Story — Execute to verify. If all pass, "Manua
 3. Create ADR files for confirmed decisions (own `agent.md`); mark superseded ADRs (Status field only)
 4. Set "Architecture Reconciled" for each Story where all Tasks are `Done`
 
-**Spec-Writer Reconcile** — trigger: Stories with `Accepted` status AND "Architecture Reconciled" set
+**Business-Analyst Reconcile** — trigger: Stories with `Accepted` status AND "Architecture Reconciled" set
 1. Read the Story + its Tasks' Implementation Reports
 2. Remove the delivered scope from Requirements (it's built now, not future work); if Documentation exists on this project, update it with what was actually built
 3. Set "Spec Reconciled"
@@ -293,7 +289,7 @@ Runs in parallel with or after arch/spec reconcile. Detail defined in each QA ro
 A face-to-face session is a dedicated interactive conversation between the user and a specific agent, opened in a separate terminal. It is used when the task requires back-and-forth discovery or design work rather than single autonomous execution.
 
 **Caller**: the orchestrator (the session with the `orchestration` skill loaded)
-**Callee**: any agent that supports it — product-strategist, spec-writer, architect, backend-developer, frontend-developer, devops, manual-qa
+**Callee**: any agent that supports it — business-analyst, architect, backend-developer, frontend-developer, devops, manual-qa
 
 The session is powered by the `session` skill:
 - The orchestrator loads this skill to know how to open and manage sessions
@@ -305,11 +301,11 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 
 ## Artifacts Ownership
 
-- **Validated Idea** → **product-strategist** (full)
-- **Requirements** → **spec-writer** (full)
-- **Documentation** → **spec-writer** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
-- **Milestones** → **spec-writer** (full)
-- **Stories** → **spec-writer** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; **orchestrator**: status `Pending Approval`; status flags — see Task Management for who sets each
+- **Validated Idea** → **business-analyst** (full)
+- **Requirements** → **business-analyst** (full)
+- **Documentation** → **business-analyst** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
+- **Milestones** → **business-analyst** (full)
+- **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; **orchestrator**: status `Pending Approval`; status flags — see Task Management for who sets each
 - **Architecture** → **architect** (full)
 - **API Contract** → **architect** (full)
 - **Technical Roadmap** (optional) → **architect**; read-only for all
