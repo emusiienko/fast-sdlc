@@ -1,5 +1,5 @@
 ---
-status: ToDo
+status: Done
 assignee: orchestrator
 story: STORY-002
 ---
@@ -16,7 +16,7 @@ Remove the two now-superseded agent files.
 TASK-002
 
 ## Acceptance Criteria
-- [ ] Both files removed
+- [x] Both files removed
 - [ ] Nothing else in the plugin still references them by name (cross-checked in TASK-007)
 
 ## Intended ADR
@@ -24,9 +24,9 @@ TASK-002
 ---
 ## Implementation Report
 <!-- filled by implementor -->
-**Date**:
-**What was done**:
-**Deviations from plan**:
-**Technical decisions made**:
-**Code locations**:
-**Technical debt noted**:
+**Date**: 2026-08-06
+**What was done**: Deleted both agent files. Verified via grep across `fast-sdlc/fast-sdlc/` that only `skills/sdlc/SKILL.md` still references the old role names — known, deferred to TASK-004.
+**Deviations from plan**: None.
+**Technical decisions made**: None.
+**Code locations**: `fast-sdlc/fast-sdlc/agents/fast-sdlc-product-strategist.md` (deleted), `fast-sdlc/fast-sdlc/agents/fast-sdlc-spec-writer.md` (deleted)
+**Technical debt noted**: `sdlc/SKILL.md` still references `product-strategist`/`spec-writer` by name until TASK-004 runs.
