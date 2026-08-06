@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Pending Approval
 type: chore
 priority: TBD
 date: 2026-08-06
@@ -17,13 +17,13 @@ One role, `business-analyst`, replaces `product-strategist` and `spec-writer` �
 
 ## Acceptance Criteria
 
-- [ ] `business-analyst` agent created (Discovery Mode + Spec Mode), replacing the two source agents' content
-- [ ] `fast-sdlc-product-strategist` and `fast-sdlc-spec-writer` agent files retired
-- [ ] `sdlc` skill updated: Roles, Mapping between roles and agents, Pipeline (phases 1+2 merged), Artifacts Ownership, Common Workflows (Setup, Reconcile)
-- [ ] `orchestration` skill updated: every reference to product-strategist/spec-writer
-- [ ] `session` skill updated: Callee list
-- [ ] No leftover reference to `product-strategist` or `spec-writer` as separate roles anywhere in the plugin
+- [x] `business-analyst` agent created (Discovery Mode + Spec Mode), replacing the two source agents' content
+- [x] `fast-sdlc-product-strategist` and `fast-sdlc-spec-writer` agent files retired
+- [x] `sdlc` skill updated: Roles, Mapping between roles and agents, Pipeline (phases 1+2 merged), Artifacts Ownership, Common Workflows (Setup, Reconcile)
+- [x] `orchestration` skill updated: every reference to product-strategist/spec-writer
+- [x] `session` skill updated: Callee list
+- [x] No leftover reference to `product-strategist` or `spec-writer` as separate roles anywhere in the plugin
 
 ## Edge Cases & Error Scenarios
 
-- [ ] Face-to-face session default: both source roles default to face-to-face today — decide the merged role's default (likely: still face-to-face, since both source roles were)
+- [x] Face-to-face session default: both source roles default to face-to-face today — decided the merged role's default: still face-to-face (inherited from both source roles)

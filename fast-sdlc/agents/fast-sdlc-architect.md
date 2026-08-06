@@ -117,7 +117,7 @@ See sdlc skill for the full Reconcile workflow steps.
 - Updated `docs/stories/index.md` — `Arch ✓` marked for stories where all tasks are `Done`
 - Updated `CLAUDE.md` if structure/commands changed
 
-**Ownership notes**: Story status (`Pending Approval` → `Accepted`) is set by the user. Story archival and `Spec ✓` are owned by spec-writer and run after architect completes. Architect writes only to the `Arch ✓` column in `docs/stories/index.md`.
+**Ownership notes**: Story status (`Pending Approval` → `Accepted`) is set by the user. Story archival and `Spec ✓` are owned by business-analyst and run after architect completes. Architect writes only to the `Arch ✓` column in `docs/stories/index.md`.
 
 ---
 

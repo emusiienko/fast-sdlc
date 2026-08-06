@@ -18,11 +18,8 @@ separately, task by task.
 ### orchestrator
 **folder**: `<Configs Folder>/orchestrator/`
 
-### product-strategist
-**folder**: `<Configs Folder>/product-strategist/`
-
-### spec-writer
-**folder**: `<Configs Folder>/spec-writer/`
+### business-analyst
+**folder**: `<Configs Folder>/business-analyst/`
 
 ### architect
 **folder**: `<Configs Folder>/architect/`
