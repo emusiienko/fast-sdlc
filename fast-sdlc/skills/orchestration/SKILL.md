@@ -119,7 +119,7 @@ Run after all implementation tasks are Done, or after a fix:
 - Create one setup task per active role: `TASK-NNN-setup-<role>.md` (assignee: role, status: ToDo)
 - Add story + tasks to index files
 - For each role, assess face-to-face need:
-  - **Default yes**: product-strategist and spec-writer
+  - **Default yes**: business-analyst
   - **Other roles**: ask the user once — "autonomously or face-to-face?"
 - Spawn one role at a time in pipeline order; include the task file path in the briefing — the agent follows their own lifecycle including marking the task `Done`
 - **Checkpoint after each task**: read the result or session report; present it to the user; ask to proceed to the next role
@@ -128,17 +128,15 @@ Run after all implementation tasks are Done, or after a fix:
 - **Trigger**: user describes something to build, fix, or investigate
 - Ask clarifying questions until the artifact is unambiguous (see Proactivity above)
 - Decide artifact type and delegation:
-  - Vague idea → product-strategist (face-to-face)
-  - Clear feature → spec-writer (face-to-face)
+  - Vague idea or clear feature → business-analyst (face-to-face)
   - Architecture question → architect (face-to-face or inline)
   - Well-defined task or bug the orchestrator can describe fully → ask: "I can create this directly — should I, or delegate to [role]?"
 - Confirm story/task/bug created and visible in `docs/stories/index.md`
 
 ### 3. Add Scope
 - **Trigger**: user wants to add new features / extend the product
-- Phase 1: product-strategist face-to-face — define scope
-- Phase 2: spec-writer face-to-face — split scope into stories
-- Phase 3: architect Feature Design — ask user preference:
+- Phase 1: business-analyst face-to-face — define scope and split into stories
+- Phase 2: architect Feature Design — ask user preference:
   - **Sequential**: design each story, user reviews before architect moves to the next
   - **Batch**: architect designs all stories first, user reviews at the end
 - No implementation. Present created stories to user.
@@ -168,7 +166,7 @@ Run after all implementation tasks are Done, or after a fix:
 **Reconcile (after explicit accept):**
 11. Mark `Accepted` in `description.md` and `docs/stories/index.md`
 12. Spawn architect → wait for `Arch ✓`
-13. Spawn spec-writer → wait for `Spec ✓`
+13. Spawn business-analyst → wait for `Spec ✓`
 14. If qa-automation in team: spawn QA Reconcile → wait for `Auto Rec ✓`
 15. If manual-qa in team: spawn QA Reconcile → wait for `QA Rec ✓`
 
@@ -205,7 +203,7 @@ Minimal. Only what cannot be inferred from story files.
 
 ```markdown
 ## Active wait
-waiting_for: SESSION-003 (spec-writer)
+waiting_for: SESSION-003 (business-analyst)
 next_step: architect Feature Design for STORY-007
 
 ## Recent changes
