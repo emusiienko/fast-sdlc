@@ -28,7 +28,7 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 Config: `<path to fast-sdlc-project-setup.md>`
 ```
 
-**Owner**: orchestrator (created during Project Initiation).
+**Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
 - **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows; Outputs: deliverables the role produces)
@@ -42,7 +42,8 @@ Config: `<path to fast-sdlc-project-setup.md>`
 ## Artifacts
 
 - **Validated Idea** — scoped problem statement with explicit IN/OUT boundaries.
-- **Requirements** — engineering-ready spec: data model, validation rules, user stories.
+- **Requirements** — what's still to be done: data model, validation rules, user stories. Always about the future — once scope is delivered, its entry is removed (or handed off to Documentation, if that artifact exists on this project), never left describing what's already built.
+- **Documentation** — what the product actually does, as-built. Kept true after the fact, not proposed/confirmed before it — the counterpart to Requirements, not a stage of it.
 - **Architecture** — the technical design.
 - **API Contract** — the interface between backend and frontend.
 - **Technical Roadmap** (optional) — longer-horizon technical plan.
@@ -176,8 +177,8 @@ product-strategist → spec-writer → architect → implementors → qa-automat
 ### 6. Reconcile
 - **Role:** architect (first), spec-writer (second) — always sequential
 - **Required:** Yes — runs after stories reach `Accepted` or by request
-- **Description:** Closes the documentation loop — architect updates architecture docs and ADRs to match what was actually built, then spec-writer updates requirements and archives completed stories.
-- **Artifacts:** Architecture, API Contract, Requirements, Stories
+- **Description:** Closes the documentation loop — architect updates architecture docs and ADRs to match what was actually built, then spec-writer removes delivered scope from Requirements (handing it off to Documentation, if that artifact exists) and archives completed stories.
+- **Artifacts:** Architecture, API Contract, Requirements, Documentation (optional), Stories
 
 ---
 
@@ -189,6 +190,7 @@ product-strategist → spec-writer → architect → implementors → qa-automat
 Run once per project before any work begins. Each role produces a strategy, conventions, or specification document that governs all subsequent work. Pauses for user approval — no further work until confirmed.
 
 - **Project Config** → `fast-sdlc-project-setup.md`, established first — defines where everything below actually lives
+- **Confirm Artifact Formats** *(applies to every role, for the artifacts whose format it itself defines — not Stories/Tasks/Bugs, whose format is the Task Management skill's concern)* → once Project Config exists: before producing such an artifact for the first time on this project, if the role has a default format for it, present that default and ask whether to use it as-is or customize it; if the role has no default, challenge the user to define one. Do not proceed past this step until the format of every such artifact required by the role is settled. Record the decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
 - **product-strategist** → Validated Idea, own `agent.md` (References)
 - **spec-writer** → Requirements, Milestones, Stories, own `agent.md` (References)
 - **architect** → Architecture, API Contract, Technical Roadmap (optional), `CLAUDE.md`, own `agent.md` (References)
@@ -274,7 +276,7 @@ After Bug Fix: QA re-runs Check Story — Execute to verify. If all pass, "Manua
 
 **Spec-Writer Reconcile** — trigger: Stories with `Accepted` status AND "Architecture Reconciled" set
 1. Read the Story + its Tasks' Implementation Reports
-2. Update Requirements to reflect reality
+2. Remove the delivered scope from Requirements (it's built now, not future work); if Documentation exists on this project, update it with what was actually built
 3. Set "Spec Reconciled"
 4. Archive Stories with "Spec Reconciled" set; offer to delete story folders
 
@@ -305,6 +307,7 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 
 - **Validated Idea** → **product-strategist** (full)
 - **Requirements** → **spec-writer** (full)
+- **Documentation** → **spec-writer** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
 - **Milestones** → **spec-writer** (full)
 - **Stories** → **spec-writer** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; **orchestrator**: status `Pending Approval`; status flags — see Task Management for who sets each
 - **Architecture** → **architect** (full)
