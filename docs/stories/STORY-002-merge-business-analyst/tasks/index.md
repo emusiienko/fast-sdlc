@@ -5,5 +5,5 @@
 | TASK-003 | Retire fast-sdlc-product-strategist and fast-sdlc-spec-writer agents | orchestrator | Done |
 | TASK-004 | Update sdlc skill | orchestrator | Done |
 | TASK-005 | Update orchestration skill | orchestrator | Done |
-| TASK-006 | Update session skill | orchestrator | ToDo |
+| TASK-006 | Update session skill | orchestrator | Done |
 | TASK-007 | Consistency check | orchestrator | ToDo |
