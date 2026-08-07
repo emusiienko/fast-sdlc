@@ -72,6 +72,9 @@ system and how to query it, etc.
 **location**: `<path>`
 **format**: `<Configs Folder>/business-analyst/requirements-format.md` (proposal, not a confirmed default — walk the user through it and confirm/adjust with business-analyst)
 
+### Documentation
+**location**: `<path>`
+
 ### Architecture
 **location**: `<path>`
 
