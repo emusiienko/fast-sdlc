@@ -136,10 +136,11 @@ Run after all implementation tasks are Done, or after a fix:
 ### 3. Add Scope
 - **Trigger**: user wants to add new features / extend the product
 - Phase 1: business-analyst face-to-face — define scope and split into stories
-- Phase 2: architect Feature Design — ask user preference:
-  - **Sequential**: design each story, user reviews before architect moves to the next
-  - **Batch**: architect designs all stories first, user reviews at the end
-- No implementation. Present created stories to user.
+- Phase 2: architect Plan Next Scope — produces/updates the Technical Roadmap for the new stories
+- Phase 3: for each repo (or repo+stack) the Technical Roadmap names, spawn lead-developer to plan implementation — ask user preference:
+  - **Sequential**: plan each repo, user reviews before moving to the next
+  - **Batch**: plan all repos first, user reviews at the end
+- No implementation. Present created stories/plans to user.
 
 ### 4. Execute Story → QA → Accept → Reconcile
 - **Trigger**: user wants to implement a story that already has tasks + implementation plan
@@ -165,10 +166,11 @@ Run after all implementation tasks are Done, or after a fix:
 
 **Reconcile (after explicit accept):**
 11. Mark `Accepted` in `description.md` and `docs/stories/index.md`
-12. Spawn architect → wait for `Arch ✓`
-13. Spawn business-analyst → wait for `Spec ✓`
-14. If qa-automation in team: spawn QA Reconcile → wait for `Auto Rec ✓`
-15. If manual-qa in team: spawn QA Reconcile → wait for `QA Rec ✓`
+12. Spawn lead-developer for each repo (or repo+stack) the story touched
+13. Spawn architect → wait for `Arch ✓`
+14. Spawn business-analyst → wait for `Spec ✓`
+15. If qa-automation in team: spawn QA Reconcile → wait for `Auto Rec ✓`
+16. If manual-qa in team: spawn QA Reconcile → wait for `QA Rec ✓`
 
 ### 5. Report Issue
 - **Trigger**: user reports a bug from manual testing or observation
@@ -204,7 +206,7 @@ Minimal. Only what cannot be inferred from story files.
 ```markdown
 ## Active wait
 waiting_for: SESSION-003 (business-analyst)
-next_step: architect Feature Design for STORY-007
+next_step: lead-developer plan for STORY-007
 
 ## Recent changes
 - 2026-06-19: orchestration skill created

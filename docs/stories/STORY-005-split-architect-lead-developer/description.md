@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Accepted
 type: chore
 priority: TBD
 date: 2026-08-07
@@ -17,14 +17,14 @@ Narrow `architect` to system design only: architecture, interfaces (API contract
 
 ## Acceptance Criteria
 
-- [ ] `architect` narrowed: Mode 1 (Project Setup) drops team/role composition setup (already superseded by orchestrator's Project Initiation per STORY-001) and implementation planning/task creation; keeps architecture, API contract, ADRs, CLAUDE.md
-- [ ] New `fast-sdlc-lead-developer` agent created: owns the Implementation Plan artifact, Task creation/breakdown, per-repo sequencing — repo-bound, one instance per repo
-- [ ] `sdlc` skill updated: new role added (Roles, Mapping table, Pipeline), Artifacts Ownership adjusted (Implementation Plan and Tasks ownership move to lead-developer)
-- [ ] `orchestration` skill updated: spawn lead-developer instead of architect for implementation planning steps
-- [ ] `session` skill updated if it references architect's planning responsibilities
-- [ ] No leftover assumption that architect creates task files or implementation plans
+- [x] `architect` narrowed: Mode 1 (Project Setup) drops team/role composition setup (already superseded by orchestrator's Project Initiation per STORY-001) and implementation planning/task creation; keeps architecture, API contract, ADRs, CLAUDE.md
+- [x] New `fast-sdlc-lead-developer` agent created: owns the Implementation Plan artifact, Task creation/breakdown, per-repo sequencing — repo-bound, one instance per repo
+- [x] `sdlc` skill updated: new role added (Roles, Mapping table, Pipeline), Artifacts Ownership adjusted (Implementation Plan and Tasks ownership move to lead-developer)
+- [x] `orchestration` skill updated: spawn lead-developer instead of architect for implementation planning steps
+- [x] `session` skill updated if it references architect's planning responsibilities
+- [x] No leftover assumption that architect creates task files or implementation plans
 
 ## Edge Cases & Error Scenarios
 
-- [ ] Single-repo projects: default to one lead-developer instance, same as today's architect behavior
-- [ ] Model tier: lead-developer defaults to the same tier as architect, not the implementor tier
+- [x] Single-repo projects: default to one lead-developer instance, same as today's architect behavior
+- [x] Model tier: lead-developer defaults to the same tier as architect, not the implementor tier

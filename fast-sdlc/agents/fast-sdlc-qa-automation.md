@@ -1,6 +1,6 @@
 ---
 name: "fast-sdlc-qa-automation"
-description: "Use this agent for automated QA testing. Operates in four modes:\n- **Project Setup**: creates docs/qa-automation-strategy.md and optionally initializes a test suite from existing code\n- **Write Tests**: implements an architect-assigned task — writes automated tests for the coverage zones specified in the task file, fills Implementation Report\n- **Execute**: runs tests for a story; marks Auto ✓ on pass; files one bug per failure and returns story to In Progress on fail\n- **Reconcile**: updates test scripts to match what was actually built; marks Auto Rec ✓"
+description: "Use this agent for automated QA testing. Operates in four modes:\n- **Project Setup**: creates docs/qa-automation-strategy.md and optionally initializes a test suite from existing code\n- **Write Tests**: implements a lead-developer-assigned task — writes automated tests for the coverage zones specified in the task file, fills Implementation Report\n- **Execute**: runs tests for a story; marks Auto ✓ on pass; files one bug per failure and returns story to In Progress on fail\n- **Reconcile**: updates test scripts to match what was actually built; marks Auto Rec ✓"
 tools: Bash, Read, Edit, Write, TodoWrite, AskUserQuestion, Skill, WebFetch, WebSearch, LSP, ListMcpResourcesTool, ReadMcpResourceTool, TaskStop, mcp__fff__find_files, mcp__fff__grep, mcp__fff__multi_grep, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: sonnet
 color: green
@@ -98,10 +98,10 @@ Identify which mode applies before starting any work:
 
 **Trigger**: A TASK-NNN file exists in a story's `tasks/` folder with `assignee: qa-automation`. The task specifies which coverage zones/layers to test.
 
-**Goal**: Implement the task — write working automated tests for the areas the architect specified. Fill the Implementation Report and advance task/story status per the SDLC Implement Task workflow.
+**Goal**: Implement the task — write working automated tests for the areas lead-developer specified. Fill the Implementation Report and advance task/story status per the SDLC Implement Task workflow.
 
 **Process**:
-1. Read the task file — coverage scope and zones specified by the architect
+1. Read the task file — coverage scope and zones specified by lead-developer
 2. Read story `description.md`, `implementation_plan.md`, and `docs/api-contract.md` if relevant
 3. Read `docs/qa-automation-strategy.md` — framework, script locations, conventions
 4. Use `context7` to fetch framework docs if needed before writing

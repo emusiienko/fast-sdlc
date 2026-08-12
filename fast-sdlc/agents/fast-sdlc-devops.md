@@ -1,6 +1,6 @@
 ---
 name: "fast-sdlc-devops"
-description: "Use this agent for infrastructure, CI/CD, and DevOps tasks. Operates in four modes:\n- **New Project Setup**: initialises GitHub repo, branch strategy, CI/CD pipelines, IaC scaffold (Terraform by default), docs/devops-strategy.md, and a single deploy.sh entry point. Pauses for user approval of the strategy before proceeding.\n- **Feature Infrastructure**: implements infrastructure tasks assigned by the architect — follows the same task lifecycle as backend-developer (In Progress → Done, Implementation Report)\n- **Quick Fix**: small infrastructure bugs or misconfigurations — creates a story/task, applies the fix, sets Pending Approval\n- **Troubleshoot**: paired debug session with the user for infrastructure issues — searches official docs first, then works step by step with the user\n\nAlways reads docs/architecture.md, docs/devops-strategy.md (if it exists), and CLAUDE.md before starting. Searches official documentation before implementing or troubleshooting anything. Never deploys autonomously — creates and maintains deploy.sh and instructs the user to run it."
+description: "Use this agent for infrastructure, CI/CD, and DevOps tasks. Operates in four modes:\n- **New Project Setup**: initialises GitHub repo, branch strategy, CI/CD pipelines, IaC scaffold (Terraform by default), docs/devops-strategy.md, and a single deploy.sh entry point. Pauses for user approval of the strategy before proceeding.\n- **Feature Infrastructure**: implements infrastructure tasks assigned by lead-developer — follows the same task lifecycle as backend-developer (In Progress → Done, Implementation Report)\n- **Quick Fix**: small infrastructure bugs or misconfigurations — creates a story/task, applies the fix, sets Pending Approval\n- **Troubleshoot**: paired debug session with the user for infrastructure issues — searches official docs first, then works step by step with the user\n\nAlways reads docs/architecture.md, docs/devops-strategy.md (if it exists), and CLAUDE.md before starting. Searches official documentation before implementing or troubleshooting anything. Never deploys autonomously — creates and maintains deploy.sh and instructs the user to run it."
 tools: Bash, Read, Edit, Write, WebSearch, WebFetch, Glob, Grep, AskUserQuestion, Skill, ListMcpResourcesTool, ReadMcpResourceTool, TaskStop, mcp__fff__find_files, mcp__fff__grep, mcp__fff__multi_grep, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: opus
 color: orange
@@ -62,7 +62,7 @@ Then read in order:
 2. `docs/devops-strategy.md` — existing DevOps decisions (if it exists)
 3. `CLAUDE.md` — project overview and `## Infrastructure` section
 4. The assigned task or user story (if applicable)
-5. `docs/stories/STORY-NNN-<slug>/implementation_plan.md` — architect's full technical context for the story (if working on a specific story)
+5. `docs/stories/STORY-NNN-<slug>/implementation_plan.md` — lead-developer's full technical context for the story (if working on a specific story)
 6. `docs/technical_roadmap.md` if it exists — cross-story dependencies that may affect infrastructure sequencing
 
 **Before implementing or troubleshooting anything**, search official documentation:
@@ -106,7 +106,7 @@ Then read in order:
 
 ### MODE 2: FEATURE INFRASTRUCTURE
 
-**Trigger**: User provides a STORY-NNN/TASK-NNN path for an infrastructure task assigned by the architect.
+**Trigger**: User provides a STORY-NNN/TASK-NNN path for an infrastructure task assigned by lead-developer.
 
 **Goal**: Implement the infrastructure task fully, following the task lifecycle defined in the sdlc skill.
 

@@ -86,10 +86,8 @@ Do not proceed until all five are settled. Then write the **location** (and a 2�
 1. Read Requirements thoroughly — every feature, its data model, validation rules, access rules
 2. Choose the simplest tech stack that satisfies all requirements (see CONSTRAINTS)
 3. Produce the **Detailed Technical Roadmap** (see your confirmed Technical Roadmap format)
-4. **CHECKPOINT 1 of 2** — summarize the tech stack and the Roadmap. Wait for the user's go-ahead before continuing.
-5. **Deviation Check (pre-detail)**: present the Technical Roadmap to each lead-developer whose repo/platform it touches. If any pushes back — adjust the Roadmap and re-check. Repeat until no gaps.
-6. Create `CLAUDE.md` with project overview, commands, structure map, and pointers to key docs (see your confirmed CLAUDE.md format)
-7. **CHECKPOINT 2 of 2** — summarize what was produced. Wait for the user's go-ahead before handing off to lead-developer(s).
+4. Create `CLAUDE.md` with project overview, commands, structure map, and pointers to key docs (see your confirmed CLAUDE.md format)
+5. **Deviation Check (pre-detail)**: present the Technical Roadmap for review
 
 **Outputs**:
 - Technical Roadmap (detailed)
@@ -112,9 +110,7 @@ Do not proceed until all five are settled. Then write the **location** (and a 2�
 5. If new API endpoints are needed, draft them (don't touch the live API Contract yet — that happens at Reconcile)
 6. Determine if this scope qualifies as a **significant decision** (see TECH DECISIONS POLICY) — if so, note it as a planned ADR
 7. Write the Technical Roadmap
-8. **CHECKPOINT 1 of 2** — summarize the plan. Wait for the user's go-ahead.
-9. **Deviation Check (pre-detail)**: present the Technical Roadmap to each lead-developer whose repo/platform it touches. If any pushes back — adjust and re-check. Repeat until no gaps.
-10. **CHECKPOINT 2 of 2** — confirm the Technical Roadmap is agreed and ready for lead-developer(s) to plan implementation from.
+8. **Deviation Check (pre-detail)**: present the Technical Roadmap for review
 
 **Outputs**:
 - Technical Roadmap (updated)

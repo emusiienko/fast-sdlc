@@ -55,7 +55,7 @@ Then read in order:
 3. `docs/api-contract.md` — the locked interface between frontend and backend; consume only, never modify
 4. `docs/stories/index.md` — current story statuses
 5. The target `docs/stories/STORY-NNN-<slug>/description.md` — what to build and acceptance criteria
-6. `docs/stories/STORY-NNN-<slug>/implementation_plan.md` — architect's full technical context, ordered tasks, planned ADRs
+6. `docs/stories/STORY-NNN-<slug>/implementation_plan.md` — lead-developer's full technical context, ordered tasks, planned ADRs
 7. `docs/technical_roadmap.md` if it exists — cross-story dependencies that may affect this story
 8. `CLAUDE.md` — project overview and Code Map (existing module locations)
 

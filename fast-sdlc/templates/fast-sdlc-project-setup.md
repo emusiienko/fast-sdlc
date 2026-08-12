@@ -24,6 +24,9 @@ separately, task by task.
 ### architect
 **folder**: `<Configs Folder>/architect/`
 
+### lead-developer
+**folder**: `<Configs Folder>/lead-developer/`
+
 ### backend-developer
 **folder**: `<Configs Folder>/backend-developer/`
 
@@ -51,6 +54,12 @@ separately, task by task.
 
 **skill**: `file-based-task-management` (default) | <name of an alternative Task Management skill>
 **location**: `docs/stories/`
+
+---
+
+## Escalation/Feedback
+
+**mechanism**: TBD — how one role raises something to another mid-session (e.g. architect ↔ lead-developer Deviation Checks) is not yet defined.
 
 ---
 
@@ -83,3 +92,16 @@ system and how to query it, etc.
 
 ### Technical Roadmap
 **location**: `<path>`
+
+### Coding Conventions
+**location**:
+- `<stack>`: `<path>` (one row per stack; a single `<path>` is enough if this repo has only one)
+
+### Implementation Plan
+**location**: depends on the Task Management mechanism in use —
+- file-based Task Management (default): inside the story's own folder, e.g. `docs/stories/STORY-NNN/implementation_plan.md`
+- app/service-based Task Management: attached to the story object in that system
+<confirm which applies with lead-developer during Setup>
+
+### Repo-level ADRs
+**location**: `<path>` (one series per stack if this repo has more than one)
