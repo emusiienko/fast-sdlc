@@ -109,7 +109,7 @@ Identify which mode applies before starting any work:
    - Bug assignment policy:
      - Default assignee when role is unclear (`TBD` — human decides manually, or name a specific role)
      - Are any domains excluded from QA testing? (e.g., "QA cannot determine infrastructure bugs — skip or default to devops")
-     - Specific assignment rules (e.g., "API bugs → backend-developer, environment bugs → devops")
+     - Specific assignment rules (e.g., "API bugs → coder, environment bugs → devops")
    - Any template customizations
 2. Create `docs/qa-strategy.md` from the answers
 3. Create empty `docs/qa/test-cases.md` (header row only)

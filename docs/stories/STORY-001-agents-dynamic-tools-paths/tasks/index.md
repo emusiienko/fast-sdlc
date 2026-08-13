@@ -8,9 +8,9 @@
 | TASK-006 | Update fast-sdlc-business-analyst agent | orchestrator | Done |
 | TASK-007 | Update fast-sdlc-spec-writer agent (superseded — merged into TASK-006) | orchestrator | Done |
 | TASK-008 | Update fast-sdlc-architect agent (superseded — absorbed into STORY-005 TASK-002) | orchestrator | Done |
-| TASK-009 | Update fast-sdlc-backend-developer agent | orchestrator | ToDo |
+| TASK-009 | Update fast-sdlc-backend-developer agent (superseded — retired, replaced by STORY-006 coder) | orchestrator | Done |
 | TASK-010 | Update fast-sdlc-devops agent | orchestrator | ToDo |
-| TASK-011 | Update fast-sdlc-frontend-developer agent | orchestrator | ToDo |
+| TASK-011 | Update fast-sdlc-frontend-developer agent (superseded — retired, replaced by STORY-006 coder) | orchestrator | Done |
 | TASK-012 | Update fast-sdlc-qa-automation agent | orchestrator | ToDo |
 | TASK-013 | Update fast-sdlc-manual-qa agent | orchestrator | ToDo |
 | TASK-014 | End-to-end test in target project | user | ToDo |

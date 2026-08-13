@@ -1,5 +1,5 @@
 ---
-status: ToDo
+status: Done
 assignee: orchestrator
 story: STORY-001
 ---
@@ -16,16 +16,20 @@ Update the agent to resolve task-file and conventions-doc locations from `fast-s
 TASK-003
 
 ## Acceptance Criteria
-- [ ] No remaining hardcoded path this agent should instead resolve from config
+- [x] No remaining hardcoded path this agent should instead resolve from config
 
 ## Intended ADR
 
 ---
 ## Implementation Report
 <!-- filled by implementor -->
-**Date**:
-**What was done**:
-**Deviations from plan**:
-**Technical decisions made**:
-**Code locations**:
-**Technical debt noted**:
+**Date**: 2026-08-13
+**What was done**: Superseded/absorbed by STORY-006 — `fast-sdlc-backend-developer.md` was retired entirely (TASK-006) and replaced by the fully dynamic-path-aware `fast-sdlc-coder.md` (TASK-002). Same resolution pattern as STORY-005 TASK-008.
+
+**Deviations from plan**: None to report here — the actual work happened under STORY-006.
+
+**Technical decisions made**: None new — see STORY-006 TASK-001/002's own Implementation Reports.
+
+**Code locations**: `fast-sdlc/agents/fast-sdlc-backend-developer.md` (removed), `fast-sdlc/agents/fast-sdlc-coder.md` (its replacement)
+
+**Technical debt noted**: None new.

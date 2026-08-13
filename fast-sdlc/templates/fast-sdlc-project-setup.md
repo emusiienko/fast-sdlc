@@ -27,11 +27,8 @@ separately, task by task.
 ### lead-developer
 **folder**: `<Configs Folder>/lead-developer/`
 
-### backend-developer
-**folder**: `<Configs Folder>/backend-developer/`
-
-### frontend-developer
-**folder**: `<Configs Folder>/frontend-developer/`
+### coder
+**folder**: `<Configs Folder>/coder/`
 
 ### devops
 **folder**: `<Configs Folder>/devops/`

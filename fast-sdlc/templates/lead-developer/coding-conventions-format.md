@@ -27,7 +27,7 @@ Approach used (if applicable to this stack).
 What must be documented (public APIs, complex logic) vs. left uncommented.
 
 ## Testing Approach
-Test framework, what must be tested, how implementors verify their own work before marking a task Done.
+Test framework(s) for unit and integration tests. Whether coder writes tests test-first (TDD) or after implementing. What must be tested, and to what depth, vs. what doesn't need coverage. How coder verifies its own work before marking a Task Done.
 
 ## Engineering Principles
 Any project-specific emphasis (e.g. SOLID, DRY, modular design for testability) beyond generic good practice — only what's specific enough to this repo to be worth stating.

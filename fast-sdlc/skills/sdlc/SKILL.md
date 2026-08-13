@@ -110,11 +110,9 @@ Each phase of the pipeline is owned by a named role. Agents identify themselves 
 
 - **lead-developer** — Phase 4, Repo Planning: repo-bound (one instance per repo, scoped to one stack per session if the repo has more than one). Turns architect's Technical Roadmap into an Implementation Plan and Tasks for its own repo, and owns that repo's Coding Conventions and Repo-level ADRs.
 
-- **backend-developer** — Phase 5, Implementation: implements backend code only — never frontend. Writes code that QA can test without reading internals. Does not decide test strategy (that's in conventions) and does not write tests themselves.
+- **coder** — Phase 5, Implementation: implements Tasks in one specific repo, scoped to one stack per session if the repo has more than one. Writes the code and its own unit/integration tests, following that stack's Coding Conventions.
 
 - **devops** — Phase 5, Implementation: provisions and manages infrastructure. Works in pair with the user — never deploys autonomously. Steps requiring cloud console access are explicitly handed to the user with a checklist.
-
-- **frontend-developer** — Phase 5, Implementation: implements React/JavaScript UI components, pages, and server-side rendering with Next.js. Consumes the API contract but never modifies it. Chooses the right rendering strategy (SSR, SSG, ISR, client-side) per requirement. Does not touch backend code, IaC, or architecture files.
 
 - **qa-automation** — Phase 6, qa-automation (Optional): verifies acceptance criteria against implemented features. Sets "Automated Tests Passed" on pass; files one bug per failing test and returns story to `In Progress` on fail.
 
@@ -131,9 +129,8 @@ Use the mapped name whenever spawning an agent for a role.
 | business-analyst | fast-sdlc-business-analyst |
 | architect | fast-sdlc-architect |
 | lead-developer | fast-sdlc-lead-developer |
-| backend-developer | fast-sdlc-backend-developer |
+| coder | fast-sdlc-coder |
 | devops | fast-sdlc-devops |
-| frontend-developer | fast-sdlc-frontend-developer |
 | qa-automation | fast-sdlc-qa-automation |
 | manual-qa | fast-sdlc-manual-qa |
 | orchestrator | — (not a spawnable agent; loaded via the `orchestration` skill) |
@@ -171,7 +168,7 @@ business-analyst → architect → lead-developer → implementors → qa-automa
 - **Artifacts:** Coding Conventions, Implementation Plan, Tasks
 
 ### 5. Implementation
-- **Role:** backend-developer, devops, frontend-developer
+- **Role:** coder, devops
 - **Required:** Yes
 - **Description:** Implementors execute assigned tasks and fill the Implementation Report in each task file as they go.
 - **Artifacts:** Implementation Report
@@ -202,9 +199,8 @@ Run once per project before any work begins. Each role produces a strategy, conv
 - **business-analyst** → Validated Idea, Requirements, Milestones, Stories, own `agent.md` (References)
 - **architect** → Architecture, API Contract, Technical Roadmap, `CLAUDE.md`, own `agent.md` (References)
 - **lead-developer** → Coding Conventions, `CLAUDE.md` (own repo), own `agent.md` (References)
-- **backend-developer** → own `agent.md` (References)
+- **coder** → own `agent.md` (References)
 - **devops** → own `agent.md` (References)
-- **frontend-developer** → own `agent.md` (References)
 - **qa-automation** → own `agent.md` (References)
 - **manual-qa** → own `agent.md` (References)
 
@@ -226,7 +222,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ---
 
 ### Implement Task
-*Applies to: backend-developer, devops, frontend-developer*
+*Applies to: coder, devops*
 
 1. Read: Architecture, Coding Conventions, own `agent.md` (References), API Contract (if applicable), Stories, Implementation Plan, Tasks, Technical Roadmap (if exists), `CLAUDE.md`
 2. Update Tasks status: `In Progress`
@@ -238,7 +234,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ---
 
 ### Quick Fix
-*Applies to: backend-developer, devops, frontend-developer*
+*Applies to: coder, devops*
 
 For small bugs or misconfigurations that don't warrant a full story. All criteria must hold: ≤ 3 files affected, clear defect (not a feature), no architectural or infrastructure changes.
 
@@ -253,7 +249,7 @@ For small bugs or misconfigurations that don't warrant a full story. All criteri
 ---
 
 ### Bug Fix
-*Applies to: backend-developer, devops, frontend-developer (and future implementor roles)*
+*Applies to: coder, devops*
 
 1. Read the Bug — description, steps to reproduce, severity, assignee
 2. **Domain check — before writing any code**: verify the root cause is in your domain. If NOT: add investigation note to the Bug, use `AskUserQuestion` to ask the user who to reassign to, update assignee on the Bug, stop.
@@ -307,7 +303,7 @@ Runs in parallel with or after arch/spec reconcile. Detail defined in each QA ro
 A face-to-face session is a dedicated interactive conversation between the user and a specific agent, opened in a separate terminal. It is used when the task requires back-and-forth discovery or design work rather than single autonomous execution.
 
 **Caller**: the orchestrator (the session with the `orchestration` skill loaded)
-**Callee**: any agent that supports it — business-analyst, architect, lead-developer, backend-developer, frontend-developer, devops, manual-qa
+**Callee**: any agent that supports it — business-analyst, architect, lead-developer, coder, devops, manual-qa
 
 The session is powered by the `session` skill:
 - The orchestrator loads this skill to know how to open and manage sessions

@@ -67,8 +67,8 @@ date: YYYY-MM-DD
 ```markdown
 | ID | Title | Assignee | Status |
 |----|-------|----------|--------|
-| TASK-001 | Set up DB schema | backend-developer | Done |
-| TASK-002 | Implement auth endpoints | backend-developer | In Progress |
+| TASK-001 | Set up DB schema | coder | Done |
+| TASK-002 | Implement auth endpoints | coder | In Progress |
 ```
 
 ### Task file (`tasks/TASK-NNN-<slug>.md`)
@@ -76,7 +76,7 @@ date: YYYY-MM-DD
 ```markdown
 ---
 status: ToDo
-assignee: backend-developer | devops
+assignee: coder | devops
 story: STORY-NNN
 ---
 
@@ -106,7 +106,7 @@ story: STORY-NNN
 ```markdown
 | ID | Title | Severity | Status | Assignee |
 |----|-------|----------|--------|----------|
-| [BUG-001](BUG-001-slug.md) | Login fails on Safari | major | open | backend-developer |
+| [BUG-001](BUG-001-slug.md) | Login fails on Safari | major | open | coder |
 | [BUG-002](BUG-002-slug.md) | Deploy fails on staging | minor | open | TBD |
 ```
 
@@ -120,7 +120,7 @@ id: BUG-NNN
 story: STORY-NNN
 severity: critical | major | minor | trivial
 status: open | in-progress | fixed | resolved | wont-fix
-assignee: backend-developer | devops | frontend-developer | TBD
+assignee: coder | devops | TBD
 ---
 
 # BUG-NNN: Title
