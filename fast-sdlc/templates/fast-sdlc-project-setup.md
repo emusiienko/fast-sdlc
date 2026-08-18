@@ -54,6 +54,22 @@ separately, task by task.
 
 ---
 
+## Sessions
+
+**mechanism**: `file-based-session-management` (default skill) | <name of an alternative skill, or an MCP server/other mechanism>
+**location**: `docs/sessions/` (only applicable for file-based mechanisms)
+
+---
+
+## Pull Requests
+
+**strategy**: `to-development` (default) | `to-feature-branch` | custom
+- `to-development`: Acceptance and Reconcile Pull Requests target the project's development branch directly (see DevOps Strategy > Branch Strategy)
+- `to-feature-branch`: the user has already created an overarching feature branch for this scope; orchestrator creates one branch per phase (implementation, Reconcile) off it, and both Pull Requests target that feature branch instead of development
+- custom: `<describe>`
+
+---
+
 ## Escalation/Feedback
 
 **mechanism**: TBD — how one role raises something to another mid-session (e.g. architect ↔ lead-developer Deviation Checks) is not yet defined.

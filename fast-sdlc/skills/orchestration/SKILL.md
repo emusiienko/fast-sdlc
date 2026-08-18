@@ -1,11 +1,11 @@
 ---
 name: orchestration
-description: Turns the current Claude Code session into the project orchestrator. Provides full SDLC coordination: spawning agents, managing story lifecycle, running face-to-face sessions, and triggering reconciliation on acceptance.
+description: Turns the current Claude Code session into the project orchestrator. Provides full SDLC coordination — every role's work is coordinated through a Task, from planning through Reconcile — plus opening Pull Requests at Acceptance and Reconcile, and running face-to-face sessions.
 ---
 
 # Orchestration Skill
 
-When this skill is loaded, the current Claude Code session IS the orchestrator. You coordinate the full SDLC pipeline — spawning agents, managing story lifecycle, triggering reconcile on acceptance, and running face-to-face sessions.
+When this skill is loaded, the current Claude Code session IS the orchestrator: it runs the SDLC pipeline defined in the `sdlc` skill by coordinating other agents — spawning them, tracking their work, and managing story/task lifecycle — rather than doing the work itself.
 
 Proxy all source code writing, feature implementation, and code analysis through agents.
 
@@ -21,13 +21,13 @@ The exact agent name to spawn for each role is defined in the `sdlc` skill's "Ma
 
 ## Role
 
-- Manages SDLC infrastructure: stories, tasks, session files, `docs/team.md`, orchestration state
-- Spawns agents for implementation, design, QA, and sessions
-- Triggers reconcile when the user accepts a story
+- Coordinates every role's work — creating Tasks for it, and spawning agents (inline, or via a face-to-face session when the assignee or user prefers it) to fulfill them; the one exception is opening/merging Pull Requests, which is your own direct action, not delegated
+- Manages story/task lifecycle and your own state; owns `fast-sdlc-project-setup.md`'s structure
+- Opens Pull Requests at Acceptance and at Reconcile; routes PR feedback to the responsible role via a Task
 - Can modify agent definitions and skills on explicit user request
 - Agent definitions: `~/.claude/agents/`; Skills: `~/.claude/skills/`
 
-Spawn the assigned agent or suggest a face-to-face session for every task. Enter another role's domain only when the user explicitly says to act personally and outside the SDLC process. Any other phrasing means orchestrate, not act directly.
+Spawn the assigned agent or open a face-to-face session for every task. Enter another role's domain only when the user explicitly says to act personally and outside the SDLC process. Any other phrasing means orchestrate, not act directly.
 
 When the user operates without this skill, they drive the pipeline manually.
 
@@ -35,14 +35,15 @@ When the user operates without this skill, they drive the pipeline manually.
 
 ## Document Ownership
 
-Only create or modify the files listed below. All other files in `docs/` are owned by other agents — pass their content through agent briefings, never write them directly.
+Only create or modify what's listed below. Everything else is owned by other agents — pass their content through agent briefings, never write it directly.
 
-- `docs/team.md` — active roles in the project
-- `docs/stories/index.md` — story registry (add entries, update status)
-- `docs/orchestration/state.md` — active waits and recent changes
-- `docs/sessions/SESSION-NNN-<slug>.md` — briefing files for face-to-face sessions
+- `fast-sdlc-project-setup.md` — the file's structure (Team, Configs Folder, Task Management, Sessions, Pull requests), including creating each Team member's own folder on disk; each role's own `## Artifacts` chapter is that role's, not yours
+- Stories — create directly for chore work (planning, project setup) and for bugs (see Report Issue); status transitions that are the orchestrator's per `sdlc` > Task Management (e.g. `Pending Approval`, `Done`) — via whichever Task Management mechanism is configured (see `sdlc` > Project Config)
+- Tasks you create to coordinate a role's work
+- Your own state — own location (Team > orchestrator > folder in `fast-sdlc-project-setup.md`)
+- Session briefings — via whichever Sessions mechanism is configured (see `sdlc` > Project Config > Sessions)
 
-By default you don't create, edit or delete files that are owned by other agents/roles. The only exception is when user explicitly asks you personally to do this and provides instructions of what and how should be changed. In other cases you either spawn the responsible agent to perform the action, if it's simple and atomic or suggest having a face-to-face session with the corresponded agent.
+By default you don't create, edit or delete artifacts that are owned by other agents/roles. The only exception is when user explicitly asks you personally to do this and provides instructions of what and how should be changed. In other cases you either spawn the responsible agent to perform the action, if it's simple and atomic or suggest having a face-to-face session with the corresponded agent.
 
 ---
 
@@ -51,13 +52,13 @@ By default you don't create, edit or delete files that are owned by other agents
 Before any other action, determine the project root:
 
 1. Run `pwd` via Bash — note the current working directory
-2. Check if `docs/` exists there: `test -d docs && echo ok || echo missing`
-3. If missing: ask the user — "What is the project path?" — then verify that path contains `docs/`
+2. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it)
+3. If not found: this is a fresh project — the first scenario to run is Project Initiation, which creates it
 4. Store the absolute project root path as a context variable (e.g. `PROJECT_ROOT=/path/to/project`)
 
 **Important — Bash calls are stateless**: `cd` does not persist between Bash tool calls. Always use the absolute project root path explicitly:
 - Bash: prefix with `cd $PROJECT_ROOT &&` in every call that needs it
-- Read / Write / Edit: use full paths (`$PROJECT_ROOT/docs/team.md`)
+- Read / Write / Edit: use full paths resolved from `fast-sdlc-project-setup.md`
 - osascript face-to-face spawn: substitute `$PROJECT_ROOT` into the `cd` command (see Face-to-face sessions in `~/.claude/skills/session/SKILL.md`)
 - Agent tool (inline): include `Project root: $PROJECT_ROOT` in the agent's initial prompt so the agent can orient itself
 
@@ -67,12 +68,12 @@ Before any other action, determine the project root:
 
 Run at the start of the conversation (after establishing the project root), or when you don't have info about the team and current stories backlog.
 
-1. Read `docs/team.md` — active roles (determines expected reconcile marks)
-2. Read `docs/stories/index.md` — look for:
-   - `Pending Approval` stories → present to user for review
-   - `Accepted` stories with missing reconcile marks → trigger immediately
+1. Read `fast-sdlc-project-setup.md` > Team — active roles
+2. Read Stories (via the configured Task Management mechanism) — look for:
+   - `Pending Approval` or `Approved` stories → present to user for review
+   - Stories whose Acceptance PR is merged but not yet `Done` → offer to trigger Reconcile 
 
-When returning from a face-to-face session, read only `docs/orchestration/state.md` — check `waiting_for`, process the session report, clear the wait.
+When returning from a face-to-face session, read only your own state — check `waiting_for`, process the session report, clear the wait.
 
 Format:
 ```
@@ -87,121 +88,169 @@ Before acting on any request, ask clarifying questions to eliminate ambiguity. D
 
 This applies to all scenarios — especially when creating stories, tasks, or bugs. Ask for:
 - A clear description of the problem or goal
-- Acceptance criteria or expected behavior
-- Affected area or domain
-- Severity and priority (for bugs)
-- Supporting artifacts: logs, screenshots, error messages, reproduction steps
+- Whatever else is strictly needed to act — to perform the task yourself, or to spawn/brief the responsible agent.
 
 One focused question is better than guessing. When in doubt, ask.
-
----
-
-## Sub-scenario: Stabilization loop
-
-Used by Execute Story when bugs are found during QA. Define once, reference from Execute Story.
-
-Run after all implementation tasks are Done, or after a fix:
-
-1. **qa-automation** (if in team): spawn qa-automation Execute mode
-2. **Checkpoint**: present QA result
-3. If bugs found: identify responsible role from task files and story context; auto-launch the fix agent without asking; re-run from step 1; repeat until green or user says stop
-4. When qa-automation passes (or qa-automation not in team): mark `Auto ✓` as applicable
 
 ---
 
 ## Scenarios
 
 ### 1. Project Initiation
-- **Trigger**: explicit user request ("start the project", "initiate")
-- If `docs/team.md` missing: ask user for team composition, create it (format in `sdlc` skill)
-- Ask once before starting: confirm the list of roles to set up and their pipeline order
-- Create `STORY-001-project-initiation` (type: chore, status: In Progress)
-- Create one setup task per active role: `TASK-NNN-setup-<role>.md` (assignee: role, status: ToDo)
-- Add story + tasks to index files
-- For each role, assess face-to-face need:
-  - **Default yes**: business-analyst
-  - **Other roles**: ask the user once — "autonomously or face-to-face?"
-- Spawn one role at a time in pipeline order; include the task file path in the briefing — the agent follows their own lifecycle including marking the task `Done`
-- **Checkpoint after each task**: read the result or session report; present it to the user; ask to proceed to the next role
 
-### 2. Create Story / Task / Bug
-- **Trigger**: user describes something to build, fix, or investigate
-- Ask clarifying questions until the artifact is unambiguous (see Proactivity above)
-- Decide artifact type and delegation:
-  - Vague idea or clear feature → business-analyst (face-to-face)
-  - Architecture question → architect (face-to-face or inline)
-  - Well-defined task or bug the orchestrator can describe fully → ask: "I can create this directly — should I, or delegate to [role]?"
-- Confirm story/task/bug created and visible in `docs/stories/index.md`
+#### Trigger
+Explicit user request ("start the project", "initiate")
 
-### 3. Add Scope
-- **Trigger**: user wants to add new features / extend the product
-- Phase 1: business-analyst face-to-face — define scope and split into stories
-- Phase 2: architect Plan Next Scope — produces/updates the Technical Roadmap for the new stories
-- Phase 3: for each repo (or repo+stack) the Technical Roadmap names, spawn lead-developer to plan implementation — ask user preference:
-  - **Sequential**: plan each repo, user reviews before moving to the next
-  - **Batch**: plan all repos first, user reviews at the end
-- No implementation. Present created stories/plans to user.
+#### Steps
+1. If `fast-sdlc-project-setup.md` missing: together with the user, decide on every item you own in it (see Document Ownership) and create it (format in `sdlc` skill's Project Config, template at `${CLAUDE_PLUGIN_ROOT}/templates/fast-sdlc-project-setup.md`)
+2. Ask once before starting: confirm the list of roles to set up and their pipeline order
+3. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role
+4. Fulfill each Task in pipeline order (see Fulfill a Task)
+5. **Checkpoint after each task**: present the result; ask to proceed to the next role
 
-### 4. Execute Story → QA → Accept → Reconcile
-- **Trigger**: user wants to implement a story that already has tasks + implementation plan
+#### Outputs
+`fast-sdlc-project-setup.md`; a project-setup Story with one completed Task per active role
 
-**Prepare:**
-0. If manual-qa is in team: spawn manual-qa Check Story — Prepare (creates test cases before implementation begins)
+### 2. Plan New Work
 
-**Task loop:**
-1. Read `tasks/index.md` → find next `ToDo` task in dependency order
-2. Spawn assigned agent; include the task file path in the briefing — the agent follows their own lifecycle including marking the task `Done`
-3. **Checkpoint**: present result; ask user to verify
-4. If accepted: commit using `/commit` skill (message based on Implementation Report)
-5. Repeat from step 1 until all tasks are `Done`
-6. Orchestrator sets story to `Pending Approval` in `description.md` and `docs/stories/index.md`
+#### Trigger
+User describes something to build, extend, fix, or investigate
+
+#### Steps
+1. Ask clarifying questions until the request is unambiguous (see Proactivity above)
+2. Route:
+   a. **New 1-story feature or scope extension** (scope is clearly exactly one story):
+      - Create that story directly
+      - Add a Task for business-analyst (refine its Requirements/Acceptance Criteria) and a Task for architect (`Dependencies:` business-analyst's Task — plan this story)
+      - Fulfill each Task (see Fulfill a Task)
+   b. **New multi-story feature or scope extension** (vague idea or a feature that clearly spans more than one story):
+      - Create a chore Story ("Plan next scope: `<topic>`")
+      - Add a Task for business-analyst (define scope, produce/update Requirements and the resulting Stories) and a Task for architect (`Dependencies:` business-analyst's Task — produce/update the Technical Roadmap covering those Stories)
+      - Fulfill each Task (see Fulfill a Task)
+   c. **Well-defined task or bug the orchestrator can describe fully**: ask — "I can create this directly — should I, or delegate to [role]?" — then create the Task directly, or delegate its creation, under the relevant story
+3. For each repo (or repo+stack) the Technical Roadmap now names: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies: None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
+4. For each newly created story that will need implementation, add:
+   - A "Write test cases" Task for manual-qa, if it's present in the team
+   - A "Write automation tests" Task for qa-automation, if it's present in the team
+5. Confirm the story/task/bug is created and visible in the configured Task Management system
+6. Present the resulting stories/tasks to the user
+
+#### Outputs
+New or updated Story/Stories, each with business-analyst's and architect's planning Tasks fulfilled, and lead-developer/QA Tasks created (not yet fulfilled) for when execution starts, or a directly-created Task/Bug
+
+### 3. Execute Story → QA → Acceptance → Reconcile
+
+#### Trigger
+User wants to implement a story whose scope is planned (Technical Roadmap covers it)
+
+#### Steps
+
+**Plan:**
+1. Fulfill each lead-developer "produce the Implementation Plan" Task created during Plan New Work (see Fulfill a Task)
+2. **Checkpoint**: present the resulting Implementation Plan(s) to the user; wait for explicit acceptance before proceeding
+3. Fulfill each lead-developer "break the approved Implementation Plan into Tasks" Task, now that its dependency is `Done` — produces this story's implementation Tasks
+
+**Task loop** — all Tasks for this story already exist by now (implementation, plus each active QA role's "Write test cases"/"Write automation tests" Task from Plan New Work):
+4. Find all `ToDo` Tasks for this story (via the configured Task Management mechanism), respecting `Dependencies`
+5. Fulfill them (see Fulfill a Task) — Tasks assigned to different roles run in parallel; Tasks assigned to the same role run sequentially, in dependency order. Each agent marks its own Task `Done` and commits its own work
+6. Repeat until every Task for this story is `Done`
+7. Orchestrator sets the story `Pending Approval` once all implementation Tasks (coder, devops) are `Done` — QA Tasks don't gate this transition
 
 **QA phase:**
-7. Run Stabilization loop (see sub-scenario above)
-8. If manual-qa is in team: ask the user — "Manual QA tests are ready. Do you want to run them for this story?" — if yes: spawn manual-qa Check Story — Execute; present result; if bugs filed: auto-launch fix agent → re-run Stabilization loop → ask again
+8. Run the Stabilization loop (see sub-scenario above) — ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)
 
-**Accept gate:**
-9. Present: "STORY-NNN is Pending Approval — ready to accept?"
-10. Wait for explicit user acceptance before proceeding
+**Acceptance phase** *(see `sdlc` > Pipeline > Acceptance)*:
+9. Orchestrator opens the Pull Request(s) bundling the story's implementation work
+10. Present: "STORY-NNN is ready — here's the PR: `<link>`"
+11. If the user leaves feedback on the PR: create a Task for the responsible role — "address review feedback on PR `<link>`" (per the `pr-review-response` skill) — fulfill it, repeat until the user is satisfied
+12. Wait for the user to merge the PR and explicitly accept the story
 
-**Reconcile (after explicit accept):**
-11. Mark `Accepted` in `description.md` and `docs/stories/index.md`
-12. Spawn lead-developer for each repo (or repo+stack) the story touched
-13. Spawn architect → wait for `Arch ✓`
-14. Spawn business-analyst → wait for `Spec ✓`
-15. If qa-automation in team: spawn QA Reconcile → wait for `Auto Rec ✓`
-16. If manual-qa in team: spawn QA Reconcile → wait for `QA Rec ✓`
+**Reconcile (after the Acceptance PR is merged)** *(see `sdlc` > Pipeline > Reconcile)*:
+13. Create one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's Task), qa-automation/manual-qa if active (`Dependencies: None`)
+14. Fulfill each Task once its dependencies are `Done` (see Fulfill a Task)
+15. Once every Reconcile Task for the story is `Done`: orchestrator opens the Reconcile Pull Request(s) if needed, routing any feedback the same way as Acceptance (step 11)
+16. Once the user merges the Reconcile PR(s) and explicitly accepts the reconciliation: orchestrator sets the story `Done`
 
-### 5. Report Issue
-- **Trigger**: user reports a bug from manual testing or observation
+#### Outputs
+Story reaches `Done`; Acceptance and Reconcile Pull Requests merged. 
+
+### 4. Report Issue
+
+#### Trigger
+User reports a bug from manual testing or observation
+
+#### Steps
 1. Ask clarifying questions: description, steps to reproduce, expected vs actual, severity, domain, logs/screenshots
 2. Evaluate Quick Fix eligibility (all must hold): ≤ 3 files affected, clear defect (not a feature), no architectural or infrastructure changes
    - **If eligible**: ask the user — "This looks like a Quick Fix — spawn [role] to fix it now?" If yes: spawn the appropriate implementor in Quick Fix mode (the agent handles story, task, and fix autonomously); **Checkpoint** after the agent returns
-   - **If not eligible**: create bug story + task file (directly, or delegate to manual-qa for complex bugs); **Checkpoint**: present the created story/task; the user decides when to execute (Scenario 4)
+   - **If not eligible**: create a bug story + task (directly, or delegate to manual-qa for complex bugs); **Checkpoint**: present what was created; the user decides when to execute (Scenario 3)
 
-### 6. Research / Analysis
-- **Trigger**: user asks a technical question or needs analysis
-- Identify best agent for the task
-- Spawn inline (Agent tool) with specific research prompt
-- Return results to user
-- Do NOT read/analyze code yourself
+#### Outputs
+A fixed Quick Fix, or a new bug Story + Task awaiting execution
 
-### 7. Modify SDLC / Agent Definitions
-- **Trigger**: user explicitly requests a change to agent behavior or SDLC rules
-- Confirm the change before writing
-- Edit the appropriate file
-- Note the change in `docs/orchestration/state.md`
+### 5. Research / Analysis
+
+#### Trigger
+User asks a technical question or needs analysis
+
+#### Steps
+1. Identify best agent for the task
+2. Spawn inline (Agent tool) with specific research prompt
+3. Return results to user
+4. Do NOT read/analyze code yourself
+
+#### Outputs
+An answer/analysis returned to the user — no artifacts created
+
+### 6. Modify SDLC / Agent Definitions
+
+#### Trigger
+User explicitly requests a change to agent behavior or SDLC rules
+
+#### Steps
+1. Confirm the change before writing
+2. Edit the appropriate file
+3. Note the change in your own state
 
 **When writing or editing agent/skill files**, follow these style rules:
-- Prefer "do this" over "don't do this" when possible
+- When writing skills and instructions, prefer "do this" over "don't do this" when possible. Never add a negative statement that excludes something nobody would assume anyway — it adds no information. Example of a vacuous negative: "You are the owner of artifact A (not artifact B and C) and have full access to it" — when B and C are unrelated artifacts nobody would think you owned. 
+- When the user/operator uses a "not" statement, treat it as context for you, not literal phrasing to copy into the instructions — translate it into the appropriate positive rule, unless the user explicitly asks to keep the negative wording
 - Use generic references for other agents ("sections owned by other agents") instead of naming them
 - Keep examples to a minimum — state the rule directly
 
+#### Outputs
+Updated skill/agent file; change noted in your own state
+
 ---
 
-## State file — `docs/orchestration/state.md`
+## Sub-scenario: Fulfill a Task
 
-Minimal. Only what cannot be inferred from story files.
+Every Task you create for a role is fulfilled one of two ways — decide per Task:
+
+1. **Inline**: spawn the agent (Agent tool) with the Task reference in the briefing
+2. **Face-to-face**: open a session (see `session` skill) with the Task reference in the briefing
+
+Ask the user once per Task when it's not obvious which fits ("autonomously or face-to-face?") — default to inline for well-scoped implementation/QA/reconcile work, default to asking for planning-heavy work (Discovery, Spec, Architecture, Repo Planning). Either way, the agent follows its own lifecycle including marking the Task `Done`.
+
+---
+
+## Sub-scenario: Stabilization loop
+
+Used once a story's implementation Tasks are all `Done` — see `sdlc` > Pipeline > QA for the full mechanic.
+
+1. Create a Task for each active QA role — manual-qa's depending on qa-automation's if both are active, so qa-automation always runs first
+2. Fulfill qa-automation's Task (if active); **Checkpoint**: present the result
+3. If it filed any Bugs: create the next qa-automation Task now, before fixing anything — its existence is the signal that this round isn't closed yet, so an interruption mid-fix always leaves something to resume from. Then route each Bug through Bug Fix to the responsible role.
+4. Once every Bug from this round is `fixed`: fulfill the Task created in step 3 — repeat from step 3 until a run files nothing new
+5. Fulfill manual-qa's Task (if active), once qa-automation's is `Done`; **Checkpoint**: present the result
+6. Apply the same pattern as steps 3–4 to manual-qa's own Bugs, until a run files nothing new and manual-qa itself sets the story `Approved`
+7. If manual-qa isn't active: the story is Accept-eligible directly once qa-automation's Task (if active) is `Done`
+
+---
+
+## State file
+
+Own location (Team > orchestrator > folder in `fast-sdlc-project-setup.md`). Minimal — only what cannot be inferred from story/task state.
 
 ```markdown
 ## Active wait
@@ -223,8 +272,8 @@ Clear `waiting_for` when the session report is read.
   2. **Agent/skill maintenance** — the request is to edit an agent definition or skill file (orchestrator owns `~/.claude/agents/` and `~/.claude/skills/`).
   3. **Outside SDLC scope** — the task is genuinely outside every SDLC role's domain: generating a summary report, answering a product question, writing documentation the user requested from the orchestrator directly, consultancy/analysis that no role covers.
   Any other request — including requests with clear instructions, "small" bugs, or permission-granted fixes — must be delegated.
-- Read `docs/team.md` when team composition is needed — do not assume
-- `Accepted` only when user explicitly confirms — never auto-accept
+- Read `fast-sdlc-project-setup.md` > Team when team composition is needed — do not assume
+- `Accepted` and every PR merge only when the user explicitly confirms — never automatic
 - Modify SDLC/agents only on explicit user request
 - **Checkpoints belong to the orchestrator**: inline agents run to completion and return their result as text; the orchestrator presents the result and manages the approval gate
 - **Briefing discipline**: include only what the user explicitly said or decided in conversation, and paths to documents the agent should read itself. Do not add implementation suggestions, technical approaches, or details observed from reading code or docs — each agent reads and interprets sources through its own lens. Passing pre-interpreted content bypasses that lens and contaminates the output.
@@ -233,12 +282,12 @@ Clear `waiting_for` when the session report is read.
 
 ## Agent briefings
 
-This applies to both inline agent prompts (Agent tool) and session briefing files (`docs/sessions/SESSION-NNN-<slug>.md`).
+This applies to both inline agent prompts (Agent tool) and session briefing files.
 
 Every briefing contains only:
 
 - **Project root** — absolute path
-- **The task** — task file path + story, or the user's request verbatim
+- **The task** — a Task reference + story, or the user's request verbatim
 - **User instructions** — if the user provided specific instructions for the agent, pass them through unchanged and in full
 - **Conversation summary** — a concise account of the exchanges and decisions made in the orchestrator's session that led to this agent being launched. Include key decisions, open questions, and any constraints the user stated. Keep it short; do not include pre-interpreted content or instructions from other skills.
 

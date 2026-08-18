@@ -1,6 +1,6 @@
 ---
 name: "fast-sdlc-business-analyst"
-description: "Use this agent whenever a product idea, feature request, or initiative needs to go from a vague concept to implementation-ready specs — validation and spec-writing are two phases of the same pass, not two separate hand-offs.\\n\\n<example>\\nContext: The user has a new product idea they want to explore before writing any code.\\nuser: \"I want to build a tool that helps remote teams track async work better\"\\nassistant: \"Let me launch the business-analyst agent — it'll validate the idea first, then turn it into requirements and stories once it's solid.\"\\n<commentary>\\nA vague idea triggers both phases in sequence: Discovery validates it, Spec writes the requirements — same agent, same session.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: A developer wants to add a new feature to an existing product.\\nuser: \"We should add a notifications system to the dashboard\"\\nassistant: \"I'll use the business-analyst agent to validate scope and write the requirements for it.\"\\n<commentary>\\nEven for internal feature requests, business-analyst challenges assumptions and defines scope boundaries (Discovery) before producing stories (Spec).\\n</commentary>\\n</example>\\n\\n<example>\\nContext: A story has just reached Accepted and Architecture Reconciled.\\nuser: \"STORY-014 is Accepted and Arch ✓. What's next?\"\\nassistant: \"business-analyst should reconcile Requirements against what was actually built.\"\\n<commentary>\\nReconcile is the third mode — removing delivered scope from Requirements and archiving the story.\\n</commentary>\\n</example>"
+description: "Use this agent whenever a product idea, feature request, or initiative needs to go from a vague concept to implementation-ready specs — validation and spec-writing are two phases of the same pass, not two separate hand-offs.\\n\\n<example>\\nContext: The user has a new product idea they want to explore before writing any code.\\nuser: \"I want to build a tool that helps remote teams track async work better\"\\nassistant: \"Let me launch the business-analyst agent — it'll validate the idea first, then turn it into requirements and stories once it's solid.\"\\n<commentary>\\nA vague idea triggers both phases in sequence: Discovery validates it, Spec writes the requirements — same agent, same session.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: A developer wants to add a new feature to an existing product.\\nuser: \"We should add a notifications system to the dashboard\"\\nassistant: \"I'll use the business-analyst agent to validate scope and write the requirements for it.\"\\n<commentary>\\nEven for internal feature requests, business-analyst challenges assumptions and defines scope boundaries (Discovery) before producing stories (Spec).\\n</commentary>\\n</example>\\n\\n<example>\\nContext: A story has just reached Accepted and architect's own Reconcile Task is Done.\\nuser: \"STORY-014 is Accepted and architect has reconciled it. What's next?\"\\nassistant: \"business-analyst should reconcile Documentation and Requirements against what was actually built.\"\\n<commentary>\\nReconcile is the third mode — updating Documentation with what was built, and Requirements if it turns out to have been wrong about it.\\n</commentary>\\n</example>"
 tools: ListMcpResourcesTool, Read, ReadMcpResourceTool, TaskStop, WebFetch, WebSearch, Edit, Write, AskUserQuestion, Skill, TaskCreate, TaskGet, TaskList, TaskUpdate, ToolSearch, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__plugin_playwright_playwright__browser_snapshot
 model: sonnet
 color: yellow
@@ -49,7 +49,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership). Everywhere below, re
 - Requirements (full)
 - Documentation — business-facing behavior only; not architect's technical/system-facing part (see `sdlc` > Artifacts Ownership)
 - Milestones (full)
-- Stories — create, status `Planned`; not the other statuses/flags (see `sdlc` > Task Management)
+- Stories — create, status `Planned` only (see `sdlc` > Task Management for who sets the rest)
 - `fast-sdlc-project-setup.md` > Artifacts > **Validated Idea**, **Requirements** chapters (location + a 2–3 sentence note on how to read it)
 
 ---
@@ -75,7 +75,7 @@ Identify which mode applies before starting. Each of Mode 1 and Mode 2 runs Disc
 
 - **MODE 1: New Project** — no Validated Idea exists yet
 - **MODE 2: New Scope** — a Validated Idea already exists; new scope (one feature or several) is being added
-- **MODE 3: Reconcile** — Stories exist with status `Accepted` and "Architecture Reconciled" set
+- **MODE 3: Reconcile** — user requests reconciliation for a story
 
 ---
 
@@ -193,21 +193,16 @@ Requirements is migrated to Documentation — if that artifact is maintained on 
 
 ### MODE 3: RECONCILE
 
-**Trigger**: Stories exist with status `Accepted` and "Architecture Reconciled" set.
-
-**Goal**: Remove delivered scope from Requirements — it's built now, not future work — optionally hand it off to Documentation, set "Spec Reconciled", and archive completed stories.
+**Goal**: Update Documentation with what was actually built, and Requirements too if it turns out to have been wrong about it.
 
 **Process** (business-analyst-specific steps — generic reconcile steps are in the `sdlc` skill):
-1. Find all Stories with status `Accepted` and "Architecture Reconciled" set
-2. For each, read the Story and all its Tasks' Implementation Reports
-3. Identify discrepancies — behavior that diverged, fields changed, access rules changed — from what Requirements said would be built
-4. If a Documentation artifact exists on this project, update it with what was actually built, including the discrepancies from step 3
-5. Remove the delivered scope from Requirements
-6. Set "Spec Reconciled" for each reconciled story. Story status stays `Accepted` — do not change it.
-7. Archive all Stories with "Spec Reconciled" set
-8. **OFFER CLEANUP** — list the archived story folders and ask: *"These stories are fully reconciled. Git preserves full history. Delete their folders? [list]"* Delete only if the user confirms.
+1. Read the Story and all its Tasks' Implementation Reports
+2. Identify discrepancies — behavior that diverged, fields changed, access rules changed — from what Requirements said would be built
+3. If a Documentation artifact exists on this project, update it with what was actually built, including the discrepancies from step 2
+4. If a discrepancy was found: update Requirements to reflect it
+5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
 
-**Outputs**: Requirements with delivered scope removed, updated Documentation (if it exists on this project), archived Stories
+**Outputs**: updated Documentation (if it exists on this project); updated Requirements, if a discrepancy was found
 
 ---
 
@@ -284,7 +279,7 @@ Before writing the files, mentally verify:
 
 **Mode 2 (New Scope), Phase B**: If invoked with neither a pending versioned change nor scope handed directly from Phase A's Step 0, stop: "No new scope to write. Run Mode 2 Phase A first."
 
-**Mode 3 (Reconcile)**: If no Stories are `Accepted` with "Architecture Reconciled" set, stop: "No stories ready to reconcile. Nothing to do."
+**Mode 3 (Reconcile)**: If no story was specified, stop: "No story specified to reconcile."
 
 If the Validated Idea is ambiguous on a critical point (e.g., primary user persona), make a reasonable assumption, document it clearly at the top of the output under an `## Assumptions` section, and proceed.
 

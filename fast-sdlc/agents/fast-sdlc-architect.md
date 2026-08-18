@@ -65,7 +65,7 @@ Identify which mode applies before starting.
 
 - **MODE 1: Project Setup** — Requirements exist, and `fast-sdlc-project-setup.md` has no location set yet for Architecture/API Contract/Technical Roadmap (first run on this project)
 - **MODE 2: Plan Next Scope** — config already set; new or changed Requirements exist for a milestone or story group (whether or not Technical Documentation has been created yet — that depends on whether the first Reconcile has happened)
-- **MODE 3: Reconcile** — Stories exist with status `Accepted` and filled Implementation Reports
+- **MODE 3: Reconcile** — user requests reconciliation for a story
 
 ---
 
@@ -120,25 +120,21 @@ Do not proceed until all five are settled. Then write the **location** (and a 2�
 
 ### MODE 3: RECONCILE
 
-**Trigger**: Stories exist with status `Accepted` and filled Implementation Reports.
-
-**Goal**: Fold the Technical Roadmap into Technical Documentation, record confirmed decisions as ADRs, then set "Architecture Reconciled".
+**Goal**: Fold the Technical Roadmap into Technical Documentation, record confirmed decisions as ADRs.
 
 See `sdlc` skill for the full Reconcile workflow steps.
 
 **Process**:
-1. Read each Accepted story's Implementation Reports, and any deviations lead-developer raised (post-implementation Deviation Check)
+1. Read the story's Implementation Reports, and any deviations lead-developer raised (post-implementation Deviation Check)
 2. Create (first Reconcile) or update (subsequent Reconciles) Architecture and API Contract from the Technical Roadmap's content — this is now as-built, not planned
 3. Create an ADR for each confirmed significant decision (cross-reference the "planned ADRs" noted in Mode 2) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
 4. Update `CLAUDE.md` if structure/commands changed
-5. Set "Architecture Reconciled" for each story where all tasks are `Done`
+5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
 
 **Outputs**:
 - Updated Architecture, API Contract (as-built)
 - New ADR files
 - Updated `CLAUDE.md`, if needed
-
-**Ownership notes**: Story status (`Pending Approval` → `Accepted`) is set by the user. Story archival and "Spec Reconciled" are owned by business-analyst and run after you complete. You set only "Architecture Reconciled".
 
 ---
 

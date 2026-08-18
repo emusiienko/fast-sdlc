@@ -3,8 +3,8 @@
 | TASK-001 | Finalize fast-sdlc-project-setup.md format | orchestrator | Done |
 | TASK-002 | Define CLAUDE.md Fast SDLC section | orchestrator | Done |
 | TASK-003 | Update sdlc skill to support the config | orchestrator | Done |
-| TASK-004 | Update orchestration skill to support the config | orchestrator | ToDo |
-| TASK-005 | Update session skill to support the config | orchestrator | ToDo |
+| TASK-004 | Update orchestration skill to support the config | orchestrator | Done |
+| TASK-005 | Update session skill to support the config | orchestrator | Done |
 | TASK-006 | Update fast-sdlc-business-analyst agent | orchestrator | Done |
 | TASK-007 | Update fast-sdlc-spec-writer agent (superseded — merged into TASK-006) | orchestrator | Done |
 | TASK-008 | Update fast-sdlc-architect agent (superseded — absorbed into STORY-005 TASK-002) | orchestrator | Done |

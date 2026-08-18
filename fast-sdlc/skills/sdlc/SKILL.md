@@ -28,12 +28,14 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 Config: `<path to fast-sdlc-project-setup.md>`
 ```
 
-**Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
+**Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
 - **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows; Outputs: deliverables the role produces)
 - **Configs Folder** — default base for role folders
 - **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
+- **Sessions** — how face-to-face session coordination is actually mechanized (a skill, an MCP server, etc.) — default: `file-based-session-management` skill
+- **Pull Requests** — branching strategy for Acceptance/Reconcile PRs (target development directly, or a feature branch) — default: target development
 - **Artifacts** — the form each sdlc artifact takes and how it's managed (the notion of artifact is defined next)
 - Any other project specifics
 
@@ -42,7 +44,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 ## Artifacts
 
 - **Validated Idea** — scoped problem statement with explicit IN/OUT boundaries.
-- **Requirements** — what's still to be done: data model, validation rules, user stories. Always about the future — once scope is delivered, its entry is removed (or handed off to Documentation, if that artifact exists on this project), never left describing what's already built.
+- **Requirements** — what's still to be done: data model, validation rules, user stories. Once scope is delivered, hand its content off to Documentation, if that artifact exists on this project.
 - **Documentation** — what the product actually does, as-built. Kept true after the fact, not proposed/confirmed before it — the counterpart to Requirements, not a stage of it.
 - **Architecture** — the technical design.
 - **API Contract** — the interface between backend and frontend.
@@ -55,6 +57,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Tasks** — a story's breakdown into implementable units, with status.
 - **Implementation Report** — record of what was actually built for a task.
 - **Bugs** — a defect filed against a story.
+- **Pull Requests** — a reviewable unit of change, opened by the orchestrator at Acceptance and again at Reconcile, bundling whichever roles' work is ready at that point. Not one-per-story — a story's work may span several.
 
 ---
 
@@ -64,29 +67,16 @@ Config: `<path to fast-sdlc-project-setup.md>`
 
 - `Planned` — set by **business-analyst** at story creation
 - `In Progress` — set by **implementor** when first task starts
-- `Pending Approval` — set by **orchestrator** when all tasks are `Done`
-- `Accepted` — set by **user** after review
-- `Approved` — reserved for future use
+- `Pending Approval` — set by **orchestrator** when all implementation Tasks are `Done`
+- `Approved` — set by **manual-qa** itself, when its own Task reaches a full pass **and no bugs remain open** against this story — QA's own approval, distinct from the user's final `Accepted`. While any bug is open, the status stays `Pending Approval` regardless of what else passed. Not used if manual-qa isn't active on this project — the story is Accept-eligible directly from `Pending Approval` in that case.
+- `Accepted` — set by **user** after review — always explicit, never automatic
+- `Done` — set by **orchestrator** once every Reconcile Task for the story is `Done`
 
-### Story Status Flags
-
-Independent of the statuses above. How each flag is actually represented (a table column, a field in an external tool, ...) depends on how Task Management is resolved for this project (see Project Config).
-
-**Pre-`Accepted`** (each optional independently):
-- **Automated Tests Passed** — set by **qa-automation** after automated tests pass; skipped for devops-only stories. On fail: story returned to `In Progress` with structured feedback.
-- **Manual QA Passed** — set by **manual-qa** after manual verification passes. On fail: bugs filed, flag left unset.
-
-The user reviews these flags before setting `Accepted`. Stories can reach `Accepted` without them if no QA roles are configured.
-
-**Post-`Accepted`**:
-- **Architecture Reconciled** — set by **architect** during Reconcile; architect always runs first
-- **Spec Reconciled** — set by **business-analyst** after Architecture Reconciled is set; triggers archival
-- **Automation Reconciled** — set by **qa-automation** after automation tests/scripts are reconciled for this story
-- **Manual QA Reconciled** — set by **manual-qa** after story test cases are merged; prevents double-merge
+A story is ready for its next stage whenever every relevant Task is `Done` — there is no separate flag to track.
 
 ### Task Statuses
 
-- `ToDo` — set by the creator (usually **lead-developer**; an implementor may self-create one, e.g. via Quick Fix)
+- `ToDo` — set by whoever creates the task
 - `In Progress` — set by **implementor** when work begins
 - `Done` — set by **implementor** when complete + Implementation Report filled
 
@@ -114,11 +104,11 @@ Each phase of the pipeline is owned by a named role. Agents identify themselves 
 
 - **devops** — Phase 5, Implementation: provisions and manages infrastructure. Works in pair with the user — never deploys autonomously. Steps requiring cloud console access are explicitly handed to the user with a checklist.
 
-- **qa-automation** — Phase 6, qa-automation (Optional): verifies acceptance criteria against implemented features. Sets "Automated Tests Passed" on pass; files one bug per failing test and returns story to `In Progress` on fail.
+- **qa-automation** — Phase 6, QA (Optional): writes black-box tests for a story from the API Contract and acceptance criteria, then verifies them against implemented features, ahead of manual-qa. Files a Bug per finding.
 
-- **manual-qa** — Phase 6, QA (optional): exploratory and scenario-based tester. Creates test cases at story start, executes them post-implementation, sets "Manual QA Passed" on pass or files bugs on fail. Does not write automated tests, does not touch story status.
+- **manual-qa** — Phase 6, QA (optional): exploratory and scenario-based tester — the final check on work implementors and qa-automation already consider complete. Creates test cases at story start and executes them once qa-automation (if active) is done. Approves the story on a full pass with no open bugs; files bugs on fail.
 
-- **orchestrator** — Meta-role (not a pipeline stage): coordinates the full pipeline from the current Claude Code session when the `orchestration` skill is loaded. Spawns agents, manages story lifecycle, triggers reconcile on acceptance, and runs face-to-face sessions. Does not implement features or analyze source code — all work is proxied through domain agents. When the user operates without the orchestration skill, the user drives the pipeline manually.
+- **orchestrator** — Meta-role (not a pipeline stage): coordinates the full pipeline from the current Claude Code session when the `orchestration` skill is loaded. Spawns agents, manages story lifecycle, creates QA/Reconcile Tasks, opens Pull Requests at Acceptance and Reconcile, and runs face-to-face sessions. Does not implement features or analyze source code — all work is proxied through domain agents. When the user operates without the orchestration skill, the user drives the pipeline manually.
 
 ### Mapping between roles and agents
 
@@ -140,7 +130,7 @@ Use the mapped name whenever spawning an agent for a role.
 ## Pipeline
 
 ```
-business-analyst → architect → lead-developer → implementors → qa-automation → reconcile
+business-analyst → architect → lead-developer → implementors → qa-automation/manual-qa → acceptance → reconcile
 ```
 
 ### 1. Discovery
@@ -176,14 +166,20 @@ business-analyst → architect → lead-developer → implementors → qa-automa
 ### 6. QA
 - **Roles:** qa-automation, manual-qa (each optional independently)
 - **Required:** No — conditional on project configuration
-- **Description:** Runs after `Pending Approval`, before the user sets `Accepted`. qa-automation runs automated checks (sets "Automated Tests Passed" on pass, returns story to `In Progress` on fail). manual-qa runs exploratory/scenario testing (sets "Manual QA Passed" on pass, files bugs on fail). The user reviews these flags then decides to set `Accepted`.
-- **Artifacts:** Stories, Bugs
+- **Description:** Runs after `Pending Approval`, before Acceptance. Orchestrator creates a Task for each active QA role once implementation Tasks are all `Done`; if both are active, manual-qa's Task depends on qa-automation's, so qa-automation always runs first. Either role's Task reaches `Done` once that round's check has run and been reported — reporting a failure (a Bug filed) is as valid a completion as a clean pass. Whenever a Bug either role filed is open, the orchestrator routes it through Bug Fix and, once it's marked `fixed`, creates a fresh Task for that same role to re-verify — repeating until none remain open. manual-qa alone sets the story `Approved`, once its latest Task is `Done` and no Bug is open against the story at all (including ones qa-automation found). If manual-qa isn't active, the story is Accept-eligible directly from `Pending Approval`.
+- **Artifacts:** Tasks, Bugs
 
-### 7. Reconcile
-- **Role:** lead-developer (first, per repo), architect (second), business-analyst (third) — sequential
-- **Required:** Yes — runs after stories reach `Accepted` or by request
-- **Description:** Closes the documentation loop — lead-developer checks its own Implementation Plan against what was built and surfaces cross-repo deviations to architect, architect folds the Technical Roadmap into Architecture/API Contract and records confirmed decisions as ADRs (project-level and repo-level), then business-analyst removes delivered scope from Requirements (handing it off to Documentation, if that artifact exists) and archives completed stories.
-- **Artifacts:** Coding Conventions, Repo-level ADRs, Architecture, API Contract, Requirements, Documentation (optional), Stories
+### 7. Acceptance
+- **Role:** orchestrator (opens the Pull Request if needed, dispatches feedback), user (reviews, decides, merges)
+- **Required:** Yes
+- **Description:** Once the story is Accept-eligible (`Approved`, or `Pending Approval` complete if manual-qa isn't active), orchestrator opens the Pull Request(s) bundling the story's implementation work, if not already open. User reviews; any feedback left on the PR is routed by the orchestrator to the responsible role (via the `pr-review-response` skill) — looping until the user is satisfied. User then sets `Accepted` and merges the Pull Request.
+- **Artifacts:** Pull Requests
+
+### 8. Reconcile
+- **Role:** architect, business-analyst, qa-automation/manual-qa (each if active) — architect and business-analyst sequential, QA roles in parallel
+- **Required:** Yes — runs after the Acceptance Pull Request is merged, or by request
+- **Description:** Orchestrator creates one Reconcile Task per applicable role, using each Task's `Dependencies` field to sequence them: business-analyst's depends on architect's; QA roles' have no dependency. What each role does within its own Task is defined in that role's own instructions. Any role whose work needs its own PR gets a new branch, named after the (now-merged) implementation branch plus a suffix describing the reconcile work (e.g. `<implementation-branch-name>-docs-reconcile`). Once every Reconcile Task for a story is `Done`, orchestrator opens the Pull Request(s) it needs — routing any feedback the same way as Acceptance — for the user to merge; story then reaches `Done`.
+- **Artifacts:** Tasks, Pull Requests
 
 ---
 
@@ -207,7 +203,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ---
 
 ### Implement Story
-*Applies to: architect (roadmap), lead-developer (plan + deviation checks with architect), business-analyst (deviation checks on Requirements), implementors (via Implement Task), qa-automation/manual-qa (QA), lead-developer/architect/business-analyst (Reconcile)*
+*Applies to: architect (roadmap), lead-developer (plan + deviation checks with architect), business-analyst (deviation checks on Requirements), implementors (via Implement Task), qa-automation/manual-qa (QA), orchestrator (Task creation, status, PRs), architect/business-analyst/qa-automation/manual-qa (Reconcile)*
 
 1. **Roadmap**: architect produces or updates the Technical Roadmap covering the story's scope, if not already current
 2. **Plan**: for each repo (or repo+stack) the Technical Roadmap names, lead-developer produces the Implementation Plan and Tasks for the story — raising a Deviation Check to architect first if the Roadmap doesn't fit that repo's reality
@@ -215,9 +211,9 @@ Run once per project before any work begins. Each role produces a strategy, conv
 4. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
 5. **Implement**: run Implement Task for each task across all repos' Implementation Plans, in dependency order, until all Tasks are `Done`
 6. **Deviation Check**: if any task's Implementation Report notes a deviation — lead-developer routes it to architect if it crosses repo boundaries, or handles it as a Repo-level ADR if not; business-analyst updates Requirements if the deviation has behavioral impact; if manual-qa is active and its test cases are affected, it updates them
-7. **QA**: qa-automation sets "Automated Tests Passed"; if manual-qa is active, it runs its test cases and sets "Manual QA Passed"
-8. User reviews, sets Story status: `Accepted`
-9. **Reconcile** *(see Reconcile workflow)*
+7. **QA** *(see Pipeline > QA for the full mechanic)*: orchestrator sets `Pending Approval` and creates a Task per active QA role; manual-qa sets `Approved` once its own latest Task is `Done` with no Bug left open (immediately Accept-eligible from `Pending Approval` if manual-qa isn't active)
+8. **Acceptance** *(see Pipeline > Acceptance)*: orchestrator opens the Pull Request(s); user reviews, sends any feedback through the orchestrator, then sets `Accepted` and merges
+9. **Reconcile** *(see Reconcile workflow)* — story reaches `Done` once complete
 
 ---
 
@@ -229,7 +225,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 3. **Implement** *(overridable — each implementing role expands this step with their own sub-steps and checkpoints; see the role's instructions)*
 4. Fill Implementation Report
 5. Update Tasks status: `Done`
-6. **QA** *(overridable — qa-automation expands this step, if active. Manual QA runs at the Story level, not per-task — see Implement Story.)*
+6. **QA** *(not per-task — both QA roles run at the Story level, once all its Tasks are `Done` — see Implement Story)*
 
 ---
 
@@ -256,7 +252,7 @@ For small bugs or misconfigurations that don't warrant a full story. All criteri
 3. **Fix** *(overridable — each implementing role defines their own sub-steps; see role instructions)*
 4. Set Bug status: `fixed`
 
-After Bug Fix: QA re-runs Check Story — Execute to verify. If all pass, "Manual QA Passed" is set and the story proceeds to Accepted. If bugs remain, the loop repeats.
+After Bug Fix: the orchestrator creates a fresh Task for whichever QA role filed the Bug, to re-verify. Once no Bug remains open, manual-qa (if active) sets `Approved`. If bugs remain, the loop repeats.
 
 ---
 
@@ -271,30 +267,17 @@ After Bug Fix: QA re-runs Check Story — Execute to verify. If all pass, "Manua
 ---
 
 ### Reconcile
-*Sequential: lead-developer runs first (per repo), architect second, business-analyst third*
+*Trigger: the story's Acceptance Pull Request is merged, or by request*
 
-**Lead-Developer Reconcile** — trigger: this repo's (or repo+stack's) Tasks for a Story are all `Done`
-1. Read the Story's Tasks and Implementation Reports for this repo
-2. Compare against the Implementation Plan; for confirmed decisions scoped to this repo only, create a Repo-level ADR (own `agent.md`); for deviations crossing repo boundaries, raise them to architect
-3. Update Coding Conventions and `CLAUDE.md` (own repo) if the story revealed a gap
+1. Orchestrator creates one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's task), qa-automation and manual-qa if active (`Dependencies: None` — parallel)
+2. Each role works its Task once its dependencies are `Done`, committing to a new branch named after the (now-merged) implementation branch plus a suffix describing its own reconcile work — high level, per role (full detail in each role's own instructions):
+   - **architect**: folds the Technical Roadmap into Architecture/API Contract; records confirmed project-level decisions as ADRs
+   - **business-analyst**: updates Documentation with what was built, if that artifact exists on this project; updates Requirements too if the Implementation Reports reveal a discrepancy against what was said would be built
+   - **qa-automation**: updates its automation scripts/tests to match what was built
+   - **manual-qa**: merges the story's test cases into its own registry
+3. Once every Reconcile Task for a story is `Done`, orchestrator opens the Pull Request(s) it needs, routing feedback the same way as Acceptance; once the user merges, orchestrator sets the story `Done` and archives it
 
-**Architect Reconcile** — trigger: Stories with status `Accepted`
-1. Read the Story + its Tasks' Implementation Reports, and any deviations raised by lead-developer(s)
-2. Fold the Technical Roadmap into Architecture, API Contract to reflect what was actually built
-3. Create ADR files for confirmed project-level decisions (own `agent.md`); mark superseded ADRs (Status field only)
-4. Set "Architecture Reconciled" for each Story where all Tasks are `Done`
-
-**Business-Analyst Reconcile** — trigger: Stories with `Accepted` status AND "Architecture Reconciled" set
-1. Read the Story + its Tasks' Implementation Reports
-2. Remove the delivered scope from Requirements (it's built now, not future work); if Documentation exists on this project, update it with what was actually built
-3. Set "Spec Reconciled"
-4. Archive Stories with "Spec Reconciled" set; offer to delete story folders
-
-**QA Reconcile** — optional; applies to qa-automation and manual-qa if active on the project
-Runs in parallel with or after arch/spec reconcile. Detail defined in each QA role's own instructions. At minimum:
-- Review test cases against what was actually built; update or retire cases that no longer match reality
-- qa-automation: update automation scripts if behavior changed
-- manual-qa: merge story-level test cases into its own test case registry (own `agent.md` Outputs); update TC files
+Lead-developer's repo-level ADRs are not part of this workflow — they're raised as needed via Deviation Check during Implement Story.
 
 ---
 
@@ -319,16 +302,17 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Requirements** → **business-analyst** (full)
 - **Documentation** → **business-analyst** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
 - **Milestones** → **business-analyst** (full)
-- **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; **orchestrator**: status `Pending Approval`; status flags — see Task Management for who sets each
+- **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; remaining statuses — see Task Management for who sets each
 - **Architecture** → **architect** (full)
 - **API Contract** → **architect** (full)
 - **Technical Roadmap** → **architect**; read-only for all
 - **Coding Conventions** → **lead-developer** (full, per repo or repo+stack)
 - **Repo-level ADRs** → **lead-developer** (create, per repo or repo+stack)
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors
-- **Tasks** → **lead-developer** (create; an implementor may self-create one, e.g. via Quick Fix); implementors: status only
+- **Tasks** → **lead-developer** (create, for implementation); **orchestrator** (create, for QA and Reconcile — see Pipeline > QA and > Reconcile); any role may self-create one for its own work (e.g. Quick Fix); assignee: status + Implementation Report only
 - **Implementation Report** → **implementor** (full, per task)
 - **Bugs** → **manual-qa** and **qa-automation** (each creates their own)
+- **Pull Requests** → **orchestrator** (opens, at Acceptance and at Reconcile); roles commit their own work onto the relevant branch; the **user** merges
 
 ---
 

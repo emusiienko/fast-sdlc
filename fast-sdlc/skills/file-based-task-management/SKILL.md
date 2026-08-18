@@ -5,7 +5,7 @@ description: Implements Task Management (as defined in the sdlc skill) using fil
 
 # File-Based Task Management
 
-Renders the Task Management concept from `sdlc` (statuses, status flags, content rules) as files. A project selects this skill in `fast-sdlc-project-setup.md` > Task Management, which also names the operating folder this skill works in (default `docs/stories/` — referred to below as the operating folder).
+Renders the Task Management concept from `sdlc` (statuses, content rules) as files. A project selects this skill in `fast-sdlc-project-setup.md` > Task Management, which also names the operating folder this skill works in (default `docs/stories/` — referred to below as the operating folder).
 
 Content requirements for each artifact (what must be said, not how) are defined in `sdlc` > Artifact Content Rules. This skill defines only the file/folder shape.
 
@@ -32,15 +32,15 @@ Content requirements for each artifact (what must be said, not how) are defined 
 ### Stories index (`index.md`)
 
 ```markdown
-| ID | Title | Type | Priority | Status | Auto ✓ | QA ✓ | Arch ✓ | Spec ✓ | Auto Rec ✓ | QA Rec ✓ |
-|----|-------|------|----------|--------|--------|------|--------|--------|------------|----------|
-| [STORY-001](STORY-001-slug/description.md) | User login | feature | P0 | Accepted | ✓ | ✓ | ✓ | ✓ | ✓ | |
-| [STORY-002](STORY-002-slug/description.md) | Password reset | feature | P1 | In Progress | | | | | | |
+| ID | Title | Type | Priority | Status |
+|----|-------|------|----------|--------|
+| [STORY-001](STORY-001-slug/description.md) | User login | feature | P0 | Done |
+| [STORY-002](STORY-002-slug/description.md) | Password reset | feature | P1 | In Progress |
 ```
 
-Column order is fixed: `Auto ✓` (Automated Tests Passed) · `QA ✓` (Manual QA Passed) · `Arch ✓` (Architecture Reconciled) · `Spec ✓` (Spec Reconciled) · `Auto Rec ✓` (Automation Reconciled) · `QA Rec ✓` (Manual QA Reconciled) — as defined in `sdlc` > Task Management > Story Status Flags. Include only the columns for QA/Reconcile roles active on the project; drop the rest, in the same left-to-right order.
+Status values: `Planned` · `In Progress` · `Pending Approval` · `Approved` (if manual-qa is active) · `Accepted` (user) · `Done` — as defined in `sdlc` > Task Management > Story Statuses.
 
-`archive.md` uses the same columns — rows move here once every applicable Reconcile flag is set.
+`archive.md` uses the same columns — rows move here once a story reaches `Done`.
 
 ### Story file (`description.md`)
 
@@ -160,9 +160,6 @@ assignee: coder | devops | TBD
 2. Update the `Status` column for that task's row in the story's tasks index
 3. On `Done`: fill Implementation Report in the same task file first
 
-### Set a Story Status Flag
-1. Set `✓` in the corresponding column for that story's row in the index — see Stories index above for the fixed column order
-
 ### Create a Bug
 1. Get the next `BUG-NNN` ID — highest existing + 1, within the story's own bugs index
 2. Create the bug file (frontmatter: `id`, `story`, `severity`, `status: open`, `assignee`; body per `sdlc` > Artifact Content Rules)
@@ -173,6 +170,6 @@ assignee: coder | devops | TBD
 2. Update the `Status` column for that bug's row in the story's bugs index
 
 ### Archive a Story
-Trigger: "Spec Reconciled" is set (see `sdlc` > Reconcile).
+Trigger: story status is `Done` (see `sdlc` > Reconcile).
 1. Move the story's row from the index to `archive.md`
 2. Offer to delete the story's folder
