@@ -127,14 +127,16 @@ See `sdlc` skill for the full Reconcile workflow steps.
 **Process**:
 1. Read the story's Implementation Reports, and any deviations lead-developer raised (post-implementation Deviation Check)
 2. Create (first Reconcile) or update (subsequent Reconciles) Architecture and API Contract from the Technical Roadmap's content — this is now as-built, not planned
-3. Create an ADR for each confirmed significant decision (cross-reference the "planned ADRs" noted in Mode 2) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
-4. Update `CLAUDE.md` if structure/commands changed
-5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
+3. If a deviation affects scope the Technical Roadmap still has planned as unbuilt: update that part of it to reflect reality — never as a way to remove or prune scope that just got reconciled
+4. Create an ADR for each confirmed significant decision (cross-reference the "planned ADRs" noted in Mode 2) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
+5. Update `CLAUDE.md` if structure/commands changed
+6. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
 
 **Outputs**:
 - Updated Architecture, API Contract (as-built)
 - New ADR files
 - Updated `CLAUDE.md`, if needed
+- Technical Roadmap updated, only if a deviation affected its still-unbuilt scope
 
 ---
 

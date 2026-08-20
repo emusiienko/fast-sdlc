@@ -72,7 +72,8 @@ separately, task by task.
 
 ## Escalation/Feedback
 
-**mechanism**: TBD — how one role raises something to another mid-session (e.g. architect ↔ lead-developer Deviation Checks) is not yet defined.
+**mechanism**: `file-based-escalation` (default) | <name of an alternative skill, or an MCP server/other mechanism>
+**location**: `docs/escalations/` (only applicable for file-based mechanisms)
 
 ---
 

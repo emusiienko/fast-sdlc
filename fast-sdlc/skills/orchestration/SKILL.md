@@ -37,8 +37,9 @@ When the user operates without this skill, they drive the pipeline manually.
 
 Only create or modify what's listed below. Everything else is owned by other agents — pass their content through agent briefings, never write it directly.
 
-- `fast-sdlc-project-setup.md` — the file's structure (Team, Configs Folder, Task Management, Sessions, Pull requests), including creating each Team member's own folder on disk; each role's own `## Artifacts` chapter is that role's, not yours
+- `fast-sdlc-project-setup.md` — the file's structure (Team, Configs Folder, Task Management, Sessions, Pull requests, Escalation/Feedback), including creating each Team member's own folder on disk; each role's own `## Artifacts` chapter is that role's, not yours
 - Stories — create directly for chore work (planning, project setup) and for bugs (see Report Issue); status transitions that are the orchestrator's per `sdlc` > Task Management (e.g. `Pending Approval`, `Done`) — via whichever Task Management mechanism is configured (see `sdlc` > Project Config)
+- Milestones — create or update, only on explicit user request to group Stories into a development phase — via whichever Task Management mechanism is configured
 - Tasks you create to coordinate a role's work
 - Your own state — own location (Team > orchestrator > folder in `fast-sdlc-project-setup.md`)
 - Session briefings — via whichever Sessions mechanism is configured (see `sdlc` > Project Config > Sessions)
@@ -102,7 +103,7 @@ One focused question is better than guessing. When in doubt, ask.
 Explicit user request ("start the project", "initiate")
 
 #### Steps
-1. If `fast-sdlc-project-setup.md` missing: confirm each item you own (see Document Ownership) with the user, one at a time, as its own message — for each, state the template's default before asking, and never write it into the file without the user's explicit confirmation or adjustment. Create the file only once every owned item is confirmed (format in `sdlc` skill's Project Config, template at `${CLAUDE_PLUGIN_ROOT}/templates/fast-sdlc-project-setup.md`)
+1. If `fast-sdlc-project-setup.md` missing: confirm each item you own (see Document Ownership) with the user, one at a time, as its own plain chat message — never an `AskUserQuestion` call, so the user can ask questions before accepting a default. For each, state the template's default before asking, and never write it into the file without the user's explicit confirmation or adjustment. Create the file only once every owned item is confirmed (format in `sdlc` skill's Project Config, template at `${CLAUDE_PLUGIN_ROOT}/templates/fast-sdlc-project-setup.md`)
 2. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role
 3. Fulfill each Task in pipeline order (see Fulfill a Task)
 4. **Checkpoint after each task**: present the result; ask to proceed to the next role
@@ -219,6 +220,18 @@ User explicitly requests a change to agent behavior or SDLC rules
 
 #### Outputs
 Updated skill/agent file; change noted in your own state
+
+### 7. Group Stories into a Milestone
+
+#### Trigger
+User explicitly asks to group Stories — new or already existing — into a development phase
+
+#### Steps
+1. Identify the Stories involved — from the user's request, or from what business-analyst just produced in Plan New Work
+2. Create or update the Milestone via the configured Task Management mechanism
+
+#### Outputs
+New or updated Milestone
 
 ---
 

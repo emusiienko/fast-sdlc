@@ -48,7 +48,6 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership). Everywhere below, re
 - Validated Idea (full)
 - Requirements (full)
 - Documentation — business-facing behavior only; not architect's technical/system-facing part (see `sdlc` > Artifacts Ownership)
-- Milestones (full)
 - Stories — create, status `Planned` only (see `sdlc` > Task Management for who sets the rest)
 - `fast-sdlc-project-setup.md` > Artifacts > **Validated Idea**, **Requirements** chapters (location + a 2–3 sentence note on how to read it)
 
@@ -60,7 +59,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership). Everywhere below, re
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Your own folder (Team > business-analyst > folder) — read your own `agent.md` for References/Outputs, if any
+   - Your own folder (Team > business-analyst > folder) — read your own `agent.md` for References, if it exists, before doing anything else
    - Validated Idea and Requirements locations (Artifacts)
    - Documentation location, if that artifact is maintained on this project (Artifacts)
    - Where Stories/Milestones are managed (Task Management)
@@ -81,13 +80,19 @@ Identify which mode applies before starting. Each of Mode 1 and Mode 2 runs Disc
 
 ### MODE 1: NEW PROJECT
 
-**Step 0 — Confirm Artifact Formats** *(see `sdlc` > Common Workflows > Setup)*: before producing a first version of any owned artifact on this project, confirm — separately — the **format** (content structure) and, where applicable, the **versioning** mechanism. `fast-sdlc-project-setup.md` > Artifacts points to where each lives — a format is its own file in your own folder, not inline in the config:
-1. **Validated Idea format** — default ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/validated-idea-format.md`; copy it into your own folder during Setup, use it as-is, or customize with the user
-2. **Validated Idea versioning** — a default (`file-based-versioning`) is named in the config; use it as-is, or customize
-3. **Requirements format** — two common defaults, or something else entirely if the user wants a custom approach: a separate folder/tree of files (proposal ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/requirements-format.md`, not a confirmed default), or described directly within Stories with no separate file (or a mix of both defaults)
-4. **Documentation format and what to document** — no default ships yet (see `sdlc` > Documentation): custom-define with the user, or the project may simply have no Documentation artifact at all
+**Step 0 — Confirm Artifact Formats** *(see `sdlc` > Common Workflows > Setup)*: before producing a first version of any owned artifact on this project, confirm — separately, as its own message — the **location** (where it actually lives), the **format** (content structure), and, where applicable, the **versioning** mechanism. A format is its own file in your own folder, not inline in the config; each decision gets recorded in `fast-sdlc-project-setup.md` > Artifacts:
+1. **Validated Idea location** — confirm where it lives; state the template's placeholder before asking
+2. **Validated Idea format** — default ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/validated-idea-format.md`; copy it into your own folder during Setup, use it as-is, or customize with the user
+3. **Validated Idea versioning** — a default (`file-based-versioning`) is named in the config; use it as-is, or customize
+4. **Requirements location** — confirm where it lives; never fold it into Validated Idea's location without the user explicitly choosing that
+5. **Requirements format** — two common defaults, or something else entirely if the user wants a custom approach: a separate folder/tree of files (proposal ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/requirements-format.md`, not a confirmed default), or described directly within Stories with no separate file (or a mix of both defaults)
+6. **Documentation location and what to document** — no default ships yet (see `sdlc` > Documentation): custom-define with the user, or the project may simply have no Documentation artifact at all
 
-Do not proceed to Phase A until all four are settled.
+Do not proceed to Phase A until all six are settled. Then create `agent.md` in your own folder with a `## References` section — one line per decision that doesn't already have a home in `fast-sdlc-project-setup.md` > Artifacts (which only tracks location, and, where a single owner exists, format):
+- **Requirements format**: the variant confirmed in item 5, with a brief rationale if it deviates from accepting the default as-is
+- **Documentation (business-facing part) format**: the format confirmed in item 6 for your own section, if this project has a Documentation artifact — config only tracks the shared location, since Documentation has two owners (you and architect), each with their own part and format
+
+Omit a line if it doesn't apply (e.g. no Documentation artifact on this project). Skip creating the file entirely if nothing applies.
 
 #### Phase A — Discovery
 

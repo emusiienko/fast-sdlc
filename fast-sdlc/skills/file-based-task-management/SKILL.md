@@ -1,6 +1,6 @@
 ---
 name: file-based-task-management
-description: Implements Task Management (as defined in the sdlc skill) using files and folders — Stories, Tasks, Implementation Reports, and Bugs as markdown files. One possible Task Management mechanism; selected per-project in fast-sdlc-project-setup.md.
+description: Implements Task Management (as defined in the sdlc skill) using files and folders — Milestones, Stories, Tasks, Implementation Reports, and Bugs as markdown files. One possible Task Management mechanism; selected per-project in fast-sdlc-project-setup.md.
 ---
 
 # File-Based Task Management
@@ -19,6 +19,7 @@ Content requirements for each artifact (what must be said, not how) are defined 
 <operating folder>/
   index.md
   archive.md
+  milestones.md
   STORY-NNN-<slug>/
     description.md
     tasks/
@@ -61,6 +62,22 @@ date: YYYY-MM-DD
 ## Edge Cases & Error Scenarios
 - [ ] ...
 ```
+
+### Milestones (`milestones.md`)
+
+```markdown
+| ID | Title | Stories |
+|----|-------|---------|
+| [MILESTONE-001](#milestone-001-auth--onboarding) | Auth & Onboarding | STORY-001, STORY-002, STORY-005 |
+
+---
+
+## MILESTONE-001: Auth & Onboarding
+**Goal**: <what this development phase delivers>
+**Stories**: STORY-001, STORY-002, STORY-005
+```
+
+A Milestone has no lifecycle status of its own — it's a grouping over Stories, each still tracked individually in `index.md`.
 
 ### Tasks index (`tasks/index.md`)
 
@@ -168,6 +185,11 @@ assignee: coder | devops | TBD
 ### Update Bug Status
 1. Update `status` in the bug file's frontmatter
 2. Update the `Status` column for that bug's row in the story's bugs index
+
+### Create or Update a Milestone
+Trigger: user explicitly asks to group Stories into a development phase (new or existing scope).
+1. Get the next `MILESTONE-NNN` ID — highest existing + 1, from `milestones.md` — or, if updating, locate the existing one
+2. Add or update its row in the index table (ID, Title, Stories) and its `## MILESTONE-NNN` section (Goal, Stories) in `milestones.md`
 
 ### Archive a Story
 Trigger: story status is `Done` (see `sdlc` > Reconcile).

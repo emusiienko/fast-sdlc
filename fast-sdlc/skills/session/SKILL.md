@@ -27,7 +27,7 @@ You are opening a session with a callee agent. Follow these steps:
    cd /absolute/project/root && claude --agent <agent-name> "Invoke Skill(\"session\") and follow the briefing: <briefing reference>"
    ```
    - Replace `/absolute/project/root` with the stored `$PROJECT_ROOT` path
-   - `<agent-name>` is the `name:` value from the target agent's frontmatter (e.g. `business-analyst`, `architect`, `lead-developer`)
+   - `<agent-name>` is the `name:` value from the target agent's frontmatter (for example `fast-sdlc-architect`)
    - Tell the user: "Open a new terminal tab, paste this command, and come back when the session is done."
    - **Only auto-open a terminal via osascript if the user explicitly asks** (e.g. "open the terminal for me")
 3. Tell the user: "Session ready for `<agent-name>`. Run the command above in a new terminal tab, then come back here."

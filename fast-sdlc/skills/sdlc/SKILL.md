@@ -28,14 +28,15 @@ This SDLC is fully configurable. Project-specific configuration lives in `fast-s
 Config: `<path to fast-sdlc-project-setup.md>`
 ```
 
-**Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
+**Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests, Escalation/Feedback), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
-- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows; Outputs: deliverables the role produces)
+- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config)
 - **Configs Folder** — default base for role folders
 - **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
 - **Sessions** — how face-to-face session coordination is actually mechanized (a skill, an MCP server, etc.) — default: `file-based-session-management` skill
 - **Pull Requests** — branching strategy for Acceptance/Reconcile PRs (target development directly, or a feature branch) — default: target development
+- **Escalation/Feedback** — how one role raises something to another role, or to the user, mid-pipeline, once it has already produced its output — default: `file-based-escalation` skill
 - **Artifacts** — the form each sdlc artifact takes and how it's managed (the notion of artifact is defined next)
 - Any other project specifics
 
@@ -143,7 +144,7 @@ business-analyst → architect → lead-developer → implementors → qa-automa
 - **Role:** business-analyst
 - **Required:** Yes
 - **Description:** Transforms the validated idea into engineering-ready specifications: data model, validation rules, and user stories.
-- **Artifacts:** Requirements, Milestones, Stories
+- **Artifacts:** Requirements, Stories
 
 ### 3. Architecture
 - **Role:** architect
@@ -191,8 +192,12 @@ business-analyst → architect → lead-developer → implementors → qa-automa
 Run once per project before any work begins. Each role produces a strategy, conventions, or specification document that governs all subsequent work. Pauses for user approval — no further work until confirmed.
 
 - **Project Config** → `fast-sdlc-project-setup.md`, established first — defines where everything below actually lives
-- **Confirm Artifact Formats** *(applies to every role, for the artifacts whose format it itself defines — not Stories/Tasks/Bugs, whose format is the Task Management skill's concern)* → once Project Config exists: before producing such an artifact for the first time on this project, if the role has a default format for it, present that default and ask whether to use it as-is or customize it; if the role has no default, challenge the user to define one. Do not proceed past this step until the format of every such artifact required by the role is settled. Record the decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
-- **business-analyst** → Validated Idea, Requirements, Milestones, Stories, own `agent.md` (References)
+- **Confirm Artifact Formats** *(applies to every role, for each artifact it owns — not Milestones/Stories/Tasks/Bugs, whose setup is the Task Management skill's concern)* → once Project Config exists: before producing such an artifact for the first time on this project, confirm each of the following with the user, as its own message, one artifact at a time:
+  - **Location** — where it actually lives; state the template's placeholder or a proposed path before asking. Confirm it even when it seems obvious, and never fold two distinct artifacts into one shared location without the user explicitly choosing that.
+  - **Format** — if the role has a default, present it and ask whether to use it as-is or customize it; if it has no default, challenge the user to define one.
+  - **Versioning** — where applicable, present the default mechanism and confirm, or ask.
+  Do not proceed past this step until every owned artifact's location and format are settled. Record each decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
+- **business-analyst** → Validated Idea, Requirements, Stories, own `agent.md` (References)
 - **architect** → Architecture, API Contract, Technical Roadmap, `CLAUDE.md`, own `agent.md` (References)
 - **lead-developer** → Coding Conventions, `CLAUDE.md` (own repo), own `agent.md` (References)
 - **coder** → own `agent.md` (References)
@@ -301,7 +306,7 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Validated Idea** → **business-analyst** (full)
 - **Requirements** → **business-analyst** (full)
 - **Documentation** → **business-analyst** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
-- **Milestones** → **business-analyst** (full)
+- **Milestones** → **orchestrator** (create/update, on explicit user request); file shape and location governed by Task Management, same as Stories
 - **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; remaining statuses — see Task Management for who sets each
 - **Architecture** → **architect** (full)
 - **API Contract** → **architect** (full)
