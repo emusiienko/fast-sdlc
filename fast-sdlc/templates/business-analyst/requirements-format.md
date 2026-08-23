@@ -7,7 +7,8 @@ Requirements is a folder, not a single file — a flat requirements.md doesn't s
 ```
 <Requirements location>/
   index.md
-  data-model.md
+  conceptual-data-model/
+  logical-data-model/
   non-functional.md
   <feature-slug>.md            (flat — default)
   <domain>/<feature-slug>.md   (grouped — optional, for projects where features cluster into domains, e.g. admin/, support/)
@@ -52,17 +53,13 @@ Paths that diverge from the happy path — what can go wrong from the user's per
 |---------|-------|-----------|
 ```
 
-## `data-model.md` (project-wide — entities are often shared across features)
+## `conceptual-data-model/` (project-wide — entities are often shared across features)
 
-```markdown
-For each entity:
-### EntityName
-| Field | Type | Required | Constraints | Notes |
-|-------|------|----------|-------------|-------|
+Format: `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/conceptual-data-model-format.md`. Composed and approved by the user, per subject area, before Logical work starts on that area (see business-analyst agent > DATA MODELING).
 
-Relationships: describe cardinality (1:1, 1:N, M:N) and foreign key behavior (CASCADE, RESTRICT, etc.)
-Indexes: list all indexes with justification
-```
+## `logical-data-model/` (project-wide — mirrors Conceptual's subject areas)
+
+Format: `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/logical-data-model-format.md`. Composed only from an already-approved Conceptual subject area; approved by the user in its own checkpoint.
 
 ## `non-functional.md` (project-wide)
 

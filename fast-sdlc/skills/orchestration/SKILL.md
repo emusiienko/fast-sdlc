@@ -128,7 +128,7 @@ User describes something to build, extend, fix, or investigate
       - Add a Task for business-analyst (define scope, produce/update Requirements and the resulting Stories) and a Task for architect (`Dependencies:` business-analyst's Task — produce/update the Technical Roadmap covering those Stories)
       - Fulfill each Task (see Fulfill a Task)
    c. **Well-defined task or bug the orchestrator can describe fully**: ask — "I can create this directly — should I, or delegate to [role]?" — then create the Task directly, or delegate its creation, under the relevant story
-3. For each repo (or repo+stack) the Technical Roadmap now names: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies: None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
+3. For each repo (or repo+stack) the Technical Roadmap now names: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies:` business-analyst's Logical Data Model Task for this story, if one exists — otherwise `None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
 4. For each newly created story that will need implementation, add:
    - A "Write test cases" Task for manual-qa, if it's present in the team
    - A "Write automation tests" Task for qa-automation, if it's present in the team
@@ -304,3 +304,19 @@ Every briefing contains only:
 - **Conversation summary** — a concise account of the exchanges and decisions made in the orchestrator's session that led to this agent being launched. Include key decisions, open questions, and any constraints the user stated. Keep it short; do not include pre-interpreted content or instructions from other skills.
 
 Do not add anything that originates from another skill (sdlc, agent role instructions, document lists, lifecycle steps, etc.). Agents load their own skills — the orchestrator only points the agent at the work.
+
+---
+
+## Task Descriptions
+
+Some Tasks invoke a process that's already standard and self-sufficient from existing artifacts/code — nothing case-specific needs to come from you. **Project Setup** and **Reconciliation** are the two recurring examples: the assignee derives everything it needs from what already exists (the project, the story's Implementation Reports) — there's nothing for you to add.
+
+For these:
+- **What to implement**: reference the process by name only. Do not restate, summarize, or add detail to a process that's already fully defined elsewhere — that's how re-description drifts from what's actually said and introduces errors.
+- **Acceptance Criteria**: keep it generic — e.g. "All artifacts you own for this process are defined and accepted by the user." Do not enumerate the process's own steps or deliverables.
+
+This doesn't apply where the work needs custom input that no agent's or `sdlc`'s own instructions already cover — e.g. a bug fix needs the bug's actual description.
+
+Examples:
+- Standard: What to implement: "Perform your Project Setup process." Acceptance Criteria: "All artifacts you own are defined and accepted by the user."
+- Standard: What to implement: "Perform your Reconcile process for STORY-014." Acceptance Criteria: "Reconcile output for STORY-014 is complete and accepted by the user."
