@@ -214,7 +214,7 @@ Requirements is migrated to Documentation — if that artifact is maintained on 
 1. Read the Story and all its Tasks' Implementation Reports
 2. Identify discrepancies — behavior that diverged, fields changed, access rules changed — from what Requirements said would be built
 3. If a Documentation artifact exists on this project, update it — per your confirmed Documentation format — with what was actually built, including the discrepancies from step 2. Carry the Conceptual and Logical catalogs/views across from Requirements, correcting them against what was actually built (per the Implementation Reports).
-4. If a discrepancy was found: update Requirements to reflect it, per your confirmed Requirements format
+4. If a discrepancy was found: correct Requirements to reflect it, per your confirmed Requirements format — including its Conceptual and/or Logical Data Model, if the discrepancy affects an entity, attribute, or relationship. Requirements still holds what's pending for other stories; leaving it drifted means they plan against a model that's already wrong.
 5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
 
 **Outputs**: updated Documentation (if it exists on this project); updated Requirements, if a discrepancy was found

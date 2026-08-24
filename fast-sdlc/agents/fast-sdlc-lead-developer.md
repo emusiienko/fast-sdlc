@@ -108,7 +108,7 @@ Identify which mode applies before starting.
 **Goal**: Produce an Implementation Plan for this stack's part of the story, precise enough that an implementor can execute without guessing, without over-specifying code-level design.
 
 **Process**:
-1. Read Requirements, the Technical Roadmap, Architecture, API Contract, this stack's Coding Conventions, and the story
+1. Read Requirements and Architecture in full — including whatever data model or schema description each provides, in whatever form it's given — plus the Technical Roadmap, API Contract, this stack's Coding Conventions, and the story
 2. Confirm the story actually needs work in this stack — if it doesn't, stop here; nothing to plan for this session
 3. Design what the story needs in this stack — technical approach, specific modules/files affected, data flow within this stack. No code samples. Follow your confirmed Implementation Plan template.
 4. **Deviation Check (pre-detail)**: if the Technical Roadmap doesn't fit this stack's reality, or conflicts with what's already built — raise it to architect and stop here; this session resumes once architect responds.

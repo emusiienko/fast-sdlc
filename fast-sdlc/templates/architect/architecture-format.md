@@ -20,7 +20,7 @@ How services depend on each other, including within the same bounded context.
 How a request moves through the system, across services. Numbered steps or nested bullets.
 
 ## Database
-Provider/technology per data store, and its schema (tables, columns, types, indexes, relations, seed data plan).
+Per data store: provider/technology, and its Physical Data Model — either inline here directly, or a pointer to where it actually lives, per the location confirmed for that store (see DATA MODELING > "New storage platform"). Never both — the confirmed location is the single source of truth for that store's schema.
 
 ## Authentication Flow
 Numbered steps describing the login/session/refresh cycle across services. Per-endpoint auth requirements live in API Contract, not here.
