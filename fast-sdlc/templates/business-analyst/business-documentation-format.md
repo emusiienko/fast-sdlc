@@ -1,11 +1,11 @@
-<!-- Proposed format for the Documentation artifact (business-facing part — architect owns the technical/system-facing part separately) — not a confirmed default. Walk the user through it and confirm/adjust with business-analyst during Step 0 (Confirm Artifact Formats). -->
+<!-- Proposed format for the Business Documentation artifact — not a confirmed default. Walk the user through it and confirm/adjust with business-analyst during Step 0 (Confirm Artifact Formats). -->
 
-# Documentation Structure (business-facing part)
+# Business Documentation Structure
 
 As-built description of what the product actually does — never a to-do list, never proposed/unconfirmed behavior. No priorities, no story/task references: those belong to Requirements, not here.
 
 ```
-<Documentation location>/
+<Business Documentation location>/
   index.md
   conceptual-data-model/
   logical-data-model/

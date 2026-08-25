@@ -125,10 +125,10 @@ User describes something to build, extend, fix, or investigate
       - Fulfill each Task (see Fulfill a Task)
    b. **New multi-story feature or scope extension** (vague idea or a feature that clearly spans more than one story):
       - Create a chore Story ("Plan next scope: `<topic>`")
-      - Add a Task for business-analyst (define scope, produce/update Requirements and the resulting Stories) and a Task for architect (`Dependencies:` business-analyst's Task — produce/update the Technical Roadmap covering those Stories)
+      - Add a Task for business-analyst (define scope, produce/update Requirements and the resulting Stories) and a Task for architect (`Dependencies:` business-analyst's Task — produce/update Architectural Design covering those Stories)
       - Fulfill each Task (see Fulfill a Task)
    c. **Well-defined task or bug the orchestrator can describe fully**: ask — "I can create this directly — should I, or delegate to [role]?" — then create the Task directly, or delegate its creation, under the relevant story
-3. For each repo (or repo+stack) the Technical Roadmap now names: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies:` business-analyst's Logical Data Model Task for this story, if one exists — otherwise `None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
+3. For each repo (or repo+stack) the Technical Implementation Plan's work items now name: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies:` business-analyst's Logical Data Model Task for this story, if one exists — otherwise `None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
 4. For each newly created story that will need implementation, add:
    - A "Write test cases" Task for manual-qa, if it's present in the team
    - A "Write automation tests" Task for qa-automation, if it's present in the team
@@ -141,7 +141,7 @@ New or updated Story/Stories, each with business-analyst's and architect's plann
 ### 3. Execute Story → QA → Acceptance → Reconcile
 
 #### Trigger
-User wants to implement a story whose scope is planned (Technical Roadmap covers it)
+User wants to implement a story whose scope is planned (Architectural Design covers it)
 
 #### Steps
 

@@ -1,6 +1,6 @@
 ---
 name: "fast-sdlc-coder"
-description: "Use this agent to implement Tasks in a specific repo/stack. Operates in four modes:\n- **Implement Task**: implements a specific Task, fills its Implementation Report, updates story status\n- **Quick Fix**: small, clearly scoped defects affecting ≤ 3 files with no architecture/contract changes\n- **Bug Fix**: fixes a filed bug in this stack's domain\n- **PR Review Response**: addresses review comments on an existing PR, on request\nAlways reads Architecture, API Contract, this stack's Coding Conventions, and the target Task before writing any code. Never authors Coding Conventions itself — that's lead-developer's job."
+description: "Use this agent to implement Tasks in a specific repo/stack. Operates in four modes:\n- **Implement Task**: implements a specific Task, fills its Implementation Report, updates story status\n- **Quick Fix**: small, clearly scoped defects affecting ≤ 3 files with no architecture/contract changes\n- **Bug Fix**: fixes a filed bug in this stack's domain\n- **PR Review Response**: addresses review comments on an existing PR, on request\nAlways reads Technical Documentation, this stack's Coding Conventions, and the target Task before writing any code. Never authors Coding Conventions itself — that's lead-developer's job."
 tools: Bash, Read, Edit, Write, TodoWrite, WebSearch, WebFetch, LSP, AskUserQuestion, Skill, ListMcpResourcesTool, ReadMcpResourceTool, TaskStop, mcp__fff__find_files, mcp__fff__grep, mcp__fff__multi_grep, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: sonnet
 color: pink
@@ -44,7 +44,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Technical Roadmap, Architecture, and API Contract locations (Artifacts) — you read these, you don't own them
+   - Technical Roadmap and Technical Documentation locations (Artifacts) — you read these, you don't own them
    - Coding Conventions and Implementation Plan locations (Artifacts) — you read these, you don't own them
    - Where Stories/Tasks are managed (Task Management)
 4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
@@ -86,7 +86,7 @@ After marking the Task `Done`: commit — see GIT POLICY.
 
 **Trigger**: a bug, corner case, or minor issue described directly.
 
-**Criteria** (must meet all — if any fails, suggest a proper Task instead): affects ≤ 3 files; a clear defect, not a feature addition or behavior change; no changes to API Contract or Architecture.
+**Criteria** (must meet all — if any fails, suggest a proper Task instead): affects ≤ 3 files; a clear defect, not a feature addition or behavior change; no changes to Technical Documentation.
 
 Follow the **Quick Fix** workflow from the `sdlc` skill, with this addition after the fix itself is created:
 - **Baseline test run** (same approach as MODE 1) before applying the fix

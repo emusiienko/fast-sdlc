@@ -95,14 +95,15 @@ system and how to query it, etc.
 **location**: `<path>`
 **format**: `<Configs Folder>/business-analyst/requirements-format.md` (proposal, not a confirmed default — walk the user through it and confirm/adjust with business-analyst)
 
-### Documentation
+### Business Documentation
 **location**: `<path>`
+**format**: `<Configs Folder>/business-analyst/business-documentation-format.md` (proposal, not a confirmed default — walk the user through it and confirm/adjust with business-analyst)
 
-### Architecture
-**location**: `<path>`
+### Technical Documentation
+**location**: `<path>` (a folder)
 
-### API Contract
-**location**: `<path>`
+### Architectural Design
+**location**: `<path>` (a folder)
 
 ### Technical Roadmap
 **location**: `<path>`

@@ -45,11 +45,10 @@ Config: `<path to fast-sdlc-project-setup.md>`
 ## Artifacts
 
 - **Validated Idea** — scoped problem statement with explicit IN/OUT boundaries.
-- **Requirements** — what's still to be done: data model, validation rules, user stories. Once scope is delivered, hand its content off to Documentation, if that artifact exists on this project.
-- **Documentation** — what the product actually does, as-built. Kept true after the fact, not proposed/confirmed before it — the counterpart to Requirements, not a stage of it.
-- **Architecture** — the technical design.
-- **API Contract** — the interface between backend and frontend.
-- **Technical Roadmap** — concrete technical plan for a milestone or story group — Detailed or Incremental, architect's judgment per scope. Exists while there's unreconciled Requirements to plan against.
+- **Requirements** — what's still to be done: data model, validation rules, user stories. Once scope is delivered, hand its content off to Business Documentation, if that artifact exists on this project.
+- **Business Documentation** — what the product actually does, as-built, from the business/behavioral view. Kept true after the fact, not proposed/confirmed before it — the counterpart to Requirements, not a stage of it.
+- **Technical Documentation** — what the system actually is, as-built. A folder: SAD (its master document), Solution Overview, ADR Log, NFR, Data Models, API Contracts, and (when topology warrants it) Deployment/Infrastructure View. The counterpart to Architectural Design, not a stage of it.
+- **Architectural Design** — architect's Phase 1 (Scope Planning) output for a milestone or story group: Solution Overview, NFR, and the Technical Implementation Plan. Exists while there's unreconciled Requirements to plan against.
 - **Coding Conventions** — a repo's (or a repo+stack's) coding standards, grounded in its actual codebase.
 - **Implementation Plan** — the technical approach and ordered task breakdown for a single story, within a single repo (or repo+stack).
 - **Repo-level ADRs** — architectural decisions scoped to a single repo, distinct from project-level ADRs.
@@ -97,15 +96,15 @@ Each phase of the pipeline is owned by a named role. Agents identify themselves 
 
 - **business-analyst** — Phases 1–2, Discovery and Spec: validates ideas before any technical work begins (gatekeeper between "someone had a thought" and "we're going to build this"), then bridges product vision and engineering execution — produces specs that are precise, traceable, unambiguous, and scoped to exactly what's needed. Does not write code, design architecture, or evaluate technical feasibility.
 
-- **architect** — Phase 3, Architecture: designs systems that are simple to build and maintain. Values clarity over cleverness, boring technology over novelty. Produces Technical Documentation (Architecture, API Contract, ADRs) and the Technical Roadmap.
+- **architect** — Phase 3, Architecture: designs systems that are simple to build and maintain. Values clarity over cleverness, boring technology over novelty. Produces Technical Documentation and Architectural Design.
 
-- **lead-developer** — Phase 4, Repo Planning: repo-bound (one instance per repo, scoped to one stack per session if the repo has more than one). Turns architect's Technical Roadmap into an Implementation Plan and Tasks for its own repo, and owns that repo's Coding Conventions and Repo-level ADRs.
+- **lead-developer** — Phase 4, Repo Planning: repo-bound (one instance per repo, scoped to one stack per session if the repo has more than one). Turns architect's Architectural Design into an Implementation Plan and Tasks for its own repo, and owns that repo's Coding Conventions and Repo-level ADRs.
 
 - **coder** — Phase 5, Implementation: implements Tasks in one specific repo, scoped to one stack per session if the repo has more than one. Writes the code and its own unit/integration tests, following that stack's Coding Conventions.
 
 - **devops** — Phase 5, Implementation: provisions and manages infrastructure. Works in pair with the user — never deploys autonomously. Steps requiring cloud console access are explicitly handed to the user with a checklist.
 
-- **qa-automation** — Phase 6, QA (Optional): writes black-box tests for a story from the API Contract and acceptance criteria, then verifies them against implemented features, ahead of manual-qa. Files a Bug per finding.
+- **qa-automation** — Phase 6, QA (Optional): writes black-box tests for a story from its API Contracts and acceptance criteria, then verifies them against implemented features, ahead of manual-qa. Files a Bug per finding.
 
 - **manual-qa** — Phase 6, QA (optional): exploratory and scenario-based tester — the final check on work implementors and qa-automation already consider complete. Creates test cases at story start and executes them once qa-automation (if active) is done. Approves the story on a full pass with no open bugs; files bugs on fail.
 
@@ -149,13 +148,13 @@ business-analyst → architect → lead-developer → implementors → qa-automa
 ### 3. Architecture
 - **Role:** architect
 - **Required:** Yes — once for project setup, then once per milestone/story group thereafter
-- **Description:** Designs the technical approach at the cross-repo level and produces the Technical Roadmap — the handoff from architect to each repo's lead-developer.
-- **Artifacts:** Architecture, API Contract, Technical Roadmap
+- **Description:** Designs the technical approach at the cross-repo level and produces Architectural Design — the handoff from architect to each repo's lead-developer.
+- **Artifacts:** Technical Documentation, Architectural Design
 
 ### 4. Repo Planning
 - **Role:** lead-developer
-- **Required:** Yes — once per repo (or repo+stack) touched by the Technical Roadmap
-- **Description:** Turns the Technical Roadmap into an Implementation Plan and Tasks for its own repo — the primary context handoff from lead-developer to implementors carrying full reasoning, ordered tasks, and planned ADRs.
+- **Required:** Yes — once per repo (or repo+stack) touched by the Technical Implementation Plan
+- **Description:** Turns Architectural Design into an Implementation Plan and Tasks for its own repo — the primary context handoff from lead-developer to implementors carrying full reasoning, ordered tasks, and planned ADRs.
 - **Artifacts:** Coding Conventions, Implementation Plan, Tasks
 
 ### 5. Implementation
@@ -198,7 +197,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
   - **Versioning** — where applicable, present the default mechanism and confirm, or ask.
   Do not proceed past this step until every owned artifact's location and format are settled. Record each decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
 - **business-analyst** → Validated Idea, Requirements, Stories, own `agent.md` (References)
-- **architect** → Architecture, API Contract, Technical Roadmap, `CLAUDE.md`, own `agent.md` (References)
+- **architect** → Technical Documentation, Architectural Design, `CLAUDE.md`, own `agent.md` (References)
 - **lead-developer** → Coding Conventions, `CLAUDE.md` (own repo), own `agent.md` (References)
 - **coder** → own `agent.md` (References)
 - **devops** → own `agent.md` (References)
@@ -210,8 +209,8 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ### Implement Story
 *Applies to: architect (roadmap), lead-developer (plan + deviation checks with architect), business-analyst (deviation checks on Requirements), implementors (via Implement Task), qa-automation/manual-qa (QA), orchestrator (Task creation, status, PRs), architect/business-analyst/qa-automation/manual-qa (Reconcile)*
 
-1. **Roadmap**: architect produces or updates the Technical Roadmap covering the story's scope, if not already current
-2. **Plan**: for each repo (or repo+stack) the Technical Roadmap names, lead-developer produces the Implementation Plan and Tasks for the story — raising a Deviation Check to architect first if the Roadmap doesn't fit that repo's reality
+1. **Scope Planning**: architect produces or updates Architectural Design covering the story's scope, if not already current
+2. **Plan**: for each repo (or repo+stack) the Technical Implementation Plan names, lead-developer produces the Implementation Plan and Tasks for the story — raising a Deviation Check to architect first if the plan doesn't fit that repo's reality
 3. **Deviation Check**: if the Implementation Plan diverges from Requirements — business-analyst updates Requirements
 4. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
 5. **Implement**: run Implement Task for each task across all repos' Implementation Plans, in dependency order, until all Tasks are `Done`
@@ -225,7 +224,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ### Implement Task
 *Applies to: coder, devops*
 
-1. Read: Architecture, Coding Conventions, own `agent.md` (References), API Contract (if applicable), Stories, Implementation Plan, Tasks, Technical Roadmap (if exists), `CLAUDE.md`
+1. Read: Technical Documentation, Coding Conventions, own `agent.md` (References), Stories, Implementation Plan, Tasks, Architectural Design (if exists), `CLAUDE.md`
 2. Update Tasks status: `In Progress`
 3. **Implement** *(overridable — each implementing role expands this step with their own sub-steps and checkpoints; see the role's instructions)*
 4. Fill Implementation Report
@@ -276,8 +275,8 @@ After Bug Fix: the orchestrator creates a fresh Task for whichever QA role filed
 
 1. Orchestrator creates one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's task), qa-automation and manual-qa if active (`Dependencies: None` — parallel)
 2. Each role works its Task once its dependencies are `Done`, committing to a new branch named after the (now-merged) implementation branch plus a suffix describing its own reconcile work — high level, per role (full detail in each role's own instructions):
-   - **architect**: folds the Technical Roadmap into Architecture/API Contract; records confirmed project-level decisions as ADRs
-   - **business-analyst**: updates Documentation with what was built, if that artifact exists on this project; updates Requirements too if the Implementation Reports reveal a discrepancy against what was said would be built
+   - **architect**: folds what was planned into Technical Documentation; records confirmed project-level decisions in the ADR Log
+   - **business-analyst**: updates Business Documentation with what was built, if that artifact exists on this project; updates Requirements too if the Implementation Reports reveal a discrepancy against what was said would be built
    - **qa-automation**: updates its automation scripts/tests to match what was built
    - **manual-qa**: merges the story's test cases into its own registry
 3. Once every Reconcile Task for a story is `Done`, orchestrator opens the Pull Request(s) it needs, routing feedback the same way as Acceptance; once the user merges, orchestrator sets the story `Done` and archives it
@@ -305,12 +304,11 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 
 - **Validated Idea** → **business-analyst** (full)
 - **Requirements** → **business-analyst** (full)
-- **Documentation** → **business-analyst** (business-facing behavior) and **architect** (technical/system-facing) — each owns their own part, neither the other's
+- **Business Documentation** → **business-analyst** (full)
+- **Technical Documentation** → **architect** (full)
 - **Milestones** → **orchestrator** (create/update, on explicit user request); file shape and location governed by Task Management, same as Stories
 - **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; remaining statuses — see Task Management for who sets each
-- **Architecture** → **architect** (full)
-- **API Contract** → **architect** (full)
-- **Technical Roadmap** → **architect**; read-only for all
+- **Architectural Design** → **architect**; read-only for all
 - **Coding Conventions** → **lead-developer** (full, per repo or repo+stack)
 - **Repo-level ADRs** → **lead-developer** (create, per repo or repo+stack)
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors

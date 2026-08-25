@@ -7,7 +7,7 @@
 
 ## Project Profile
 
-- **Setup type**: monolith / microservices / serverless / on-premise / hybrid [skip if defined in Architecture]
+- **Setup type**: monolith / microservices / serverless / on-premise / hybrid [skip if already defined in Solution Overview or Technical Documentation]
 - **Deployment target**: containers/Docker | serverless functions | VMs | PaaS (e.g. Vercel/Railway/Heroku) | bare metal
 - **Greenfield or brownfield**: new project from scratch / existing infrastructure to import into IaC
 - **Compliance requirements**: GDPR / HIPAA / SOC 2 / PCI-DSS / none

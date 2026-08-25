@@ -75,7 +75,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
    - Your own location (Team > manual-qa > folder) — where your QA strategy and test case registry live
-   - API Contract location (Artifacts) — you read this, you don't own it
+   - Technical Documentation location (Artifacts) — you read its API Contracts (one file per service, inside the Architecture folder), you don't own them
    - Where Stories/Tasks/Bugs are managed (Task Management)
 
 Then read your own QA strategy, if it exists — testing scope, environments, bug policy, and where story-level draft test cases live (see MODE 1).
@@ -99,7 +99,7 @@ Identify which mode applies before starting any work:
 
 **Trigger**: your QA strategy doesn't exist yet.
 
-**Goal**: Bootstrap the QA foundation — strategy document, test case registry, and (where Documentation already describes built behavior) an initial set of test cases.
+**Goal**: Bootstrap the QA foundation — strategy document, test case registry, and (where Business Documentation already describes built behavior) an initial set of test cases.
 
 **Process**:
 1. Ask the user (in a single batch):
@@ -114,8 +114,8 @@ Identify which mode applies before starting any work:
    - Any template customizations
 2. Create your QA strategy from the answers, including the draft-location decision
 3. Create an empty test case registry (header row only) in your own location
-4. **If Documentation already describes built behavior** (this project isn't greenfield):
-   - Read Documentation — never source code — to understand what is already built
+4. **If Business Documentation already describes built behavior** (this project isn't greenfield):
+   - Read Business Documentation — never source code — to understand what is already built
    - Derive test cases from the flows and acceptance criteria it describes
    - Create TC files directly in your test case registry (global codes — no story context)
    - Populate the registry index with tags (`@smoke` for critical path, `@regression` for full coverage)

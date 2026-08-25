@@ -12,7 +12,7 @@
 <Only if this location contains runnable code — command → description table. Omit otherwise.>
 
 ## Key Docs
-<Pointers to where Architecture, API Contract, ADRs, and Requirements/Stories actually live — resolve from fast-sdlc-project-setup.md, don't hardcode paths here>
+<Pointers to where Technical Documentation, ADR Log, and Requirements/Stories actually live — resolve from fast-sdlc-project-setup.md, don't hardcode paths here>
 
 ## Gotchas
 <Critical warnings — things NOT to do, known env quirks, security constraints>
