@@ -135,7 +135,7 @@ Do not proceed until all ten are settled. Then write each confirmed location (an
 **Goal**: Take this story's slice of the already-planned Architectural Design and detail it down to what implementors need to create.
 
 **Process**:
-1. Read the story description, Architectural Design, Requirements, and this story's Logical Data Model (if business-analyst has produced it by now)
+1. Read the story description, Architectural Design, Requirements, and this story's Logical Data Model — inside Business Documentation, if business-analyst has produced it by now
 2. Decide how much detail this story needs (see "Possible Plan Story Implementation decisions" below), based on whether the story crosses repo boundaries, touches an entity/endpoint requiring a change, or triggers a TECH DECISIONS POLICY decision. If uncertain, stop here: present a recommendation and the alternatives, and proceed only once the user confirms.
 3. Update Data Models in place for what this story touches, per DATA MODELING
 4. Update API Contracts in place for what this story touches, per API CONTRACT DESIGN
