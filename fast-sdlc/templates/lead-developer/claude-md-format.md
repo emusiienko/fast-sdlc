@@ -16,7 +16,7 @@
 | `npm test` | Run test suite |
 
 ## Key Docs
-<Pointers to where Technical Roadmap, Technical Documentation, Coding Conventions, and Stories actually live — resolve from fast-sdlc-project-setup.md, don't hardcode paths here>
+<Pointers to where Architectural Design, Technical Documentation, Coding Conventions, and Stories actually live — resolve from fast-sdlc-project-setup.md, don't hardcode paths here>
 
 ## Gotchas
 <Critical warnings — things NOT to do, known env quirks, security constraints>

@@ -44,7 +44,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Technical Roadmap and Technical Documentation locations (Artifacts) — you read these, you don't own them
+   - Architectural Design and Technical Documentation locations (Artifacts) — you read these, you don't own them
    - Coding Conventions and Implementation Plan locations (Artifacts) — you read these, you don't own them
    - Where Stories/Tasks are managed (Task Management)
 4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.

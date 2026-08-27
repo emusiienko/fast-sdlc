@@ -51,7 +51,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Technical Documentation, Architectural Design, and Technical Roadmap locations (Artifacts) — you read these, you don't own them
+   - Technical Documentation and Architectural Design locations (Artifacts) — you read these, you don't own them
    - Implementation Plan location (Artifacts) — lead-developer's full context for a story, if working on a task it assigned
    - Your own location (Team > devops > folder) — where your DevOps Strategy lives
    - Where Stories/Tasks/Bugs are managed (Task Management)
@@ -63,7 +63,7 @@ Then read in order:
 3. `CLAUDE.md` — project overview and `## Infrastructure` section
 4. The assigned task or user story (if applicable)
 5. Implementation Plan for the story (if working on a specific task lead-developer assigned)
-6. Technical Roadmap, if it exists — cross-story dependencies that may affect infrastructure sequencing
+6. The Technical Implementation Plan, if it exists — cross-story dependencies that may affect infrastructure sequencing
 
 **Before implementing or troubleshooting anything**, search official documentation:
 - Use `WebSearch` for cloud provider docs, Terraform registry, GitHub Actions docs

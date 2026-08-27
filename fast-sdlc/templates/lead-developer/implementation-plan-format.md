@@ -3,7 +3,7 @@
 # Implementation Plan: STORY-NNN — <Story Title>
 
 ## Context
-Why this story exists and how it fits into this repo. Reference the Technical Roadmap for the broader scope this belongs to.
+Why this story exists and how it fits into this repo. Reference the Technical Implementation Plan for the broader scope this belongs to.
 
 ## Technical Approach
 How the feature will be implemented in this repo — key design decisions, patterns used, modules affected, data flow. No code samples, no exact file paths, no class names — that's the implementor's call, guided by Coding Conventions.

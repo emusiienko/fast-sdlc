@@ -105,8 +105,8 @@ system and how to query it, etc.
 ### Architectural Design
 **location**: `<path>` (a folder)
 
-### Technical Roadmap
-**location**: `<path>`
+### Story Implementation Plan
+**location**: `<path>` (per story, produced only when needed)
 
 ### Coding Conventions
 **location**:

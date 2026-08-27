@@ -128,12 +128,13 @@ User describes something to build, extend, fix, or investigate
       - Add a Task for business-analyst (define scope, produce/update Requirements and the resulting Stories) and a Task for architect (`Dependencies:` business-analyst's Task — produce/update Architectural Design covering those Stories)
       - Fulfill each Task (see Fulfill a Task)
    c. **Well-defined task or bug the orchestrator can describe fully**: ask — "I can create this directly — should I, or delegate to [role]?" — then create the Task directly, or delegate its creation, under the relevant story
-3. For each repo (or repo+stack) the Technical Implementation Plan's work items now name: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies:` business-analyst's Logical Data Model Task for this story, if one exists — otherwise `None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
-4. For each newly created story that will need implementation, add:
+3. If architect is on the team and this came from routing case (a) or (b) — not a well-defined task/bug: add a Task for architect — "update API Contracts/Data Models and produce a Story Implementation Plan for this story, if needed" (`Dependencies: None`)
+4. Determine which repos (or repo+stacks) need Tasks: the Technical Implementation Plan's work items, if one exists and names them; otherwise every repo the story description clearly identifies, or every repo in the project's team if it isn't clear which ones apply. For each: create two Tasks for lead-developer — "produce the Implementation Plan for this story, in this repo/stack" (`Dependencies:` business-analyst's Logical Data Model Task covering this story's subject area, and architect's Task from step 3, whichever exist — otherwise `None`), and "break the approved Implementation Plan into Tasks" (`Dependencies:` the first)
+5. For each newly created story that will need implementation, add:
    - A "Write test cases" Task for manual-qa, if it's present in the team
    - A "Write automation tests" Task for qa-automation, if it's present in the team
-5. Confirm the story/task/bug is created and visible in the configured Task Management system
-6. Present the resulting stories/tasks to the user
+6. Confirm the story/task/bug is created and visible in the configured Task Management system
+7. Present the resulting stories/tasks to the user
 
 #### Outputs
 New or updated Story/Stories, each with business-analyst's and architect's planning Tasks fulfilled, and lead-developer/QA Tasks created (not yet fulfilled) for when execution starts, or a directly-created Task/Bug
@@ -146,30 +147,32 @@ User wants to implement a story whose scope is planned (Architectural Design cov
 #### Steps
 
 **Plan:**
-1. Fulfill each lead-developer "produce the Implementation Plan" Task created during Plan New Work (see Fulfill a Task)
-2. **Checkpoint**: present the resulting Implementation Plan(s) to the user; wait for explicit acceptance before proceeding
-3. Fulfill each lead-developer "break the approved Implementation Plan into Tasks" Task, now that its dependency is `Done` — produces this story's implementation Tasks
+1. Fulfill business-analyst's Logical Data Model Task covering this story's subject area, if it exists and is still `ToDo` (see Fulfill a Task) — a dependency of the lead-developer Tasks below
+2. Fulfill architect's Task from Plan New Work for this story, if it exists and is still `ToDo` (see Fulfill a Task) — also a dependency of the lead-developer Tasks below
+3. Fulfill each lead-developer "produce the Implementation Plan" Task created during Plan New Work (see Fulfill a Task)
+4. **Checkpoint**: present the resulting Implementation Plan(s) to the user; wait for explicit acceptance before proceeding
+5. Fulfill each lead-developer "break the approved Implementation Plan into Tasks" Task, now that its dependency is `Done` — produces this story's implementation Tasks
 
 **Task loop** — all Tasks for this story already exist by now (implementation, plus each active QA role's "Write test cases"/"Write automation tests" Task from Plan New Work):
-4. Find all `ToDo` Tasks for this story (via the configured Task Management mechanism), respecting `Dependencies`
-5. Fulfill them (see Fulfill a Task) — Tasks assigned to different roles run in parallel; Tasks assigned to the same role run sequentially, in dependency order. Each agent marks its own Task `Done` and commits its own work
-6. Repeat until every Task for this story is `Done`
-7. Orchestrator sets the story `Pending Approval` once all implementation Tasks (coder, devops) are `Done` — QA Tasks don't gate this transition
+6. Find all `ToDo` Tasks for this story (via the configured Task Management mechanism), respecting `Dependencies`
+7. Fulfill them (see Fulfill a Task) — Tasks assigned to different roles run in parallel; Tasks assigned to the same role run sequentially, in dependency order. Each agent marks its own Task `Done` and commits its own work
+8. Repeat until every Task for this story is `Done`
+9. Orchestrator sets the story `Pending Approval` once all implementation Tasks (coder, devops) are `Done` — QA Tasks don't gate this transition
 
 **QA phase:**
-8. Run the Stabilization loop (see sub-scenario above) — ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)
+10. Run the Stabilization loop (see sub-scenario above) — ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)
 
 **Acceptance phase** *(see `sdlc` > Pipeline > Acceptance)*:
-9. Orchestrator opens the Pull Request(s) bundling the story's implementation work
-10. Present: "STORY-NNN is ready — here's the PR: `<link>`"
-11. If the user leaves feedback on the PR: create a Task for the responsible role — "address review feedback on PR `<link>`" (per the `pr-review-response` skill) — fulfill it, repeat until the user is satisfied
-12. Wait for the user to merge the PR and explicitly accept the story
+11. Orchestrator opens the Pull Request(s) bundling the story's implementation work
+12. Present: "STORY-NNN is ready — here's the PR: `<link>`"
+13. If the user leaves feedback on the PR: create a Task for the responsible role — "address review feedback on PR `<link>`" (per the `pr-review-response` skill) — fulfill it, repeat until the user is satisfied
+14. Wait for the user to merge the PR and explicitly accept the story
 
 **Reconcile (after the Acceptance PR is merged)** *(see `sdlc` > Pipeline > Reconcile)*:
-13. Create one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's Task), qa-automation/manual-qa if active (`Dependencies: None`)
-14. Fulfill each Task once its dependencies are `Done` (see Fulfill a Task)
-15. Once every Reconcile Task for the story is `Done`: orchestrator opens the Reconcile Pull Request(s) if needed, routing any feedback the same way as Acceptance (step 11)
-16. Once the user merges the Reconcile PR(s) and explicitly accepts the reconciliation: orchestrator sets the story `Done`
+15. Create one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's Task), qa-automation/manual-qa if active (`Dependencies: None`)
+16. Fulfill each Task once its dependencies are `Done` (see Fulfill a Task)
+17. Once every Reconcile Task for the story is `Done`: orchestrator opens the Reconcile Pull Request(s) if needed, routing any feedback the same way as Acceptance (step 13)
+18. Once the user merges the Reconcile PR(s) and explicitly accepts the reconciliation: orchestrator sets the story `Done`
 
 #### Outputs
 Story reaches `Done`; Acceptance and Reconcile Pull Requests merged. 

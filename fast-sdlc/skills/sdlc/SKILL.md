@@ -49,6 +49,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Business Documentation** — what the product actually does, as-built, from the business/behavioral view. Kept true after the fact, not proposed/confirmed before it — the counterpart to Requirements, not a stage of it.
 - **Technical Documentation** — what the system actually is, as-built. A folder: SAD (its master document), Solution Overview, ADR Log, NFR, Data Models, API Contracts, and (when topology warrants it) Deployment/Infrastructure View. The counterpart to Architectural Design, not a stage of it.
 - **Architectural Design** — architect's Phase 1 (Scope Planning) output for a milestone or story group: Solution Overview, NFR, and the Technical Implementation Plan. Exists while there's unreconciled Requirements to plan against.
+- **Story Implementation Plan** — architect's cross-repo detail for a single story, during its execution window: technical approach, key decisions, and implementation steps for other roles to turn into their own Tasks. Produced only when a story needs it.
 - **Coding Conventions** — a repo's (or a repo+stack's) coding standards, grounded in its actual codebase.
 - **Implementation Plan** — the technical approach and ordered task breakdown for a single story, within a single repo (or repo+stack).
 - **Repo-level ADRs** — architectural decisions scoped to a single repo, distinct from project-level ADRs.
@@ -207,17 +208,18 @@ Run once per project before any work begins. Each role produces a strategy, conv
 ---
 
 ### Implement Story
-*Applies to: architect (roadmap), lead-developer (plan + deviation checks with architect), business-analyst (deviation checks on Requirements), implementors (via Implement Task), qa-automation/manual-qa (QA), orchestrator (Task creation, status, PRs), architect/business-analyst/qa-automation/manual-qa (Reconcile)*
+*Applies to: architect (roadmap, plan story implementation — if on the team), lead-developer (plan + deviation checks with architect), business-analyst (deviation checks on Requirements), implementors (via Implement Task), qa-automation/manual-qa (QA), orchestrator (Task creation, status, PRs), architect/business-analyst/qa-automation/manual-qa (Reconcile)*
 
 1. **Scope Planning**: architect produces or updates Architectural Design covering the story's scope, if not already current
-2. **Plan**: for each repo (or repo+stack) the Technical Implementation Plan names, lead-developer produces the Implementation Plan and Tasks for the story — raising a Deviation Check to architect first if the plan doesn't fit that repo's reality
-3. **Deviation Check**: if the Implementation Plan diverges from Requirements — business-analyst updates Requirements
-4. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
-5. **Implement**: run Implement Task for each task across all repos' Implementation Plans, in dependency order, until all Tasks are `Done`
-6. **Deviation Check**: if any task's Implementation Report notes a deviation — lead-developer routes it to architect if it crosses repo boundaries, or handles it as a Repo-level ADR if not; business-analyst updates Requirements if the deviation has behavioral impact; if manual-qa is active and its test cases are affected, it updates them
-7. **QA** *(see Pipeline > QA for the full mechanic)*: orchestrator sets `Pending Approval` and creates a Task per active QA role; manual-qa sets `Approved` once its own latest Task is `Done` with no Bug left open (immediately Accept-eligible from `Pending Approval` if manual-qa isn't active)
-8. **Acceptance** *(see Pipeline > Acceptance)*: orchestrator opens the Pull Request(s); user reviews, sends any feedback through the orchestrator, then sets `Accepted` and merges
-9. **Reconcile** *(see Reconcile workflow)* — story reaches `Done` once complete
+2. **Detail** *(if architect is on the team)*: architect updates API Contracts and Data Models in place for what this story touches, and creates a Story Implementation Plan (see MODE 3: Plan Story Implementation)
+3. **Plan**: lead-developer reads Requirements, the story description, and — wherever they exist — architect's artifacts (Architectural Design, Technical Documentation, Story Implementation Plan); produces this stack's Implementation Plan (optional — see lead-developer's own Plan Implementation mode) and Tasks for the story — raising a Deviation Check to architect first if the plan doesn't fit that repo's reality
+4. **Deviation Check**: if the Implementation Plan diverges from Requirements — business-analyst updates Requirements
+5. If manual-qa is active: manual-qa creates test cases for the story, based on the now-current Requirements
+6. **Implement**: run Implement Task for each task across all repos' Implementation Plans, in dependency order, until all Tasks are `Done`
+7. **Deviation Check**: if any task's Implementation Report notes a deviation — lead-developer routes it to architect if it crosses repo boundaries, or handles it as a Repo-level ADR if not; business-analyst updates Requirements if the deviation has behavioral impact; if manual-qa is active and its test cases are affected, it updates them
+8. **QA** *(see Pipeline > QA for the full mechanic)*: orchestrator sets `Pending Approval` and creates a Task per active QA role; manual-qa sets `Approved` once its own latest Task is `Done` with no Bug left open (immediately Accept-eligible from `Pending Approval` if manual-qa isn't active)
+9. **Acceptance** *(see Pipeline > Acceptance)*: orchestrator opens the Pull Request(s); user reviews, sends any feedback through the orchestrator, then sets `Accepted` and merges
+10. **Reconcile** *(see Reconcile workflow)* — story reaches `Done` once complete
 
 ---
 
@@ -309,6 +311,7 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Milestones** → **orchestrator** (create/update, on explicit user request); file shape and location governed by Task Management, same as Stories
 - **Stories** → **business-analyst** (create, status `Planned`); **orchestrator** and any agent executing a Quick Fix or Bug Fix workflow may also create; implementors: status `In Progress` only; remaining statuses — see Task Management for who sets each
 - **Architectural Design** → **architect**; read-only for all
+- **Story Implementation Plan** → **architect** (create, per story, only when needed); read-only for all
 - **Coding Conventions** → **lead-developer** (full, per repo or repo+stack)
 - **Repo-level ADRs** → **lead-developer** (create, per repo or repo+stack)
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors
