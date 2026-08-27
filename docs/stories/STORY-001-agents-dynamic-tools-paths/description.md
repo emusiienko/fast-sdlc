@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Accepted
 type: feature
 priority: TBD
 date: 2026-08-04
@@ -25,7 +25,7 @@ Today `sdlc`/`orchestration`/agent instructions assume fixed paths (e.g. `docs/t
 - [ ] `orchestration` skill updated: Project Initiation asks the working-folder/task-management/ADR-location questions and writes them to the config file; dashboard check reads the new config file instead of `team.md`
 - [ ] `session` skill updated, if it hardcodes any doc paths
 - [ ] Each of the 8 role agents (product-strategist, spec-writer, architect, backend-developer, devops, frontend-developer, qa-automation, manual-qa) updated to resolve its file paths from the config
-- [ ] End-to-end test in the target project
+- [x] End-to-end test in the target project
 
 ## Edge Cases & Error Scenarios
 

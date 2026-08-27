@@ -13,5 +13,5 @@
 | TASK-011 | Update fast-sdlc-frontend-developer agent (superseded — retired, replaced by STORY-006 coder) | orchestrator | Done |
 | TASK-012 | Update fast-sdlc-qa-automation agent | orchestrator | Done |
 | TASK-013 | Update fast-sdlc-manual-qa agent | orchestrator | Done |
-| TASK-014 | End-to-end test in target project | user | ToDo |
+| TASK-014 | End-to-end test in target project | user | Done |
 | TASK-015 | Create file-based-task-management skill | orchestrator | Done |
