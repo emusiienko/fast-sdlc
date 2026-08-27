@@ -88,8 +88,8 @@ Identify which mode applies before starting. Each of Mode 1 and Mode 2 runs Disc
 4. **Requirements location** — confirm where it lives; never fold it into Validated Idea's location without the user explicitly choosing that
 5. **Requirements format** — two common defaults, or something else entirely if the user wants a custom approach: a separate folder/tree of files (proposal ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/requirements-format.md`, not a confirmed default — copy it into your own folder during Setup, use it as-is, or customize with the user), or described directly within Stories with no separate file (or a mix of both defaults)
 6. **Conceptual Data Model format** — default ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/conceptual-data-model-format.md`; copy it into your own folder during Setup, use it as-is, or customize with the user
-7. **Logical Data Model format** — default ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/logical-data-model-format.md`; copy it into your own folder during Setup, use it as-is, or customize with the user
-8. **Business Documentation location and format** — proposal ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/business-documentation-format.md`, not a confirmed default; copy it into your own folder during Setup, use it as-is, or customize with the user — or the project may simply have no Business Documentation artifact at all
+7. **Business Documentation location and format** — proposal ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/business-documentation-format.md`, not a confirmed default; copy it into your own folder during Setup, use it as-is, or customize with the user — or the project may simply have no Business Documentation artifact at all
+8. **Logical Data Model format** — default ships at `${CLAUDE_PLUGIN_ROOT}/templates/business-analyst/logical-data-model-format.md`; copy it into your own folder during Setup, use it as-is, or customize with the user. Lives inside Business Documentation's `logical-data-model/` folder — location is confirmed by item 7, nothing separate to confirm here.
 
 Do not proceed to Phase A until all eight are settled. Then create `agent.md` in your own folder with a `## References` section — one line per decision that doesn't already have a home in `fast-sdlc-project-setup.md` > Artifacts (which only tracks location, and, where a single owner exists, format):
 - **Requirements format**: the variant confirmed in item 5, with a brief rationale if it deviates from accepting the default as-is
@@ -216,8 +216,8 @@ Requirements is migrated to Business Documentation — if that artifact is maint
 **Process** (business-analyst-specific steps — generic reconcile steps are in the `sdlc` skill):
 1. Read the Story and all its Tasks' Implementation Reports
 2. Identify discrepancies — behavior that diverged, fields changed, access rules changed — from what Requirements said would be built
-3. If a Business Documentation artifact exists on this project, update it — per your confirmed Business Documentation format — with what was actually built, including the discrepancies from step 2. Carry the Conceptual and Logical catalogs/views across from Requirements, correcting them against what was actually built (per the Implementation Reports).
-4. If a discrepancy was found: correct Requirements to reflect it, per your confirmed Requirements format — including its Conceptual and/or Logical Data Model, if the discrepancy affects an entity, attribute, or relationship. Requirements still holds what's pending for other stories; leaving it drifted means they plan against a model that's already wrong.
+3. If a Business Documentation artifact exists on this project, update it — per your confirmed Business Documentation format — with what was actually built, including the discrepancies from step 2. Carry the Conceptual catalog/views across from Requirements, correcting them against what was actually built (per the Implementation Reports). Correct the Logical catalog/views the same way, for the same discrepancies — in place, since they already live in Business Documentation rather than being carried across.
+4. If a discrepancy was found: correct Requirements to reflect it, per your confirmed Requirements format — including its Conceptual Data Model, if the discrepancy affects an entity, attribute, or relationship. Requirements still holds what's pending for other stories; leaving it drifted means they plan against a model that's already wrong.
 5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
 
 **Outputs**: updated Business Documentation (if it exists on this project); updated Requirements, if a discrepancy was found
@@ -277,7 +277,7 @@ Apply this process every time you produce or update a Conceptual or Logical Data
 
 ### Composing the Logical Data Model
 
-Composed as its own Task (see Phase B, step 14, and Mode 2's equivalent) — fulfilled during that story's execution, following the normal Task lifecycle.
+Composed as its own Task (see Phase B, step 14, and Mode 2's equivalent) — fulfilled during that story's execution, following the normal Task lifecycle. Lives inside Business Documentation's `logical-data-model/` folder — write directly there, creating just that part of Business Documentation early if it doesn't fully exist yet. If this project maintains no Business Documentation artifact at all, escalate (see `fast-sdlc-project-setup.md` > Escalation/Feedback) rather than inventing a location.
 
 **Find the base document first.** Never invent entities or relationships from scratch here — Logical only enriches something that's already defined. Depending on the story's context, the base may be: Requirements' Conceptual Data Model, Business Documentation's Conceptual Data Model (already reconciled from earlier stories), the story description itself (a lightweight delta stated inline, e.g. "add a new `GiftCard` entity, related to `Order`"), or another reference the story description points to. If none of these define what this Task needs, stop and escalate (see `fast-sdlc-project-setup.md` > Escalation/Feedback) rather than generating Conceptual content yourself inside a Logical Task.
 
@@ -292,7 +292,7 @@ Same "entities global, relationships local" rule as Conceptual.
 5. **Normalize (catalog)** — bring every entity to third normal form: remove repeating groups (1NF), partial-key dependencies (2NF), transitive dependencies (3NF). Split entities and add relationships as needed; new entities go in the catalog. If a deliberate denormalization is requested, keep it but record each deviation and its target normal form in `assumptions`.
 6. **Self-check before writing** — emit only if all pass, otherwise fix and recheck: every entity has an `identifier` that resolves to real attributes; every relationship is carried by a foreign key that exists on the child entity; no many-to-many relationship remains unresolved; every attribute has a general `type` and a `required` flag; the model is in 3NF or every deviation is recorded in `assumptions`; no DBMS-specific type/index/storage content and no technical/cross-cutting entity is present; every `from`/`to` resolves to a catalog entity; no entity is defined in a view; `model_context` fields are short phrases.
 
-Fill the Implementation Report with the resulting catalog/view(s) and mark the Task `Done`.
+Write the resulting catalog/view(s) into Business Documentation's `logical-data-model/` folder, fill the Implementation Report, and mark the Task `Done`.
 
 ---
 

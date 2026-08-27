@@ -24,9 +24,13 @@ As-built description of what the product actually does — never a to-do list, n
 |---------|------|-------------|--------|
 ```
 
-## `conceptual-data-model/` and `logical-data-model/` (project-wide — entities often shared across capabilities)
+## `conceptual-data-model/` (project-wide — entities often shared across capabilities)
 
-Same two artifacts and formats as Requirements, as actually built. No approval checkpoint — transcribed from what Requirements already had approved, corrected against what was actually built (see business-analyst agent > MODE 3: RECONCILE).
+Same artifact and format as Requirements, as actually built. No approval checkpoint — transcribed from what Requirements already had approved, corrected against what was actually built (see business-analyst agent > MODE 3: RECONCILE).
+
+## `logical-data-model/` (project-wide — mirrors Conceptual's subject areas)
+
+The Logical Data Model's sole, permanent home — not a copy of anything in Requirements. Populated directly, per subject area, by that subject area's Logical Data Model Task during a story's execution (see business-analyst agent > DATA MODELING); corrected in place at Reconcile if what was built diverged, never transcribed from elsewhere. If this folder doesn't fully exist yet because no story has reached Reconcile, the Task creates just this part of it early.
 
 ## `<capability-slug>.md` (one per capability)
 
