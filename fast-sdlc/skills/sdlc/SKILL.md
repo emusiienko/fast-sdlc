@@ -31,7 +31,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 **Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests, Escalation/Feedback), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
-- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config)
+- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config). A repo-bound role (lead-developer, coder) gets its own section and folder per stack if the repo has more than one — never one shared folder across stacks.
 - **Configs Folder** — default base for role folders
 - **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
 - **Sessions** — how face-to-face session coordination is actually mechanized (a skill, an MCP server, etc.) — default: `file-based-session-management` skill

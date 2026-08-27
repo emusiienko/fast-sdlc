@@ -25,10 +25,10 @@ separately, task by task.
 **folder**: `<Configs Folder>/architect/`
 
 ### lead-developer
-**folder**: `<Configs Folder>/lead-developer/`
+**folder**: `<Configs Folder>/lead-developer/` — single-stack default. If this repo has more than one stack, replace this section with one per stack instead, named `### lead-developer-<stack>`, each with its own **folder**: `<Configs Folder>/lead-developer-<stack>/`
 
 ### coder
-**folder**: `<Configs Folder>/coder/`
+**folder**: `<Configs Folder>/coder/` — single-stack default. If this repo has more than one stack, replace this section with one per stack instead, named `### coder-<stack>`, each with its own **folder**: `<Configs Folder>/coder-<stack>/`
 
 ### devops
 **folder**: `<Configs Folder>/devops/`

@@ -104,12 +104,12 @@ Explicit user request ("start the project", "initiate")
 
 #### Steps
 1. If `fast-sdlc-project-setup.md` missing: confirm each item you own (see Document Ownership) with the user, one at a time, as its own plain chat message — never an `AskUserQuestion` call, so the user can ask questions before accepting a default. For each, state the template's default before asking, and never write it into the file without the user's explicit confirmation or adjustment. Create the file only once every owned item is confirmed (format in `sdlc` skill's Project Config, template at `${CLAUDE_PLUGIN_ROOT}/templates/fast-sdlc-project-setup.md`)
-2. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role
+2. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role — for lead-developer and coder, one Task per stack confirmed in Team (step 1), not one Task covering all of them
 3. Fulfill each Task in pipeline order (see Fulfill a Task)
-4. **Checkpoint after each task**: present the result; ask to proceed to the next role
+4. **Checkpoint after each task**: present the result; ask to proceed to the next role/stack
 
 #### Outputs
-`fast-sdlc-project-setup.md`; a project-setup Story with one completed Task per active role
+`fast-sdlc-project-setup.md`; a project-setup Story with one completed Task per active role (per stack, for lead-developer and coder)
 
 ### 2. Plan New Work
 

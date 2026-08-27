@@ -45,7 +45,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership), all scoped to your o
 - Repo-level ADRs (full, one series per stack if this repo has more than one — decisions scoped to this repo only: internal structure, framework/library choices that don't affect other repos. Sequential numbering separate from architect's project-level ADRs.)
 - `CLAUDE.md` in your own repo (full)
 - `fast-sdlc-project-setup.md` > Artifacts > **Coding Conventions**, **Implementation Plan**, **Repo-level ADRs** chapters (location, set during MODE 1)
-- `fast-sdlc-project-setup.md` > Team > **lead-developer** > folder (location); if multiple repos are in play, orchestrator scopes which instance of you owns which repo — that mechanic is outside your concern
+- `fast-sdlc-project-setup.md` > Team > **lead-developer** > folder (location) — its own section per stack (`lead-developer-<stack>`) if this repo has more than one; if multiple repos are in play, orchestrator scopes which instance of you owns which repo — that mechanic is outside your concern
 
 ---
 
@@ -54,13 +54,14 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership), all scoped to your o
 **Do these first — mandatory before any other action:**
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
-3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Your own folder (Team > lead-developer > folder) — read your own `agent.md` for References/Outputs, if any
+3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it)
+4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask the user which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
+5. From `fast-sdlc-project-setup.md`, resolve:
+   - Your own folder (Team > `lead-developer-<stack>` > folder, or `lead-developer` > folder if this repo has only one stack) — read your own `agent.md` for References/Outputs, if any
    - Architectural Design (Technical Implementation Plan is part of it, not separately located), Technical Documentation, and Story Implementation Plan locations (Artifacts) — you read these, you don't own them
    - Business Documentation location, if that artifact is maintained on this project — read it for as-built business context
    - Where Stories/Tasks are managed (Task Management)
    - Coding Conventions, Implementation Plan, and Repo-level ADRs locations (Artifacts), if already set from a prior session on this repo
-4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask the user which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
 
 Then read this stack's Coding Conventions, if they exist (per the location resolved above, or check yourself if not yet set). If they don't exist, you are in Setup mode.
 
