@@ -31,7 +31,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 **Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests, Escalation/Feedback), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
-- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config). A repo-bound role (lead-developer, coder) gets its own section and folder per stack if the repo has more than one — never one shared folder across stacks.
+- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config). A repo-bound role (lead-developer, coder) gets its own section and folder per stack if the repo has more than one — never one shared folder across stacks. Every role except orchestrator also has one or more **working folder(s)** — used only by the orchestrator, to decide where to spawn that role (inline or face-to-face); the role itself is never aware of this field. Defaults to that role's own generated-artifact location(s) where one exists (Source Code, Infrastructure Code, Automated Test Suite, Test Case Registry), or project root for roles whose artifacts are too varied to reduce to one path (business-analyst, architect).
 - **Configs Folder** — default base for role folders
 - **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
 - **Sessions** — how face-to-face session coordination is actually mechanized (a skill, an MCP server, etc.) — default: `file-based-session-management` skill
@@ -53,6 +53,10 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Coding Conventions** — a repo's (or a repo+stack's) coding standards, grounded in its actual codebase.
 - **Implementation Plan** — the technical approach and ordered task breakdown for a single story, within a single repo (or repo+stack).
 - **Repo-level ADRs** — architectural decisions scoped to a single repo, distinct from project-level ADRs.
+- **Source Code** — the actual implementation for a repo (or repo+stack).
+- **Automated Test Suite** — qa-automation's black-box test code, verifying the system from the outside across repos/services.
+- **Infrastructure Code** — IaC, CI/CD pipelines, deployment scripts, and environment configuration.
+- **Test Case Registry** — manual-qa's index of test cases and their individual TC files.
 - **Milestones** — a composition of stories describing a development phase.
 - **Stories** — a scoped unit of work and its lifecycle status.
 - **Tasks** — a story's breakdown into implementable units, with status.
@@ -315,6 +319,10 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Coding Conventions** → **lead-developer** (full, per repo or repo+stack)
 - **Repo-level ADRs** → **lead-developer** (create, per repo or repo+stack)
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors
+- **Source Code** → **coder** (full, per repo or repo+stack); **lead-developer** (full, same location, only when writing code directly — see its MODE 5)
+- **Automated Test Suite** → **qa-automation** (full)
+- **Infrastructure Code** → **devops** (full, per repo/stack/environment)
+- **Test Case Registry** → **manual-qa** (full, per repo or repo+stack)
 - **Tasks** → **lead-developer** (create, for implementation); **orchestrator** (create, for QA and Reconcile — see Pipeline > QA and > Reconcile); any role may self-create one for its own work (e.g. Quick Fix); assignee: status + Implementation Report only
 - **Implementation Report** → **implementor** (full, per task)
 - **Bugs** → **manual-qa** and **qa-automation** (each creates their own)

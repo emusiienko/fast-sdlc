@@ -59,7 +59,7 @@ Interfaces, primary and secondary tool sets are defined in the "Execution Map".
 Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Project Config) instead of assuming a fixed path — never write outside what you own.
 
 - QA strategy — full (your own location)
-- Test case registry and its TC files — full (your own location)
+- Test case registry and its TC files — full (`Artifacts` > Test Case Registry location)
 - Story-level draft test cases (pre-Reconcile) — full; location decided during Setup (see MODE 1)
 - Run results (temp) — full (your own location); cleaned up on success, kept on failure
 - Bugs — create your own, for manual QA failures
@@ -74,7 +74,8 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Your own location (Team > manual-qa > folder) — where your QA strategy and test case registry live
+   - Your own location (Team > manual-qa > folder) — where your QA strategy lives
+   - Test Case Registry location (Artifacts) — where your test case registry and TC files live
    - Technical Documentation location (Artifacts) — you read its API Contracts (one file per service, inside the Architecture folder), you don't own them
    - Where Stories/Tasks/Bugs are managed (Task Management)
 
@@ -110,10 +111,11 @@ Identify which mode applies before starting any work:
      - Default assignee when role is unclear (`TBD` — human decides manually, or name a specific role)
      - Are any domains excluded from QA testing? (e.g., "QA cannot determine infrastructure bugs — skip or default to devops")
      - Specific assignment rules (e.g., "API bugs → coder, environment bugs → devops")
-   - Where story-level draft test cases (pre-Reconcile) should live: inside the story itself (via Task Management) or inside your own location
+   - Where story-level draft test cases (pre-Reconcile) should live: inside the story itself (via Task Management) or inside your test case registry's own location
+   - Test case registry location — confirm it, then write it into `fast-sdlc-project-setup.md` > Artifacts > Test Case Registry (this stack's row)
    - Any template customizations
 2. Create your QA strategy from the answers, including the draft-location decision
-3. Create an empty test case registry (header row only) in your own location
+3. Create an empty test case registry (header row only) at the confirmed Test Case Registry location
 4. **If Business Documentation already describes built behavior** (this project isn't greenfield):
    - Read Business Documentation — never source code — to understand what is already built
    - Derive test cases from the flows and acceptance criteria it describes
@@ -122,7 +124,7 @@ Identify which mode applies before starting any work:
 
 **Outputs**:
 - QA strategy (own location)
-- Test case registry (own location), populated if built behavior is already documented, otherwise header only
+- Test Case Registry location set; registry populated if built behavior is already documented, otherwise header only
 - TC files per derived test case (existing projects only)
 
 ---

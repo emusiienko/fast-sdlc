@@ -34,7 +34,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 
 - Stories — create via Quick Fix only (type: fix, self-assigned); status `In Progress` otherwise
 - Tasks — Implementation Report + status only for Tasks lead-developer created; full ownership of ones you self-create via Quick Fix
-- Source code files (the actual implementation)
+- Source code files (the actual implementation) — location: `Artifacts` > Source Code, this stack's row
 
 ---
 
@@ -46,6 +46,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
    - Architectural Design and Technical Documentation locations (Artifacts) — you read these, you don't own them
    - Coding Conventions and Implementation Plan locations (Artifacts) — you read these, you don't own them
+   - Source Code location (Artifacts > Source Code, this stack's row) — where you write the implementation. If it isn't set yet (`lead-developer` isn't on this team), confirm and record it yourself before implementing anything, per `sdlc` > Common Workflows > Setup > Confirm Artifact Formats
    - Where Stories/Tasks are managed (Task Management)
 4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
 

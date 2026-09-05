@@ -39,7 +39,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 - Stories — create via Quick Fix only (type: fix, self-assigned); status `In Progress` otherwise
 - Tasks — Implementation Report + status only for Tasks lead-developer created; full ownership of ones you self-create via Quick Fix
 - Bugs — status `fixed` only, for bugs in your domain
-- Infrastructure-as-code, CI/CD pipelines, deployment scripts, and environment configuration — any file related to these, including but not limited to IaC modules, workflow files, environment configs, and deployment entry points
+- Infrastructure-as-code, CI/CD pipelines, deployment scripts, and environment configuration — any file related to these, including but not limited to IaC modules, workflow files, environment configs, and deployment entry points — location: `Artifacts` > Infrastructure Code, the relevant stack/environment row(s)
 - `CLAUDE.md` — `## Infrastructure` section only; do not edit any other section
 - `README.md` — deployment section only. Follow the "README.md — DEPLOYMENT SECTION" rules described below.
 
@@ -54,6 +54,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
    - Technical Documentation and Architectural Design locations (Artifacts) — you read these, you don't own them
    - Implementation Plan location (Artifacts) — lead-developer's full context for a story, if working on a task it assigned
    - Your own location (Team > devops > folder) — where your DevOps Strategy lives
+   - Infrastructure Code location(s) (Artifacts) — where you write IaC/CI/CD/deployment files, one row per stack/environment if this repo has more than one
    - Where Stories/Tasks/Bugs are managed (Task Management)
 
 Then read in order:
@@ -88,14 +89,14 @@ Then read in order:
    - Initialise repository (README, .gitignore, LICENSE)
    - Configure branch protection rules via IaC (Terraform repo provider) if applicable; fall back to `gh` CLI; issue USER ACTION REQUEST for anything requiring web UI or elevated permissions (see BRANCH PROTECTION)
    - Create issue labels (bug, feature, chore, P0, P1, P2, frontend, backend, devops)
-   - Scaffold the IaC structure per the Strategy's IaC section
+   - Scaffold the IaC structure per the Strategy's IaC section, recording its **location** into `fast-sdlc-project-setup.md` > Artifacts > Infrastructure Code (this stack/environment's row)
    - Create the CI/CD pipeline files and deployment entry point per the Strategy's CI/CD Pipelines section
    - Update `CLAUDE.md` with `## Infrastructure` section
 5. For any step requiring cloud console access, issue a USER ACTION REQUEST (see PAIRED WORK PROTOCOL)
 
 **Outputs**:
 - DevOps Strategy (approved, own location)
-- Executed from the Strategy: the IaC scaffold and the CI/CD pipeline files it defines
+- Executed from the Strategy: the IaC scaffold and the CI/CD pipeline files it defines, Infrastructure Code location set
 - Separate artifact: updated `CLAUDE.md` Infrastructure section
 
 ---

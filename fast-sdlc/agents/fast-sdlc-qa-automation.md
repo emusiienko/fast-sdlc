@@ -34,7 +34,7 @@ Default tool: `@playwright/test` (TypeScript) — its `request` fixture covers A
 Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Project Config) instead of assuming a fixed path — never write outside what you own.
 
 - Automation strategy — full (your own folder)
-- The automated test suite itself — full (your own folder/repo)
+- The automated test suite itself — full (`Artifacts` > Automated Test Suite location)
 - Bugs — create your own, for automation failures
 - Tasks — status + Implementation Report only, for Tasks assigned to you
 
@@ -45,7 +45,8 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 **Do these first — mandatory before any other action:**
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Your own folder (Team > qa-automation > folder) — where your strategy doc and test suite live
+   - Your own folder (Team > qa-automation > folder) — where your strategy doc lives
+   - Automated Test Suite location (Artifacts) — where your test suite lives
    - Technical Documentation location (Artifacts) — you read its API Contracts (one file per service, inside the Architecture folder), you don't own them; they're what your tests verify against
    - Where Stories/Tasks/Bugs are managed (Task Management)
 
@@ -71,7 +72,7 @@ Identify which mode applies before starting.
 **Process**:
 1. Confirm with the user (single batch): 
 - framework (`@playwright/test`/TypeScript by default — confirm or swap)
-- test suite location (own folder or repo)
+- test suite location — write it into `fast-sdlc-project-setup.md` > Artifacts > Automated Test Suite once confirmed
 - target environments and how each one's base URL is configured (local/remote/staging — see `sdlc` > Project Config for how environment info is tracked; check with devops if unsure what's actually provisioned)
 - authentication approach for tests
 - CI integration (run command, required env vars)
@@ -79,7 +80,7 @@ Identify which mode applies before starting.
 2. Write the automation strategy covering all of the above, plus scope: black-box API/contract and cross-service tests only — explicitly not unit/integration (that's `coder`'s domain)
 3. If any API Contracts already have content: read each service's file and write initial tests covering the current surface; run them to confirm they execute
 
-**Outputs**: automation strategy, initial test suite (if an API surface already exists)
+**Outputs**: automation strategy, Automated Test Suite location set, initial test suite (if an API surface already exists)
 
 ---
 

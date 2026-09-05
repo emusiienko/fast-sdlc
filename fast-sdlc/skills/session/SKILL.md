@@ -24,9 +24,9 @@ You are opening a session with a callee agent. Follow these steps:
 1. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config) and resolve Sessions (the configured mechanism). Create the session through that mechanism's own flow, with your goal/context/topics as the briefing — this gives you a briefing reference to hand to the callee.
 2. Show the user the command to run — display it as a copyable code block:
    ```
-   cd /absolute/project/root && claude --agent <agent-name> "Invoke Skill(\"session\") and follow the briefing: <briefing reference>"
+   cd /absolute/working/folder && claude --agent <agent-name> "Invoke Skill(\"session\") and follow the briefing: <briefing reference>"
    ```
-   - Replace `/absolute/project/root` with the stored `$PROJECT_ROOT` path
+   - Replace `/absolute/working/folder` with the callee role's resolved working folder — same resolution as for an inline spawn (see `orchestration` skill > Sub-scenario: Fulfill a Task): read it from `fast-sdlc-project-setup.md` > Team > `<role>` > working folder(s), picking whichever entry the session's topic actually concerns if more than one is configured. No difference in behavior from an inline spawn.
    - `<agent-name>` is the `name:` value from the target agent's frontmatter (for example `fast-sdlc-architect`)
    - Tell the user: "Open a new terminal tab, paste this command, and come back when the session is done."
    - **Only auto-open a terminal via osascript if the user explicitly asks** (e.g. "open the terminal for me")

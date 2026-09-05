@@ -60,8 +60,8 @@ Before any other action, determine the project root:
 **Important — Bash calls are stateless**: `cd` does not persist between Bash tool calls. Always use the absolute project root path explicitly:
 - Bash: prefix with `cd $PROJECT_ROOT &&` in every call that needs it
 - Read / Write / Edit: use full paths resolved from `fast-sdlc-project-setup.md`
-- osascript face-to-face spawn: substitute `$PROJECT_ROOT` into the `cd` command (see Face-to-face sessions in `~/.claude/skills/session/SKILL.md`)
-- Agent tool (inline): include `Project root: $PROJECT_ROOT` in the agent's initial prompt so the agent can orient itself
+- osascript face-to-face spawn: substitute the assignee role's resolved working folder (see Sub-scenario: Fulfill a Task) into the `cd` command instead of `$PROJECT_ROOT` (see Face-to-face sessions in `~/.claude/skills/session/SKILL.md`)
+- Agent tool (inline): include `Working folder: <resolved path>` in the agent's initial prompt (see Sub-scenario: Fulfill a Task) so the agent orients itself there instead of the project root
 
 ---
 
@@ -247,6 +247,8 @@ Every Task you create for a role is fulfilled one of two ways — decide per Tas
 
 Ask the user once per Task when it's not obvious which fits ("autonomously or face-to-face?") — default to inline for well-scoped implementation/QA/reconcile work, default to asking for planning-heavy work (Discovery, Spec, Architecture, Repo Planning). Either way, the agent follows its own lifecycle including marking the Task `Done`.
 
+**Before spawning, either way**: resolve the assignee role's working folder(s) from `fast-sdlc-project-setup.md` > Team > `<role>` > working folder(s). If more than one is configured (e.g. one per stack/environment), pick whichever the Task's story/context actually concerns. Use that path as the spawn location (see Agent briefings) instead of the project root.
+
 ---
 
 ## Sub-scenario: Stabilization loop
@@ -301,7 +303,7 @@ This applies to both inline agent prompts (Agent tool) and session briefing file
 
 Every briefing contains only:
 
-- **Project root** — absolute path
+- **Working folder** — the assignee role's resolved working folder (see Sub-scenario: Fulfill a Task), absolute path
 - **The task** — a Task reference + story, or the user's request verbatim
 - **User instructions** — if the user provided specific instructions for the agent, pass them through unchanged and in full
 - **Conversation summary** — a concise account of the exchanges and decisions made in the orchestrator's session that led to this agent being launched. Include key decisions, open questions, and any constraints the user stated. Keep it short; do not include pre-interpreted content or instructions from other skills.

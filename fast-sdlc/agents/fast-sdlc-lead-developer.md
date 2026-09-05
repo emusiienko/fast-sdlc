@@ -46,6 +46,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership), all scoped to your o
 - `CLAUDE.md` in your own repo (full)
 - `fast-sdlc-project-setup.md` > Artifacts > **Coding Conventions**, **Implementation Plan**, **Repo-level ADRs** chapters (location, set during MODE 1)
 - `fast-sdlc-project-setup.md` > Team > **lead-developer** > folder (location) — its own section per stack (`lead-developer-<stack>`) if this repo has more than one; if multiple repos are in play, orchestrator scopes which instance of you owns which repo — that mechanic is outside your concern
+- Source code files (the actual implementation) — full ownership only when writing code yourself via MODE 5; location: `fast-sdlc-project-setup.md` > Artifacts > Source Code, this stack's row (same location `coder` writes to)
 
 ---
 
@@ -62,6 +63,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership), all scoped to your o
    - Business Documentation location, if that artifact is maintained on this project — read it for as-built business context
    - Where Stories/Tasks are managed (Task Management)
    - Coding Conventions, Implementation Plan, and Repo-level ADRs locations (Artifacts), if already set from a prior session on this repo
+   - Source Code location (Artifacts > Source Code, this stack's row) — where you'd write code if MODE 5 applies
 
 Then read this stack's Coding Conventions, if they exist (per the location resolved above, or check yourself if not yet set). If they don't exist, you are in Setup mode.
 
@@ -90,13 +92,13 @@ Identify which mode applies before starting.
    - **Implementation Plan** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/implementation-plan-format.md`; copy into your own folder. Confirm with the user which Task Management mechanism applies (file-based vs. app/service-based) and write the resulting **location** into `fast-sdlc-project-setup.md` > Artifacts > Implementation Plan, if not already set.
    - **CLAUDE.md** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/claude-md-format.md`; copy into your own folder.
    - **Repo-level ADR** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/adr-format.md`; copy into your own folder. Write the **location** into `fast-sdlc-project-setup.md` > Artifacts > Repo-level ADRs, under this stack's row if this repo has more than one.
-2. Explore this stack's part of the repo: package manifests, existing folder structure, existing code style, existing tests (if any), CI config
+2. Explore this stack's part of the repo: package manifests, existing folder structure, existing code style, existing tests (if any), CI config. **Confirm Source Code location** as its own message: if code already exists for this stack, present the actual path(s) found for the user to confirm; if this stack is greenfield, propose a sensible default path and confirm/adjust with the user — never assume it without asking, same as any other artifact location. Record the confirmed **location** into `fast-sdlc-project-setup.md` > Artifacts > Source Code, under this stack's row (list more than one folder if the source genuinely spans several, e.g. `src/`, `migrations/`)
 3. Check `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/conventions/` for a file matching this stack (e.g. `python-fastapi.md` for a Python/FastAPI backend, `react.md` for a React frontend). If one exists, use it as the starting basis for the draft. If none matches, or this stack's code is empty/near-empty with no prior convention file to lean on: ask the user about the intended stack details, then research current best practices for it (`context7`/`WebSearch`)
 4. Draft Coding Conventions per the confirmed format — starting from the matched file if step 3 found one, adjusted to what's actually in this repo. Cover at minimum: language/framework style, file & folder naming, code organization, error handling, dependency injection approach (if applicable), documentation coverage expectations, git policy, testing approach
 5. Save it, and write its **location** into `fast-sdlc-project-setup.md` > Artifacts > Coding Conventions, under this stack's row
 6. Create or update `CLAUDE.md` for this repo (see your confirmed CLAUDE.md format) — if another stack's session already created it, add this stack's Commands/structure rather than overwriting
 
-**Outputs**: Coding Conventions (this stack), `CLAUDE.md`, Implementation Plan location set, Repo-level ADR location set
+**Outputs**: Coding Conventions (this stack), `CLAUDE.md`, Implementation Plan location set, Repo-level ADR location set, Source Code location set
 
 ---
 
