@@ -159,23 +159,30 @@ User wants to implement a story whose scope is planned (Architectural Design cov
 8. Repeat until every Task for this story is `Done`
 9. Orchestrator sets the story `Pending Approval` once all implementation Tasks (coder, devops) are `Done` — QA Tasks don't gate this transition
 
+**PR Review phase:**
+10. Orchestrator opens the Pull Request(s) bundling the story's implementation work
+11. Present: "STORY-NNN implementation is ready for review — here's the PR: `<link>`"
+12. If the user leaves feedback on the PR: create a Task for the responsible role — "address review feedback on PR `<link>`" (per the `pr-review-response` skill) — fulfill it, repeat until the user is satisfied
+13. Wait for the user to approve the PR — no merge yet
+
+**Deviation Report:**
+14. Fulfill lead-developer's Reconcile Task, one per stack (see `sdlc` > Pipeline > Reconcile) — produces the Story Implementation Deviation Report from the approved code
+
 **QA phase:**
-10. Run the Stabilization loop (see sub-scenario above) — ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)
+15. Run the Stabilization loop (see sub-scenario above) — qa-automation/manual-qa read the Deviation Report from step 14; ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)
 
-**Acceptance phase** *(see `sdlc` > Pipeline > Acceptance)*:
-11. Orchestrator opens the Pull Request(s) bundling the story's implementation work
-12. Present: "STORY-NNN is ready — here's the PR: `<link>`"
-13. If the user leaves feedback on the PR: create a Task for the responsible role — "address review feedback on PR `<link>`" (per the `pr-review-response` skill) — fulfill it, repeat until the user is satisfied
-14. Wait for the user to merge the PR and explicitly accept the story
+**Acceptance:**
+16. Once QA is clean: present: "STORY-NNN passed QA — ready to merge and accept"
+17. Wait for the user to merge the PR and explicitly accept the story
 
-**Reconcile (after the Acceptance PR is merged)** *(see `sdlc` > Pipeline > Reconcile)*:
-15. Create one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's Task), qa-automation/manual-qa if active (`Dependencies: None`)
-16. Fulfill each Task once its dependencies are `Done` (see Fulfill a Task)
-17. Once every Reconcile Task for the story is `Done`: orchestrator opens the Reconcile Pull Request(s) if needed, routing any feedback the same way as Acceptance (step 13)
-18. Once the user merges the Reconcile PR(s) and explicitly accepts the reconciliation: orchestrator sets the story `Done`
+**Reconcile (after the story is `Accepted`)** *(see `sdlc` > Pipeline > Reconcile)*:
+18. Create one Reconcile Task per applicable role: architect (`Dependencies: None` — lead-developer's Task from step 14 is already `Done`), business-analyst (`Dependencies:` architect's Task)
+19. Fulfill each Task once its dependencies are `Done` (see Fulfill a Task)
+20. Once every Reconcile Task for the story is `Done`: orchestrator opens the Reconcile Pull Request(s) if needed, routing any feedback the same way as the PR Review phase (step 12)
+21. Once the user merges the Reconcile PR(s): orchestrator sets the story `Done`
 
 #### Outputs
-Story reaches `Done`; Acceptance and Reconcile Pull Requests merged. 
+Story reaches `Done`; implementation and Reconcile Pull Requests merged. 
 
 ### 4. Report Issue
 
@@ -258,7 +265,7 @@ Used once a story's implementation Tasks are all `Done` — see `sdlc` > Pipelin
 1. Create a Task for each active QA role — manual-qa's depending on qa-automation's if both are active, so qa-automation always runs first
 2. Fulfill qa-automation's Task (if active); **Checkpoint**: present the result
 3. If it filed any Bugs: create the next qa-automation Task now, before fixing anything — its existence is the signal that this round isn't closed yet, so an interruption mid-fix always leaves something to resume from. Then route each Bug through Bug Fix to the responsible role.
-4. Once every Bug from this round is `fixed`: fulfill the Task created in step 3 — repeat from step 3 until a run files nothing new
+4. Once every Bug from this round is `fixed`: re-fulfill lead-developer's Reconcile Task to refresh the Story Implementation Deviation Report; if the refreshed report has new content, re-fulfill qa-automation's own Reconcile Task against it. Then fulfill the Task created in step 3 — repeat from step 3 until a run files nothing new
 5. Fulfill manual-qa's Task (if active), once qa-automation's is `Done`; **Checkpoint**: present the result
 6. Apply the same pattern as steps 3–4 to manual-qa's own Bugs, until a run files nothing new and manual-qa itself sets the story `Approved`
 7. If manual-qa isn't active: the story is Accept-eligible directly once qa-automation's Task (if active) is `Done`

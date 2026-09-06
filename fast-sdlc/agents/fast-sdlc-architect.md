@@ -152,25 +152,28 @@ Do not proceed until all ten are settled. Then write each confirmed location (an
 
 ### MODE 4: RECONCILE
 
-**Goal**: Fold what was planned into the Architecture folder, record confirmed decisions in the ADR Log.
+**Goal**: Update the Architecture folder and ADR Log to reflect what was actually built, using the Story Implementation Deviation Report(s) to know what changed.
 
 See `sdlc` skill for the full Reconcile workflow steps.
 
 **Process**:
-1. Read the story's Implementation Reports, and any deviations lead-developer raised (post-implementation Deviation Check)
-2. If a deviation affects a still-open Technical Implementation Plan work item: update it first to reflect reality — never as a way to remove or prune work that just got reconciled
-3. Promote/correct Solution Overview and NFR against what was actually built: at the first Reconcile this creates them inside the Architecture folder from the Architectural Design draft; at subsequent Reconciles it corrects them in place. Same templates throughout — draft becomes as-built, never a second document.
-4. Produce or update Data Models (Persistence Map + Physical Data Model) inside the Architecture folder, per DATA MODELING: check whether any story's storage platform is new (produce its format first if so), produce/update the Persistence Map if the system spans more than one store, then the Physical Data Model per affected store.
-5. Produce or update API Contracts inside the Architecture folder — one file per affected service, per API CONTRACT DESIGN.
-6. Create an ADR Log entry for each confirmed significant decision (cross-reference the anticipated decisions noted in Solution Overview's Key Decisions, or in a change note, wherever this scope's plan noted them) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
-7. Produce or promote a Deployment/Infrastructure View only if topology is genuinely non-trivial by now; otherwise leave its content inside Solution Overview's Deployment Topology subsection
-8. Assemble or update SAD — the Architecture folder's master document; a cheap update at every Reconcile, with a fuller pass at milestone boundaries
-9. Update `CLAUDE.md` if structure/commands changed
-10. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
+1. Read the Story Implementation Deviation Report(s) for this story — one per stack that had work in it.
+2. If every report's Architecture, Data Models, and API Contracts sections say "No deviations": note that there's nothing to reconcile and skip straight to step 11.
+3. If a deviation affects a still-open Technical Implementation Plan work item: update it first to reflect reality — never as a way to remove or prune work that just got reconciled
+4. Where the Architecture section has entries: promote/correct Solution Overview and NFR per what those entries describe.
+5. Where the Data Models section has entries: produce or update Data Models (Persistence Map + Physical Data Model) inside the Architecture folder per what those entries describe, per DATA MODELING: check whether any story's storage platform is new (produce its format first if so), produce/update the Persistence Map if the system spans more than one store, then the Physical Data Model per affected store.
+6. Where the API Contracts section has entries: produce or update API Contracts inside the Architecture folder per what those entries describe — one file per affected service, per API CONTRACT DESIGN.
+7. Create an ADR Log entry for each confirmed significant decision surfaced by any non-empty section (cross-reference the anticipated decisions noted in Solution Overview's Key Decisions, or in a change note, wherever this scope's plan noted them) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
+8. Produce or promote a Deployment/Infrastructure View only if topology is genuinely non-trivial by now; otherwise leave its content inside Solution Overview's Deployment Topology subsection
+9. Update SAD — the Architecture folder's master document — only if anything from steps 4–8 changed content it aggregates or links to. A fuller pass still happens at milestone boundaries regardless.
+10. Update `CLAUDE.md` if structure/commands changed
+11. Commit your changes to the branch named for this Reconcile Task, if anything changed; fill the Implementation Report and mark the Task `Done`
+
+**Never read raw Implementation Reports or source code to reconstruct what changed for Reconcile** — the Story Implementation Deviation Report(s) are the single source for this.
 
 **Outputs**:
-- Updated Architecture folder: Solution Overview, NFR (as-built), Data Models, API Contracts, SAD
-- New ADR Log entries
+- Updated Architecture folder: whichever of Solution Overview, NFR (as-built), Data Models, API Contracts, SAD actually changed
+- New ADR Log entries, if any
 - Deployment/Infrastructure View, produced or updated only if topology warrants it
 - Updated `CLAUDE.md`, if needed
 - Technical Implementation Plan updated, only if a deviation affected a still-open work item

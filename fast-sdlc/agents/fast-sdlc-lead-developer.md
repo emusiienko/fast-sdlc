@@ -92,6 +92,7 @@ Identify which mode applies before starting.
    - **Implementation Plan** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/implementation-plan-format.md`; copy into your own folder. Confirm with the user which Task Management mechanism applies (file-based vs. app/service-based) and write the resulting **location** into `fast-sdlc-project-setup.md` > Artifacts > Implementation Plan, if not already set.
    - **CLAUDE.md** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/claude-md-format.md`; copy into your own folder.
    - **Repo-level ADR** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/adr-format.md`; copy into your own folder. Write the **location** into `fast-sdlc-project-setup.md` > Artifacts > Repo-level ADRs, under this stack's row if this repo has more than one.
+   - **Story Implementation Deviation Report** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/story-implementation-deviation-report-format.md`; copy into your own folder. Confirm with the user which Task Management mechanism applies (same as Implementation Plan) and write the resulting **location** into `fast-sdlc-project-setup.md` > Artifacts > Story Implementation Deviation Report, if not already set.
 2. Explore this stack's part of the repo: package manifests, existing folder structure, existing code style, existing tests (if any), CI config. **Confirm Source Code location** as its own message: if code already exists for this stack, present the actual path(s) found for the user to confirm; if this stack is greenfield, propose a sensible default path and confirm/adjust with the user — never assume it without asking, same as any other artifact location. Record the confirmed **location** into `fast-sdlc-project-setup.md` > Artifacts > Source Code, under this stack's row (list more than one folder if the source genuinely spans several, e.g. `src/`, `migrations/`)
 3. Check `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/conventions/` for a file matching this stack (e.g. `python-fastapi.md` for a Python/FastAPI backend, `react.md` for a React frontend). If one exists, use it as the starting basis for the draft. If none matches, or this stack's code is empty/near-empty with no prior convention file to lean on: ask the user about the intended stack details, then research current best practices for it (`context7`/`WebSearch`)
 4. Draft Coding Conventions per the confirmed format — starting from the matched file if step 3 found one, adjusted to what's actually in this repo. Cover at minimum: language/framework style, file & folder naming, code organization, error handling, dependency injection approach (if applicable), documentation coverage expectations, git policy, testing approach
@@ -142,19 +143,19 @@ Identify which mode applies before starting.
 
 **Preconditions**: the current stack is defined and known for this session (see BEFORE STARTING).
 
-**Trigger**: this stack's Tasks for a story are all `Done` with filled Implementation Reports.
+**Trigger**: given, once the story's Acceptance Pull Request is merged.
 
-**Goal**: Check this stack's Implementation Plan against what was actually built; surface anything architecturally significant to architect before architect's own Reconcile runs.
+**Goal**: Check this stack's Implementation Plan against what was actually built; produce the Story Implementation Deviation Report so architect, business-analyst, and qa-automation can use it to find out what changed.
 
 **Process**:
 1. Read this stack's Tasks for the story and their Implementation Reports
 2. Compare against the Implementation Plan — identify deviations: approach changed, scope changed, unplanned dependencies introduced
-3. **Deviation Check (post-implementation)**: if a deviation is significant AND crosses into architect's territory (would change Technical Documentation, or a planned ADR's trigger condition affecting other repos) — raise it to architect with the specific Implementation Report(s) as evidence.
-4. For confirmed decisions scoped to this repo only (see TECH DECISIONS POLICY): create the Repo-level ADR file, cross-referencing the "Planned ADRs" noted in the Implementation Plan. If it supersedes a prior repo-level ADR, update the old one's `Status` field only.
-5. Update `CLAUDE.md` if this repo's structure/commands changed
-6. Update Coding Conventions if the story revealed a gap or a pattern worth standardizing
+3. **Produce the Story Implementation Deviation Report** (per your confirmed format): sort every deviation found into its section — Architecture, Data Models, API Contracts, Requirements. Write "No deviations" in a section when nothing in it applies. A deviation can land in more than one section if it genuinely affects more than one concern.
+4. If every section says "No deviations": save the report as-is, fill the Implementation Report noting nothing to reconcile, and stop here — skip steps 5–6.
+5. For confirmed decisions scoped to this repo only (see TECH DECISIONS POLICY): create the Repo-level ADR file, cross-referencing the "Planned ADRs" noted in the Implementation Plan. If it supersedes a prior repo-level ADR, update the old one's `Status` field only.
+6. Update `CLAUDE.md` if this repo's structure/commands changed
 
-**Outputs**: New Repo-level ADR files, if any; updated `CLAUDE.md` and/or Coding Conventions, if needed; deviations raised to architect, if any
+**Outputs**: Story Implementation Deviation Report (this stack); New Repo-level ADR files, if any; updated `CLAUDE.md` and/or Coding Conventions, if needed
 
 ---
 

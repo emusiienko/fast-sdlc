@@ -211,16 +211,18 @@ Requirements is migrated to Business Documentation — if that artifact is maint
 
 ### MODE 3: RECONCILE
 
-**Goal**: Update Business Documentation with what was actually built, and Requirements too if it turns out to have been wrong about it.
+**Goal**: Update Business Documentation and Requirements to reflect what the Story Implementation Deviation Report(s) describe.
 
 **Process** (business-analyst-specific steps — generic reconcile steps are in the `sdlc` skill):
-1. Read the Story and all its Tasks' Implementation Reports
-2. Identify discrepancies — behavior that diverged, fields changed, access rules changed — from what Requirements said would be built
-3. If a Business Documentation artifact exists on this project, update it — per your confirmed Business Documentation format — with what was actually built, including the discrepancies from step 2. Carry the Conceptual catalog/views across from Requirements, correcting them against what was actually built (per the Implementation Reports). Correct the Logical catalog/views the same way, for the same discrepancies — in place, since they already live in Business Documentation rather than being carried across.
-4. If a discrepancy was found: correct Requirements to reflect it, per your confirmed Requirements format — including its Conceptual Data Model, if the discrepancy affects an entity, attribute, or relationship. Requirements still holds what's pending for other stories; leaving it drifted means they plan against a model that's already wrong.
-5. Commit your changes to the branch named for this Reconcile Task; fill the Implementation Report and mark the Task `Done`
+1. Read the Story Implementation Deviation Report(s)' Requirements sections — one per stack that had work in this story.
+2. If every report's Requirements section says "No deviations": note that there's nothing to reconcile and skip straight to step 5.
+3. If a Business Documentation artifact exists on this project, update it — per your confirmed Business Documentation format — per what those entries describe. Carry the Conceptual catalog/views across from Requirements, correcting them per what those entries describe. Correct the Logical catalog/views the same way — in place, since they already live in Business Documentation rather than being carried across.
+4. Correct Requirements per what those entries describe, per your confirmed Requirements format — including its Conceptual Data Model, where an entry affects an entity, attribute, or relationship. Requirements still holds what's pending for other stories; leaving it drifted means they plan against a model that's already wrong.
+5. Commit your changes to the branch named for this Reconcile Task, if anything changed; fill the Implementation Report and mark the Task `Done`
 
-**Outputs**: updated Business Documentation (if it exists on this project); updated Requirements, if a discrepancy was found
+**Never read raw Implementation Reports or source code to reconstruct what changed for Reconcile** — the Story Implementation Deviation Report(s) are the single source for this.
+
+**Outputs**: updated Business Documentation (if it exists on this project); updated Requirements, if an entry was found
 
 ---
 

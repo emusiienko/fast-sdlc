@@ -135,6 +135,12 @@ system and how to query it, etc.
 - app/service-based Task Management: attached to the story object in that system
 <confirm which applies with lead-developer during Setup>
 
+### Story Implementation Deviation Report
+**location**: depends on the Task Management mechanism in use, one per stack if this repo has more than one —
+- file-based Task Management (default): inside the story's own folder, e.g. `docs/stories/STORY-NNN/deviation-report-<stack>.md` (drop the `-<stack>` suffix if this repo has only one)
+- app/service-based Task Management: attached to the story object in that system, one per stack
+<confirm which applies with lead-developer during Setup>
+
 ### Repo-level ADRs
 **location**: `<path>` (one series per stack if this repo has more than one)
 

@@ -52,6 +52,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Story Implementation Plan** — architect's cross-repo detail for a single story, during its execution window: technical approach, key decisions, and implementation steps for other roles to turn into their own Tasks. Produced only when a story needs it.
 - **Coding Conventions** — a repo's (or a repo+stack's) coding standards, grounded in its actual codebase.
 - **Implementation Plan** — the technical approach and ordered task breakdown for a single story, within a single repo (or repo+stack).
+- **Story Implementation Deviation Report** — lead-developer's filtered account of what deviated from plan for a story, within a single repo (or repo+stack), sorted into the sections each downstream role actually needs (Architecture, Data Models, API Contracts, Requirements) — read instead of raw Implementation Reports.
 - **Repo-level ADRs** — architectural decisions scoped to a single repo, distinct from project-level ADRs.
 - **Source Code** — the actual implementation for a repo (or repo+stack).
 - **Automated Test Suite** — qa-automation's black-box test code, verifying the system from the outside across repos/services.
@@ -279,15 +280,14 @@ After Bug Fix: the orchestrator creates a fresh Task for whichever QA role filed
 ### Reconcile
 *Trigger: the story's Acceptance Pull Request is merged, or by request*
 
-1. Orchestrator creates one Reconcile Task per applicable role: architect (`Dependencies: None`), business-analyst (`Dependencies:` architect's task), qa-automation and manual-qa if active (`Dependencies: None` — parallel)
+1. Orchestrator creates one Reconcile Task per applicable role: lead-developer (`Dependencies: None`, one per stack), architect (`Dependencies:` every lead-developer Reconcile Task), business-analyst (`Dependencies:` architect's task)
 2. Each role works its Task once its dependencies are `Done`, committing to a new branch named after the (now-merged) implementation branch plus a suffix describing its own reconcile work — high level, per role (full detail in each role's own instructions):
-   - **architect**: folds what was planned into Technical Documentation; records confirmed project-level decisions in the ADR Log
-   - **business-analyst**: updates Business Documentation with what was built, if that artifact exists on this project; updates Requirements too if the Implementation Reports reveal a discrepancy against what was said would be built
-   - **qa-automation**: updates its automation scripts/tests to match what was built
-   - **manual-qa**: merges the story's test cases into its own registry
+   - **lead-developer**: produces the Story Implementation Deviation Report for its stack, sorted into Architecture/Data Models/API Contracts/Requirements; records repo-level ADRs and Coding Conventions/`CLAUDE.md` updates where warranted
+   - **architect**: reads the Story Implementation Deviation Report(s); updates whichever of Technical Documentation, Data Models, API Contracts, and the ADR Log the report's sections affect
+   - **business-analyst**: reads the Story Implementation Deviation Report(s)' Requirements sections; updates Business Documentation with what was built, if that artifact exists on this project; updates Requirements too if a discrepancy was found
 3. Once every Reconcile Task for a story is `Done`, orchestrator opens the Pull Request(s) it needs, routing feedback the same way as Acceptance; once the user merges, orchestrator sets the story `Done` and archives it
 
-Lead-developer's repo-level ADRs are not part of this workflow — they're raised as needed via Deviation Check during Implement Story.
+qa-automation and manual-qa sit outside this automatic chain — orchestrator creates each of their Reconcile Tasks separately, by its own judgment (typically once the Story Implementation Deviation Report exists, and again later if it changes, e.g. after a bug-fix round). Each reads the report's relevant section on its own Task; see each role's own instructions.
 
 ---
 
@@ -319,6 +319,7 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Coding Conventions** → **lead-developer** (full, per repo or repo+stack)
 - **Repo-level ADRs** → **lead-developer** (create, per repo or repo+stack)
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors
+- **Story Implementation Deviation Report** → **lead-developer** (create, per story per repo/stack); **coder** (create, same location, only when lead-developer isn't on the team); read-only for architect, business-analyst, qa-automation, manual-qa
 - **Source Code** → **coder** (full, per repo or repo+stack); **lead-developer** (full, same location, only when writing code directly — see its MODE 5)
 - **Automated Test Suite** → **qa-automation** (full)
 - **Infrastructure Code** → **devops** (full, per repo/stack/environment)
