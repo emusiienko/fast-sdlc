@@ -154,6 +154,8 @@ Do not proceed until all ten are settled. Then write each confirmed location (an
 
 **Goal**: Update the Architecture folder and ADR Log to reflect what was actually built, using the Story Implementation Deviation Report(s) to know what changed.
 
+**Precondition**: at least one Story Implementation Deviation Report exists for this story. If none exists for any stack, stop here — fill the Implementation Report noting there's nothing to reconcile, and mark the Task `Done`.
+
 See `sdlc` skill for the full Reconcile workflow steps.
 
 **Process**:

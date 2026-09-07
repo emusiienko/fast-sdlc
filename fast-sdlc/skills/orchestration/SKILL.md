@@ -166,7 +166,7 @@ User wants to implement a story whose scope is planned (Architectural Design cov
 13. Wait for the user to approve the PR — no merge yet
 
 **Deviation Report:**
-14. Fulfill lead-developer's Reconcile Task, one per stack (see `sdlc` > Pipeline > Reconcile) — produces the Story Implementation Deviation Report from the approved code
+14. If this story has no lead-developer/coder/devops Tasks at all: skip straight to Acceptance — there's no Deviation Report to produce, and the whole Reconcile phase (steps 18–21) is skipped too, since architect/business-analyst would have nothing to read. Otherwise, fulfill lead-developer's Reconcile Task, one per stack (see `sdlc` > Pipeline > Reconcile) — produces the Story Implementation Deviation Report from the approved code
 
 **QA phase:**
 15. Run the Stabilization loop (see sub-scenario above) — qa-automation/manual-qa read the Deviation Report from step 14; ends with the story `Approved` (manual-qa active) or directly Accept-eligible from `Pending Approval` (manual-qa not active)

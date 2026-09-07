@@ -213,6 +213,8 @@ Requirements is migrated to Business Documentation — if that artifact is maint
 
 **Goal**: Update Business Documentation and Requirements to reflect what the Story Implementation Deviation Report(s) describe.
 
+**Precondition**: at least one Story Implementation Deviation Report exists for this story. If none exists for any stack, stop here — fill the Implementation Report noting there's nothing to reconcile, and mark the Task `Done`.
+
 **Process** (business-analyst-specific steps — generic reconcile steps are in the `sdlc` skill):
 1. Read the Story Implementation Deviation Report(s)' Requirements sections — one per stack that had work in this story.
 2. If every report's Requirements section says "No deviations": note that there's nothing to reconcile and skip straight to step 5.
