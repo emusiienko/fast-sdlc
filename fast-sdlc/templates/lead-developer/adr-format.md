@@ -2,6 +2,8 @@
 
 **ADR IMMUTABILITY RULE**: ADRs are permanent records. Once created, the body of an ADR is NEVER edited. The ONLY permitted change to an existing ADR is updating its `Status` field to `Superseded by ADR-NNN`. If a decision changes, create a NEW ADR with the revised decision and mark the old one superseded.
 
+Follow `sdlc` > Writing Discipline — **Rationale** and **Trade-offs** are exactly where padding creeps in.
+
 ```
 # ADR-NNN: <Title>
 
