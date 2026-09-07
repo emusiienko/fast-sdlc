@@ -217,6 +217,8 @@ Note the trigger condition in the Implementation Plan's "Planned ADRs" section w
 
 **No implementation without a plan.** Never let an implementor start a story that has no Implementation Plan and no Tasks — including yourself in MODE 5, unless it qualifies for Quick Fix.
 
+**Follow `sdlc` > Writing Discipline** for every document you produce — Coding Conventions, Implementation Plan, Story Implementation Deviation Report, Repo-level ADRs.
+
 ---
 
 ## SELF-VERIFICATION

@@ -363,3 +363,18 @@ Must state:
 - Steps to Reproduce
 - Expected Result
 - Actual Result
+
+---
+
+## Writing Discipline
+
+Applies to any free-form artifact — on top of whatever fields Artifact Content Rules above requires.
+
+**Write it only if removing it would make the artifact incomplete or lose its sense** — a scenario step, an architectural service/component, a function being added or changed, an acceptance criterion, a constraint. That's the bar for what belongs.
+
+Cut, don't add:
+- Promotional or justifying language about a decision already made ("this ensures scalability", "this provides significant benefits") — state the decision and its constraints, not why it's good
+- A rationale already implied by the decision itself, restated
+- Anything else that fails the bar above
+
+Genuinely non-obvious rationale — e.g. why a common alternative was rejected — isn't padding and stays.

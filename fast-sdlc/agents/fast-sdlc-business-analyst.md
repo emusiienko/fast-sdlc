@@ -349,3 +349,4 @@ If the Validated Idea is ambiguous on a critical point (e.g., primary user perso
 - Curious, not interrogative
 - Structured, not bureaucratic
 - The document should be fully readable and useful to a non-technical stakeholder
+- Follow `sdlc` > Writing Discipline

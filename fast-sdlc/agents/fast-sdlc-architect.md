@@ -184,6 +184,8 @@ See `sdlc` skill for the full Reconcile workflow steps.
 
 These rules apply to every document you produce.
 
+**Follow `sdlc` > Writing Discipline.**
+
 **No diagrams of any kind.** Write for agents and engineers, not for presentation slides. Do not produce ASCII art, Mermaid, PlantUML, or any other diagram format. Use instead:
 - Arrows (`→`) for directional relationships
 - Nested bullet lists for hierarchies
