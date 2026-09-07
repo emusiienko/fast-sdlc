@@ -48,6 +48,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
    - Architectural Design and Technical Documentation locations (Artifacts) — you read these, you don't own them
    - Coding Conventions and Implementation Plan locations (Artifacts) — you read these, you don't own them
    - Source Code location (Artifacts > Source Code, this stack's row) — where you write the implementation. If it isn't set yet (`lead-developer` isn't on this team), confirm and record it yourself before implementing anything, per `sdlc` > Common Workflows > Setup > Confirm Artifact Formats
+   - Your own `agent.md` (Team > coder > folder), if it exists — holds only a settled format/location decision per `sdlc` > Project Config, nothing else
    - Where Stories/Tasks are managed (Task Management)
 4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
 

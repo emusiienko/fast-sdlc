@@ -39,7 +39,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership). Resolve the actual l
 - ADR Log (full — project-level; not in the shared Artifacts list, location/format defined in your own folder; referenced from Architecture's SAD by ID, not physically inside that folder)
 - Architectural Design (full — Solution Overview draft, NFR draft, Technical Implementation Plan)
 - Story Implementation Plan (full, per story — see MODE 3: PLAN STORY IMPLEMENTATION)
-- `CLAUDE.md` (full)
+- `CLAUDE.md` > Key Docs chapter only
 - `fast-sdlc-project-setup.md` > Artifacts > **Architecture**, **Architectural Design**, **Story Implementation Plan** chapters (location + a 2–3 sentence note on how to read it)
 
 ---
@@ -50,7 +50,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership). Resolve the actual l
 1. Invoke `Skill("sdlc")` — load SDLC process, roles, artifacts, and content rules
 2. Invoke `Skill("session")` — if a briefing file was given at launch, this skill handles session mode automatically
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
-   - Your own folder (Team > architect > folder) — read your own `agent.md` for References/Outputs (including ADR location/format), if any
+   - Your own folder (Team > architect > folder) — read your own `agent.md` for References (including ADR location/format), if any
    - Architecture location (Artifacts) — one location for the whole folder: SAD, Solution Overview, NFR, Data Models, API Contracts, Deployment/Infrastructure View are parts of it, not separately located
    - Architectural Design location (Artifacts) — one location for the whole thing; Solution Overview, NFR, and the Technical Implementation Plan are parts of it, not separately located
    - Business Documentation location, if that artifact is maintained on this project — read it for as-built business context
@@ -95,7 +95,7 @@ Do not proceed until all ten are settled. Then write each confirmed location (an
 3. Draft Solution Overview — Purpose, Scope, System Context (C4 Level 1), Key Components (C4 Level 2) — anchored to Requirements' Conceptual Data Model entities and features; note any anticipated decision in Key Decisions with no ADR ID yet
 4. Formalize NFR — turn Requirements' business-stated non-functional needs into measurable targets
 5. Produce the Technical Implementation Plan — work items for the full initial scope, technical dependencies, risks
-6. Create `CLAUDE.md` with project overview, commands, structure map, and pointers to key docs (see your confirmed CLAUDE.md format)
+6. Create `CLAUDE.md` with a project overview and Key Docs pointers (see your confirmed CLAUDE.md format)
 7. **Deviation Check (pre-detail)**: present Architectural Design (all three parts) for review
 
 **Outputs**:
@@ -168,7 +168,7 @@ See `sdlc` skill for the full Reconcile workflow steps.
 7. Create an ADR Log entry for each confirmed significant decision surfaced by any non-empty section (cross-reference the anticipated decisions noted in Solution Overview's Key Decisions, or in a change note, wherever this scope's plan noted them) — if it supersedes a prior decision, update the old ADR's `Status` field only (see ADR IMMUTABILITY RULE)
 8. Produce or promote a Deployment/Infrastructure View only if topology is genuinely non-trivial by now; otherwise leave its content inside Solution Overview's Deployment Topology subsection
 9. Update SAD — the Architecture folder's master document — only if anything from steps 4–8 changed content it aggregates or links to. A fuller pass still happens at milestone boundaries regardless.
-10. Update `CLAUDE.md` if structure/commands changed
+10. Update `CLAUDE.md`'s Key Docs if a doc's location changed
 11. Commit your changes to the branch named for this Reconcile Task, if anything changed; fill the Implementation Report and mark the Task `Done`
 
 **Never read raw Implementation Reports or source code to reconstruct what changed for Reconcile** — the Story Implementation Deviation Report(s) are the single source for this.

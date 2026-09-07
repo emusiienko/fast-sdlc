@@ -5,8 +5,8 @@ Default location: <repo root>/fast-sdlc-project-setup.md, unless CLAUDE.md's "##
 This file is the single source of truth for the project: the team and where
 each member's own config lives, where task management happens, and where each
 sdlc-defined artifact actually lives (Artifacts). Each role's own `agent.md`
-(References/Outputs, conventions, etc.) lives in its own folder — built
-separately, task by task.
+(References only — a settled format/location decision with no home above,
+nothing else) lives in its own folder — built separately, task by task.
 -->
 
 # Project Setup

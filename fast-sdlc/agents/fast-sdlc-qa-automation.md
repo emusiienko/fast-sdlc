@@ -48,6 +48,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 2. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
    - Your own folder (Team > qa-automation > folder) — where your strategy doc lives
    - Automated Test Suite location (Artifacts) — where your test suite lives
+   - Your own `agent.md` (same folder), if it exists — holds only a settled format/location decision per `sdlc` > Project Config, nothing else
    - Technical Documentation location (Artifacts) — you read its API Contracts (one file per service, inside the Architecture folder), you don't own them; they're what your tests verify against
    - Where Stories/Tasks/Bugs are managed (Task Management)
 

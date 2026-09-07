@@ -76,6 +76,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it). From it, resolve:
    - Your own location (Team > manual-qa > folder) — where your QA strategy lives
    - Test Case Registry location (Artifacts) — where your test case registry and TC files live
+   - Your own `agent.md` (same folder), if it exists — holds only a settled format/location decision per `sdlc` > Project Config, nothing else
    - Technical Documentation location (Artifacts) — you read its API Contracts (one file per service, inside the Architecture folder), you don't own them
    - Where Stories/Tasks/Bugs are managed (Task Management)
 

@@ -31,7 +31,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 **Owner**: orchestrator (created during Project Initiation) — but ownership is per-section, same pattern as `CLAUDE.md`: orchestrator owns the file's structure (Team, Configs Folder, Task Management, Sessions, Pull Requests, Escalation/Feedback), while each role may edit its own chapter under `## Artifacts` (location + brief access notes for the artifact(s) it owns — see `sdlc` > Artifacts Ownership).
 
 **What's configurable** (not exhaustive):
-- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References: conventions/standards the role follows, for whatever isn't already captured by a confirmed format/location in this config). A repo-bound role (lead-developer, coder) gets its own section and folder per stack if the repo has more than one — never one shared folder across stacks. Every role except orchestrator also has one or more **working folder(s)** — used only by the orchestrator, to decide where to spawn that role (inline or face-to-face); the role itself is never aware of this field. Defaults to that role's own generated-artifact location(s) where one exists (Source Code, Infrastructure Code, Automated Test Suite, Test Case Registry), or project root for roles whose artifacts are too varied to reduce to one path (business-analyst, architect).
+- **Team** — active roles, each with a folder where that role's own `agent.md` lives (References — a settled format/location decision that has no home elsewhere in this config, nothing else; see the rule below). A repo-bound role (lead-developer, coder) gets its own section and folder per stack if the repo has more than one — never one shared folder across stacks. Every role except orchestrator also has one or more **working folder(s)** — used only by the orchestrator, to decide where to spawn that role (inline or face-to-face); the role itself is never aware of this field. Defaults to that role's own generated-artifact location(s) where one exists (Source Code, Infrastructure Code, Automated Test Suite, Test Case Registry), or project root for roles whose artifacts are too varied to reduce to one path (business-analyst, architect).
 - **Configs Folder** — default base for role folders
 - **Task Management** — which skill implements it (e.g. `file-based-task-management`) and where it operates
 - **Sessions** — how face-to-face session coordination is actually mechanized (a skill, an MCP server, etc.) — default: `file-based-session-management` skill
@@ -39,6 +39,8 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Escalation/Feedback** — how one role raises something to another role, or to the user, mid-pipeline, once it has already produced its output — default: `file-based-escalation` skill
 - **Artifacts** — the form each sdlc artifact takes and how it's managed (the notion of artifact is defined next)
 - Any other project specifics
+
+**`agent.md` is not memory.** It holds only a settled format/location decision that has no home in Artifacts — nothing else. Never write conventions, standards, patterns, or general notes there, even ones you find useful or ones missing from a canonical artifact. A gap in a canonical artifact (Coding Conventions, Technical Documentation, etc.) gets flagged to that artifact's owner — never filled in your own `agent.md` instead.
 
 ---
 
@@ -203,7 +205,7 @@ Run once per project before any work begins. Each role produces a strategy, conv
   - **Versioning** — where applicable, present the default mechanism and confirm, or ask.
   Do not proceed past this step until every owned artifact's location and format are settled. Record each decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
 - **business-analyst** → Validated Idea, Requirements, Stories, own `agent.md` (References)
-- **architect** → Technical Documentation, Architectural Design, `CLAUDE.md`, own `agent.md` (References)
+- **architect** → Technical Documentation, Architectural Design, `CLAUDE.md`'s Key Docs chapter, own `agent.md` (References)
 - **lead-developer** → Coding Conventions, `CLAUDE.md` (own repo), own `agent.md` (References)
 - **coder** → own `agent.md` (References)
 - **devops** → own `agent.md` (References)

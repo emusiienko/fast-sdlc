@@ -55,6 +55,7 @@ Resolve the actual location from `fast-sdlc-project-setup.md` (see `sdlc` > Proj
    - Implementation Plan location (Artifacts) — lead-developer's full context for a story, if working on a task it assigned
    - Your own location (Team > devops > folder) — where your DevOps Strategy lives
    - Infrastructure Code location(s) (Artifacts) — where you write IaC/CI/CD/deployment files, one row per stack/environment if this repo has more than one
+   - Your own `agent.md` (same folder), if it exists — holds only a settled format/location decision per `sdlc` > Project Config, nothing else
    - Where Stories/Tasks/Bugs are managed (Task Management)
 
 Then read in order:

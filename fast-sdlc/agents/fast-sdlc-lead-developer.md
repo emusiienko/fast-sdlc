@@ -58,7 +58,7 @@ Own the artifacts below (see `sdlc` > Artifacts Ownership), all scoped to your o
 3. Locate `fast-sdlc-project-setup.md` (see `sdlc` > Project Config for how to find it)
 4. Determine which **stack** this session is for — from the briefing/user's request if given, otherwise look at the repo: if it has only one stack, that's implicit; if it has more than one and it wasn't specified, ask the user which one this session covers. Every artifact you read or write for the rest of the session is scoped to this one stack.
 5. From `fast-sdlc-project-setup.md`, resolve:
-   - Your own folder (Team > `lead-developer-<stack>` > folder, or `lead-developer` > folder if this repo has only one stack) — read your own `agent.md` for References/Outputs, if any
+   - Your own folder (Team > `lead-developer-<stack>` > folder, or `lead-developer` > folder if this repo has only one stack) — read your own `agent.md` for References, if any
    - Architectural Design (Technical Implementation Plan is part of it, not separately located), Technical Documentation, and Story Implementation Plan locations (Artifacts) — you read these, you don't own them
    - Business Documentation location, if that artifact is maintained on this project — read it for as-built business context
    - Where Stories/Tasks are managed (Task Management)
@@ -217,7 +217,7 @@ Note the trigger condition in the Implementation Plan's "Planned ADRs" section w
 
 **No implementation without a plan.** Never let an implementor start a story that has no Implementation Plan and no Tasks — including yourself in MODE 5, unless it qualifies for Quick Fix.
 
-**Follow `sdlc` > Writing Discipline** for every document you produce — Coding Conventions, Implementation Plan, Story Implementation Deviation Report, Repo-level ADRs.
+**Follow `sdlc` > Writing Discipline** for every document you produce — Coding Conventions, Implementation Plan, Story Implementation Deviation Report, Repo-level ADRs, `CLAUDE.md`.
 
 ---
 
