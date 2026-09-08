@@ -57,6 +57,7 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Story Implementation Deviation Report** — lead-developer's filtered account of what deviated from plan for a story, within a single repo (or repo+stack), sorted into the sections each downstream role actually needs (Architecture, Data Models, API Contracts, Requirements) — read instead of raw Implementation Reports.
 - **Repo-level ADRs** — architectural decisions scoped to a single repo, distinct from project-level ADRs.
 - **Source Code** — the actual implementation for a repo (or repo+stack).
+- **Code Map** — coder's own account of where things actually live in the code, module/function-level — more detailed than lead-developer's folder-level Repository Structure, kept current at Reconcile.
 - **Automated Test Suite** — qa-automation's black-box test code, verifying the system from the outside across repos/services.
 - **Infrastructure Code** — IaC, CI/CD pipelines, deployment scripts, and environment configuration.
 - **Test Case Registry** — manual-qa's index of test cases and their individual TC files.
@@ -282,9 +283,10 @@ After Bug Fix: the orchestrator creates a fresh Task for whichever QA role filed
 ### Reconcile
 *Trigger: the story's Acceptance Pull Request is merged, or by request*
 
-1. Orchestrator creates one Reconcile Task per applicable role: lead-developer (`Dependencies: None`, one per stack), architect (`Dependencies:` every lead-developer Reconcile Task), business-analyst (`Dependencies:` architect's task)
+1. Orchestrator creates one Reconcile Task per applicable role: lead-developer (`Dependencies: None`, one per stack), coder (`Dependencies: None`, one per stack — always, regardless of whether lead-developer is on the team), architect (`Dependencies:` every lead-developer Reconcile Task), business-analyst (`Dependencies:` architect's task)
 2. Each role works its Task once its dependencies are `Done`, committing to a new branch named after the (now-merged) implementation branch plus a suffix describing its own reconcile work — high level, per role (full detail in each role's own instructions):
    - **lead-developer**: produces the Story Implementation Deviation Report for its stack, sorted into Architecture/Data Models/API Contracts/Requirements; records repo-level ADRs and Coding Conventions/`CLAUDE.md` updates where warranted
+   - **coder**: updates its stack's Code Map to reflect what was actually built, independent of lead-developer's own Reconcile Task
    - **architect**: reads the Story Implementation Deviation Report(s); updates whichever of Technical Documentation, Data Models, API Contracts, and the ADR Log the report's sections affect
    - **business-analyst**: reads the Story Implementation Deviation Report(s)' Requirements sections; updates Business Documentation with what was built, if that artifact exists on this project; updates Requirements too if a discrepancy was found
 3. Once every Reconcile Task for a story is `Done`, orchestrator opens the Pull Request(s) it needs, routing feedback the same way as Acceptance; once the user merges, orchestrator sets the story `Done` and archives it
@@ -323,6 +325,7 @@ Refer to `~/.claude/skills/orchestration/SKILL.md` and `~/.claude/skills/session
 - **Implementation Plan** → **lead-developer** (create, per story per repo/stack); read-only for implementors
 - **Story Implementation Deviation Report** → **lead-developer** (create, per story per repo/stack); **coder** (create, same location, only when lead-developer isn't on the team); read-only for architect, business-analyst, qa-automation, manual-qa
 - **Source Code** → **coder** (full, per repo or repo+stack); **lead-developer** (full, same location, only when writing code directly — see its MODE 5)
+- **Code Map** → **coder** (full, per repo or repo+stack)
 - **Automated Test Suite** → **qa-automation** (full)
 - **Infrastructure Code** → **devops** (full, per repo/stack/environment)
 - **Test Case Registry** → **manual-qa** (full, per repo or repo+stack)

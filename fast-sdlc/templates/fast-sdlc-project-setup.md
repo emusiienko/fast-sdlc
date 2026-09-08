@@ -148,6 +148,10 @@ system and how to query it, etc.
 **location**:
 - `<stack>`: `<path>` (one row per stack; a single `<path>` is enough if this repo has only one) — one or more folders; list all that apply for this stack (e.g. `src/`, `migrations/`) rather than assuming a single root
 
+### Code Map
+**location**:
+- `<stack>`: `<path>` (one row per stack; a single `<path>` is enough if this repo has only one) — a single file, persistent across stories (not per-story). `CLAUDE.md` > Key Docs points here; no length cap of its own
+
 ### Automated Test Suite
 **location**: `<path>` (a single suite, tested black-box across repos/services — not split per stack) — one or more folders; list all that apply
 
