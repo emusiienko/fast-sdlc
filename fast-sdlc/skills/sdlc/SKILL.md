@@ -42,6 +42,8 @@ Config: `<path to fast-sdlc-project-setup.md>`
 
 **`agent.md` is not memory.** It holds only a settled format/location decision that has no home in Artifacts — nothing else. Never write conventions, standards, patterns, or general notes there, even ones you find useful or ones missing from a canonical artifact. A gap in a canonical artifact (Coding Conventions, Technical Documentation, etc.) gets flagged to that artifact's owner — never filled in your own `agent.md` instead.
 
+**`fast-sdlc-project-setup.md` and `CLAUDE.md` aren't for task-bound information.** Don't write temporary artifacts or anything bound to the task at hand into either file — a location/format chapter that's already been confirmed stays as it is. Any modification to either file must be a decision explicitly stated in the current task's own description; otherwise, don't touch them — flag a discrepancy instead of correcting it yourself.
+
 ---
 
 ## Artifacts
