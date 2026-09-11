@@ -321,7 +321,7 @@ Do not add anything that originates from another skill (sdlc, agent role instruc
 
 ## Task Descriptions
 
-Some Tasks invoke a process that's already standard and self-sufficient from existing artifacts/code — nothing case-specific needs to come from you. **Project Setup** and **Reconciliation** are the two recurring examples: the assignee derives everything it needs from what already exists (the project, the story's Implementation Reports) — there's nothing for you to add.
+Some Tasks invoke a process that's already standard and self-sufficient from existing artifacts/code — nothing case-specific needs to come from you. **Project Setup**, **Reconciliation**, and architect's **Plan Next Scope**/**Plan Story Implementation** are recurring examples: the assignee derives everything it needs from what already exists (the project, Requirements, the story's Implementation Reports) — there's nothing for you to add.
 
 For these:
 - **What to implement**: reference the process by name only. Do not restate, summarize, or add detail to a process that's already fully defined elsewhere — that's how re-description drifts from what's actually said and introduces errors.
@@ -329,6 +329,9 @@ For these:
 
 This doesn't apply where the work needs custom input that no agent's or `sdlc`'s own instructions already cover — e.g. a bug fix needs the bug's actual description.
 
+**When the assignee's own instructions document more than one legitimate outcome** — e.g. architect's Plan Next Scope can conclude "no artifacts," a change set, or a full Architectural Design; Plan Story Implementation can conclude Data Models/API Contracts only, or a full Story Implementation Plan — phrase Acceptance Criteria as those alternatives, joined by "or," with a short note on why any of them counts as complete. Never a single fixed deliverable that only fits one of several outcomes the assignee's own mode already anticipates — that's how a Task ends up unable to close even when the assignee did exactly what its own instructions call for.
+
 Examples:
 - Standard: What to implement: "Perform your Project Setup process." Acceptance Criteria: "All artifacts you own are defined and accepted by the user."
 - Standard: What to implement: "Perform your Reconcile process for STORY-014." Acceptance Criteria: "Reconcile output for STORY-014 is complete and accepted by the user."
+- Standard, multiple outcomes: What to implement: "Perform your Plan Next Scope process for this milestone." Acceptance Criteria: "Architectural Design reflects this scope, at whatever weight it actually needs — no artifacts, a change set, or a full design are all complete outcomes; which one applies is your own call."
