@@ -3,8 +3,10 @@
 # Implementation Plan: STORY-NNN — <Story Title>
 
 ## Scope
-In scope: <what this story touches> — <one-line reason>.
-Out of scope: <what this story doesn't touch, even if adjacent> — <one-line reason>.
+One bullet per item — list as many as the story needs.
+
+- <what this story touches> — <one-line reason>.
+  e.g. "the resizable border between the Sessions list and Session detail panels — the only two panels sharing an edge in the default shell."
 
 ## Decisions
 - <Decision> — because <reason>.
