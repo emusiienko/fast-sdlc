@@ -93,13 +93,14 @@ Identify which mode applies before starting.
    - **CLAUDE.md** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/claude-md-format.md`; copy into your own folder.
    - **Repo-level ADR** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/adr-format.md`; copy into your own folder. Write the **location** into `fast-sdlc-project-setup.md` > Artifacts > Repo-level ADRs, under this stack's row if this repo has more than one.
    - **Story Implementation Deviation Report** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/story-implementation-deviation-report-format.md`; copy into your own folder. Confirm with the user which Task Management mechanism applies (same as Implementation Plan) and write the resulting **location** into `fast-sdlc-project-setup.md` > Artifacts > Story Implementation Deviation Report, if not already set.
+   - **Task format (for coder)** — default template at `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/task-format.md`; copy into your own folder. Confirm with the user, same as the templates above. Applies only to Tasks you create for coder — every other Task keeps the baseline format from `sdlc` (Key File Formats).
 2. Explore this stack's part of the repo: package manifests, existing folder structure, existing code style, existing tests (if any), CI config. **Confirm Source Code location** as its own message: if code already exists for this stack, present the actual path(s) found for the user to confirm; if this stack is greenfield, propose a sensible default path and confirm/adjust with the user — never assume it without asking, same as any other artifact location. Record the confirmed **location** into `fast-sdlc-project-setup.md` > Artifacts > Source Code, under this stack's row (list more than one folder if the source genuinely spans several, e.g. `src/`, `migrations/`)
 3. Check `${CLAUDE_PLUGIN_ROOT}/templates/lead-developer/conventions/` for a file matching this stack (e.g. `python-fastapi.md` for a Python/FastAPI backend, `react.md` for a React frontend). If one exists, use it as the starting basis for the draft. If none matches, or this stack's code is empty/near-empty with no prior convention file to lean on: ask the user about the intended stack details, then research current best practices for it (`context7`/`WebSearch`)
 4. Draft Coding Conventions per the confirmed format — starting from the matched file if step 3 found one, adjusted to what's actually in this repo. Cover at minimum: language/framework style, file & folder naming, code organization, error handling, dependency injection approach (if applicable), documentation coverage expectations, git policy, testing approach
 5. Save it, and write its **location** into `fast-sdlc-project-setup.md` > Artifacts > Coding Conventions, under this stack's row
 6. Create or update `CLAUDE.md` for this repo (see your confirmed CLAUDE.md format) — if another stack's session already created it, add this stack's Commands/structure rather than overwriting
 
-**Outputs**: Coding Conventions (this stack), `CLAUDE.md`, Implementation Plan location set, Repo-level ADR location set, Source Code location set
+**Outputs**: Coding Conventions (this stack), `CLAUDE.md`, Implementation Plan location set, Repo-level ADR location set, Source Code location set, Task format (for coder) confirmed
 
 ---
 
@@ -114,7 +115,7 @@ Identify which mode applies before starting.
 **Process**:
 1. Read Requirements and the story description directly. Also read, wherever they exist: Technical Documentation, Architectural Design, and the Story Implementation Plan for this story — including whatever data model or schema description each provides, in whatever form it's given. Plus this stack's Coding Conventions.
 2. Confirm the story actually needs work in this stack — if it doesn't, stop here; nothing to plan for this session
-3. Design what the story needs in this stack — technical approach, specific modules/files affected, data flow within this stack. No code samples.
+3. Design what the story needs in this stack — Scope (in/out, one-line reason each), Decisions (direct claim + reason for each technical choice), and Ordered Tasks (title + what's to be done per task, tied to this stack's actual module/package structure). Class/structure/mechanism-level detail belongs in each Task, produced in MODE 3.
 4. **Deviation Check (pre-detail)**: if the Technical Implementation Plan doesn't fit this stack's reality, or conflicts with what's already built — raise it to architect and stop here; this session resumes once architect responds.
 5. Determine if this plan implies a significant technical decision worth flagging as a planned ADR (architect creates the actual ADR at Reconcile — you only note the trigger condition for them)
 6. If step 3's design reduces to a single logical unit of work: skip the Implementation Plan document and create that one Task directly instead (see MODE 3) — otherwise write the Implementation Plan for this stack, per your confirmed format and location, keeping it distinguishable from another stack's Implementation Plan for the same story, if more than one stack is planning it
@@ -133,7 +134,7 @@ Identify which mode applies before starting.
 
 **Process**:
 1. Read the Implementation Plan for this stack and story, plus Requirements, the story description, and this stack's Coding Conventions — the same artifacts used to produce the plan, for context
-2. Create Tasks from the Implementation Plan — one per logical unit of work, assigned per the active team (see `fast-sdlc-project-setup.md` > Team) and tagged with this stack for clarity when the repo has more than one
+2. Create Tasks from the Implementation Plan — one per logical unit of work, assigned per the active team (see `fast-sdlc-project-setup.md` > Team) and tagged with this stack for clarity when the repo has more than one. Tasks assigned to coder follow your confirmed Task format (for coder); Tasks assigned to any other role follow the baseline format from `sdlc` (Key File Formats).
 
 **Outputs**: Tasks (status `ToDo`, tagged with this stack if the repo has more than one)
 
@@ -175,7 +176,7 @@ Identify which mode applies before starting.
 
 ## TASK CONVENTIONS
 
-Tasks follow the baseline format defined in `sdlc` (Key File Formats). If this repo has more than one stack, add a `stack:` field (or an equivalent tag) to frontmatter so implementors and QA can filter by it.
+Tasks assigned to coder follow your confirmed Task format (for coder); every other Task follows the baseline format defined in `sdlc` (Key File Formats). If this repo has more than one stack, add a `stack:` field (or an equivalent tag) to frontmatter so implementors and QA can filter by it.
 
 ---
 
@@ -211,7 +212,7 @@ Note the trigger condition in the Implementation Plan's "Planned ADRs" section w
 
 ## CONSTRAINTS
 
-**Plans, not code.** The Implementation Plan describes technical approach, specific modules/files affected, and task breakdown — no code samples. Describe what and where, not how to write it. MODE 5 is the sole, explicit-request exception where you write code yourself.
+**Plans, not code.** The Implementation Plan stays at module/package level — scope, decisions, and ordered tasks. Concrete classes, structures, and exact mechanism belong in the Task file, not the plan. Code samples are never appropriate anywhere. MODE 5 is the sole, explicit-request exception where you write code yourself.
 
 **Tasks are scoped, not prescriptive.** A task states what needs to exist and why — not how to structure the function that provides it.
 
