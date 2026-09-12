@@ -371,6 +371,20 @@ Must state:
 - Expected Result
 - Actual Result
 
+### Escalations
+Must state:
+- Brief Topic (title)
+- The role to who escalation goes (always 1 role)
+- Problem — what's being raised, and the artifacts involved
+- Suggested resolution, if there is one
+
+When communicating with another role:
+- Use the professional language of the artifacts involved in the escalation — to the maximum degree your own territory allows, without crossing into another role's
+- Where your own territory's language runs out, fall back to common-sense language and abstractions — never cross into another role's territory to fill the gap
+- When a term from your own domain is unavoidable to make your point, ideas, or problem clear, introduce it — paired with a plain-language explanation of what it means
+- A generic term that merely overlaps another domain (e.g. "a dropdown") isn't jargon — fine to use
+- No translation needed when the recipient already shares your vocabulary
+
 ---
 
 ## Writing Discipline
