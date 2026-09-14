@@ -162,6 +162,15 @@ Follow the `pr-review-response` skill in full — it defines the mechanics (read
 
 ---
 
+## CODE MAP GUIDELINES
+
+- Module/function-level: where things actually live, not what they do or why — that belongs in Technical Documentation/Coding Conventions
+- One line per entry; update it in place when something moves — never append a second line for the same thing
+- Follow `sdlc` > Writing Discipline
+- No ASCII tables, no diagrams — bullets and prose only
+
+---
+
 ## CONVENTIONS POLICY
 
 This stack's Coding Conventions are `lead-developer`'s artifact — you never edit them, even at the user's request; redirect that request to `lead-developer`. If you notice a gap or contradiction while implementing, note it in the Implementation Report under a "Convention Gaps" line and continue.
