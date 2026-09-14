@@ -148,7 +148,7 @@ User wants to implement a story whose scope is planned (Architectural Design cov
 
 **Plan:**
 1. Fulfill business-analyst's Logical Data Model Task covering this story's subject area, if it exists and is still `ToDo` (see Fulfill a Task) — a dependency of the lead-developer Tasks below
-2. Fulfill architect's Task from Plan New Work for this story, if it exists and is still `ToDo` (see Fulfill a Task) — also a dependency of the lead-developer Tasks below
+2. Fulfill architect's Task from Plan New Work for this story, if it exists and is still `ToDo` (see Fulfill a Task) — also a dependency of the lead-developer Tasks below. If it concludes there is no architect involvement here: also close architect's Plan Story Implementation Task for this story (mark `Done`, noting why) instead of running it — Scope Planning already found no architectural footprint left to detail.
 3. Fulfill each lead-developer "produce the Implementation Plan" Task created during Plan New Work (see Fulfill a Task)
 4. **Checkpoint**: present the resulting Implementation Plan(s) to the user; wait for explicit acceptance before proceeding
 5. Fulfill each lead-developer "break the approved Implementation Plan into Tasks" Task, now that its dependency is `Done` — produces this story's implementation Tasks
@@ -321,7 +321,7 @@ Do not add anything that originates from another skill (sdlc, agent role instruc
 
 ## Task Descriptions
 
-Some Tasks invoke a process that's already standard and self-sufficient from existing artifacts/code — nothing case-specific needs to come from you. **Project Setup**, **Reconciliation**, and architect's **Plan Next Scope**/**Plan Story Implementation** are recurring examples: the assignee derives everything it needs from what already exists (the project, Requirements, the story's Implementation Reports) — there's nothing for you to add.
+Some Tasks invoke a process that's already standard and self-sufficient from existing artifacts/code — nothing case-specific needs to come from you. **Project Setup**, **Reconciliation**, architect's **Plan Next Scope**/**Plan Story Implementation**, and **PR Review Response** are recurring examples: the assignee derives everything it needs from what already exists (the project, Requirements, the story's Implementation Reports, the PR's own comments) — there's nothing for you to add.
 
 For these:
 - **What to implement**: reference the process by name only. Do not restate, summarize, or add detail to a process that's already fully defined elsewhere — that's how re-description drifts from what's actually said and introduces errors.
@@ -333,5 +333,6 @@ This doesn't apply where the work needs custom input that no agent's or `sdlc`'s
 
 Examples:
 - Standard: What to implement: "Perform your Project Setup process." Acceptance Criteria: "All artifacts you own are defined and accepted by the user."
-- Standard: What to implement: "Perform your Reconcile process for STORY-014." Acceptance Criteria: "Reconcile output for STORY-014 is complete and accepted by the user."
+- Standard: What to implement: "Perform your Reconcile process for STORY-014." Acceptance Criteria: "Reconcile output for STORY-014 is complete"
 - Standard, multiple outcomes: What to implement: "Perform your Plan Next Scope process for this milestone." Acceptance Criteria: "Architectural Design reflects this scope, at whatever weight it actually needs — no artifacts, a change set, or a full design are all complete outcomes; which one applies is your own call."
+- Standard: What to implement: "Address review feedback on PR `<link>` (per the `pr-review-response` skill)." Acceptance Criteria: "Every comment on the PR is either resolved or replied to — none left unaddressed." Never enumerate the individual comments or give each its own criterion — the skill itself reads them from the PR.
