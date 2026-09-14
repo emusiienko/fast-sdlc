@@ -204,7 +204,7 @@ A new Repo-level ADR is required ONLY when a decision is **significant** AND **s
 
 **Do NOT create an ADR for**:
 - Routine library version bumps
-- Code style or formatting tool choices already covered by Coding Conventions
+- A code-structure choice whose only rationale is following this repo's Coding Conventions
 
 Note the trigger condition in the Implementation Plan's "Planned ADRs" section when you first spot the decision; create the actual file only at Reconcile, once implementation confirms it.
 
