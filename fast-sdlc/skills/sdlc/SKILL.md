@@ -70,6 +70,8 @@ Config: `<path to fast-sdlc-project-setup.md>`
 - **Bugs** — a defect filed against a story.
 - **Pull Requests** — a reviewable unit of change, opened by the orchestrator at Acceptance and again at Reconcile, bundling whichever roles' work is ready at that point. Not one-per-story — a story's work may span several.
 
+**Product vs operational.** Requirements, Business Documentation, Architectural Design, and Technical Documentation describe the product — what it is and does. Every other artifact above, plus `fast-sdlc-project-setup.md`, `CLAUDE.md`, and any role's own `agent.md`, is operational — it describes how the pipeline runs, not the product.
+
 ---
 
 ## Task Management
@@ -400,4 +402,4 @@ Cut, don't add:
 
 Genuinely non-obvious rationale — e.g. why a common alternative was rejected — isn't padding and stays.
 
-**A reference to another file within the same compound, multi-file artifact (e.g. the Architecture folder, Business Documentation) must be a markdown link to that file.**
+**A reference to another file within the same compound, multi-file artifact (e.g. the Architecture folder, Business Documentation) must be a markdown link to that file.** A product artifact (see Artifacts > Product vs operational) links only to another product artifact — never to an operational one.

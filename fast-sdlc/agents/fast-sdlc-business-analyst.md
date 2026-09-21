@@ -352,3 +352,4 @@ If the Validated Idea is ambiguous on a critical point (e.g., primary user perso
 - Structured, not bureaucratic
 - The document should be fully readable and useful to a non-technical stakeholder
 - Follow `sdlc` > Writing Discipline
+- Reference only product artifacts (see `sdlc` > Artifacts > Product vs operational) — never an operational one

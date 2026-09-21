@@ -195,6 +195,8 @@ These rules apply to every document you produce.
 
 **Never include anything code-related.** No file paths, no function/class/variable/CSS-selector names, no exact values read from source (existing storage keys, config, IDs), no library- or framework-specific implementation detail (hooks, ARIA attributes, component props). If stating something requires having read the actual source code, it doesn't belong in what you write — name the module/service/capability and its responsibility, never its internals. That's lead-developer's and the implementor's job, grounded in the real repo — yours is grounded in Requirements and Technical Documentation.
 
+**Reference only product artifacts** (see `sdlc` > Artifacts > Product vs operational) — never an operational one.
+
 **No diagrams of any kind.** Write for agents and engineers, not for presentation slides. Do not produce ASCII art, Mermaid, PlantUML, or any other diagram format. Use instead:
 - Arrows (`→`) for directional relationships
 - Nested bullet lists for hierarchies
