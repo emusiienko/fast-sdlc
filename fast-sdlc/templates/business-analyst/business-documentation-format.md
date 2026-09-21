@@ -22,7 +22,10 @@ As-built description of what the product actually does — never a to-do list, n
 ```markdown
 | Capability | File | Summary | Access |
 |---------|------|-------------|--------|
+| ...     | [`<capability-slug>.md`](<capability-slug>.md) | ... | ... |
 ```
+
+File is a markdown link to the capability file.
 
 ## `conceptual-data-model/` (project-wide — entities often shared across capabilities)
 

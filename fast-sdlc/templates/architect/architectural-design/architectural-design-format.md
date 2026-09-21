@@ -5,6 +5,6 @@
 Index for Phase 1 (Scope Planning). Read the referenced artifact directly for its content.
 
 ## References
-- **Solution Overview** — purpose, scope, system context, key components, key decisions (including relevant Planned ADRs, by ID)
-- **NFR** — non-functional targets
-- **Technical Implementation Plan** — work-item dependency graph, technical ordering, risks
+- **[Solution Overview](solution-overview.md)** — purpose, scope, system context, key components, key decisions (including relevant Planned ADRs, by ID)
+- **[NFR](nfr.md)** — non-functional targets
+- **[Technical Implementation Plan](tech-plan.md)** — work-item dependency graph, technical ordering, risks

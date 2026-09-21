@@ -399,3 +399,5 @@ Cut, don't add:
 - Anything else that fails the bar above
 
 Genuinely non-obvious rationale — e.g. why a common alternative was rejected — isn't padding and stays.
+
+**A reference to another file within the same compound, multi-file artifact (e.g. the Architecture folder, Business Documentation) must be a markdown link to that file.**

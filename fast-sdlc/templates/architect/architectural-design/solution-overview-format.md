@@ -1,4 +1,4 @@
-<!-- Default format for the Solution Overview artifact — accept as-is or customize with architect during Step 0 (Confirm Artifact Formats). The same shape serves both lifecycle stages: a draft, part of Architectural Design (Phase 1 — Scope Planning, see architectural-design-format.md), created at Project Setup (MODE 1) and updated at Plan Next Scope (MODE 2) only if scope/context/components actually change; and the as-built version living inside the Architecture folder (Technical Documentation), promoted/corrected against what was actually built at Reconcile (MODE 3). Text only — no diagrams or graph data inline; each references its own YAML (data) and Mermaid (diagram) file. -->
+<!-- Default format for the Solution Overview artifact — accept as-is or customize with architect during Step 0 (Confirm Artifact Formats). The same shape serves both lifecycle stages: a draft, part of Architectural Design (Phase 1 — Scope Planning, see architectural-design-format.md), created at Project Setup (MODE 1) and updated at Plan Next Scope (MODE 2) only if scope/context/components actually change; and the as-built version living inside the Architecture folder (Technical Documentation), promoted/corrected against what was actually built at Reconcile (MODE 3). Text only — no diagrams or graph data inline; each references its own YAML (data) and Mermaid (diagram) file. Every reference to another file — a data/diagram file, an ADR Log entry, Deployment/Infrastructure View — is a markdown link to it. -->
 
 # Solution Overview
 
@@ -13,13 +13,13 @@
 
 ## System Context (C4 Level 1)
 Users/roles and external systems this system talks to — the outermost boundary. See:
-- Data: `system-context.yaml`
-- Diagram: `system-context.mmd`
+- Data: [system-context.yaml](system-context.yaml)
+- Diagram: [system-context.mmd](system-context.mmd)
 
 ## Key Components (C4 Level 2)
 Top-level containers — services, databases, queues, frontends — grouped by bounded context, container level only, never deeper. See:
-- Data: `key-components.yaml`
-- Diagram: `key-components.mmd`
+- Data: [key-components.yaml](key-components.yaml)
+- Diagram: [key-components.mmd](key-components.mmd)
 
 ## Tech Stack
 Every system-level technology choice (language/runtime per service, cloud provider, managed services), with rationale. A choice significant enough for TECH DECISIONS POLICY gets its own ADR Log entry, referenced by ID — don't restate the rationale here too.

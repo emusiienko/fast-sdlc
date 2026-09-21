@@ -25,8 +25,10 @@ Grouping into domain folders is optional and per-project — pick flat or groupe
 ## Feature List
 | Feature | File | Description | Priority | Access |
 |---------|------|-------------|----------|--------|
-| ...     | `<feature-slug>.md` or `<domain>/<feature-slug>.md` | ... (note if a list within the feature must be paginated) | P0/P1/P2 | Public / Authorized users / Authorized users with <role/permission> |
+| ...     | [`<feature-slug>.md`](<feature-slug>.md) or [`<domain>/<feature-slug>.md`](<domain>/<feature-slug>.md) | ... (note if a list within the feature must be paginated) | P0/P1/P2 | Public / Authorized users / Authorized users with <role/permission> |
 ```
+
+File is a markdown link to the feature file.
 
 ## `<feature-slug>.md` (one per feature)
 

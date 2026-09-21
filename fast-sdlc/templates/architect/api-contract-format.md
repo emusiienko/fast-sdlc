@@ -1,4 +1,4 @@
-<!-- Default format for the API Contracts artifact — accept as-is or customize with architect during Step 0 (Confirm Artifact Formats). Part of the Architecture folder (Technical Documentation) — created or updated only at Reconcile, never written directly in Project Setup or Plan Next Scope mode. One file per service/API — this format applies to each. -->
+<!-- Default format for the API Contracts artifact — accept as-is or customize with architect during Step 0 (Confirm Artifact Formats). Part of the Architecture folder (Technical Documentation) — created or updated only at Reconcile, never written directly in Project Setup or Plan Next Scope mode. One file per service/API — this format applies to each. A reference to Solution Overview's Error Handling/Authentication Flow subsections is a markdown link to it. -->
 
 # API Contract: <Service Name>
 
