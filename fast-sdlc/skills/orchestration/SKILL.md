@@ -102,11 +102,21 @@ One focused question is better than guessing. When in doubt, ask.
 #### Trigger
 Explicit user request ("start the project", "initiate")
 
-#### Steps
+Two paths. Take the fast one when the user asks for it and no code exists yet; otherwise take the standard one. A project with an existing codebase takes the standard path, since reconstructing its picture needs the user in the loop.
+
+#### Steps — standard path
 1. If `fast-sdlc-project-setup.md` missing: confirm each item you own (see Document Ownership) with the user, one at a time, as its own plain chat message — never an `AskUserQuestion` call, so the user can ask questions before accepting a default. For each, state the template's default before asking, and never write it into the file without the user's explicit confirmation or adjustment. Create the file only once every owned item is confirmed (format in `sdlc` skill's Project Config, template at `${CLAUDE_PLUGIN_ROOT}/templates/fast-sdlc-project-setup.md`)
 2. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role — for lead-developer and coder, one Task per stack confirmed in Team (step 1), not one Task covering all of them
 3. Fulfill each Task in pipeline order (see Fulfill a Task)
 4. **Checkpoint after each task**: present the result; ask to proceed to the next role/stack
+
+#### Steps — fast path (greenfield)
+1. Ask for what the template cannot default: the team, and the stacks of any repo that has more than one
+2. Present every remaining value in one message — the items you own and the location of each artifact other roles own, each with the template's default — as a list the user accepts wholesale or corrects line by line. Mechanism choices (Task Management, Sessions, Escalation/Feedback) belong in that same list
+3. Write `fast-sdlc-project-setup.md` with the confirmed values, and create each Team member's folder on disk. On this path you also write each artifact's **location** into its `## Artifacts` chapter — the one case where you write in a chapter the owning role otherwise owns; that role still records its own format and access notes when it runs its Task
+4. Create a Story for project setup (type: chore, status: In Progress), with one Task per active role — for lead-developer and coder, one Task per stack confirmed in step 1. Each Task states that the role adopts its own defaults and keeps the locations already settled in `fast-sdlc-project-setup.md` as they are
+5. Fulfill each Task inline, in pipeline order (see Fulfill a Task) — this path runs every role inline
+6. **Checkpoint once every Task is `Done`**: present the whole setup; ask the user to confirm it
 
 #### Outputs
 `fast-sdlc-project-setup.md`; a project-setup Story with one completed Task per active role (per stack, for lead-developer and coder)

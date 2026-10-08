@@ -209,6 +209,8 @@ Run once per project before any work begins. Each role produces a strategy, conv
   - **Format** — if the role has a default, present it and ask whether to use it as-is or customize it; if it has no default, challenge the user to define one.
   - **Versioning** — where applicable, present the default mechanism and confirm, or ask.
   Do not proceed past this step until every owned artifact's location and format are settled. Record each decision in that artifact's chapter under `fast-sdlc-project-setup.md` > Artifacts (or in the role's own `agent.md`, if the artifact isn't in the shared Artifacts list).
+
+  **Defaults and already-recorded values**: where the request says to use defaults, adopt yours without confirming them; where it says to keep what the project config already records, take those values as they stand. An owned artifact for which you have no default still goes through the confirmation above.
 - **business-analyst** → Validated Idea, Requirements, Stories, own `agent.md` (References)
 - **architect** → Technical Documentation, Architectural Design, `CLAUDE.md`'s Key Docs chapter, own `agent.md` (References)
 - **lead-developer** → Coding Conventions, `CLAUDE.md` (own repo), own `agent.md` (References)
