@@ -30,7 +30,7 @@ flowchart LR
     PR --> U
 ```
 
-The user talks only to the orchestrator. For each story it creates tasks and spawns the responsible subagent: requirements first, then architecture, then a per-repo implementation plan, then the code, then QA. Implementation is opened as a pull request for the user to review, and after acceptance the architecture and requirements documents are reconciled with what was actually built.
+The user talks only to the orchestrator. For each story it creates tasks and spawns the responsible subagent: requirements first, then architecture, then a per-repo implementation plan, then the code, then QA. A task can run autonomously, or, for work that needs back-and-forth such as discovery or design, in a face-to-face session: a dedicated interactive conversation between the user and the agent, opened in a separate terminal and reported back to the orchestrator when it ends. Implementation is opened as a pull request for the user to review, and after acceptance the architecture and requirements documents are reconciled with what was actually built.
 
 ## Related Projects
 
