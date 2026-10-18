@@ -10,9 +10,10 @@ It is built for developers who want to delegate a whole delivery pipeline to AI 
 ## Key Features
 
 - **Orchestrator–subagent architecture**: one orchestrator session plans and tracks the work, and spawns a specialized subagent for each task.
-- **End-to-end SDLC pipeline**: business analysis, architecture, repo-level planning, implementation, QA, and documentation reconcile.
-- **Multiple workflows**: project initiation, new work planning, story execution, issue reporting, and research.
+- **End-to-end SDLC pipeline**: business analysis, architecture, repo-level planning, implementation, QA, and documentation reconciliation.
+- **Multiple workflows**: project setup, scope planning, execution, stabilization, and acceptance, plus issue reporting and research as extras.
 - **Multi-repository support**: architecture is designed across repos, and each repo (and stack) gets its own implementation plan and tasks.
+- **Escalations**: a role that finds a problem after delivering its output raises it to the responsible role or the user, tracked as a thread until resolved.
 - **Human-in-the-loop review**: the user reviews the plan, the pull requests, and the final acceptance before a story is considered done.
 
 ## How It Works
@@ -31,14 +32,6 @@ flowchart LR
 ```
 
 The user talks only to the orchestrator. For each story it creates tasks and spawns the responsible subagent: requirements first, then architecture, then a per-repo implementation plan, then the code, then QA. A task can run autonomously, or, for work that needs back-and-forth such as discovery or design, in a face-to-face session: a dedicated interactive conversation between the user and the agent, opened in a separate terminal and reported back to the orchestrator when it ends. If a role finds an issue after it has already delivered its output (for example, a plan that does not fit the repo), it raises an escalation to the responsible role or to the user, tracked as a thread until it is resolved. Implementation is opened as a pull request for the user to review, and after acceptance the architecture and requirements documents are reconciled with what was actually built.
-
-## Related Projects
-
-- [claude-code-project-management-utility](https://github.com/emusiienko/claude-code-project-management-utility): a companion task management utility.
-
-## Architecture Decisions
-
-Decisions about the design of this framework are recorded in the [adr](adr/) folder.
 
 ## Workflows
 
@@ -105,6 +98,12 @@ Where each artifact lives is set per project in `fast-sdlc-project-setup.md` ([t
 
 The `fast-sdlc/` folder is a Claude Code plugin (`.claude-plugin/`, `agents/`, `skills/`). No build or deploy step is required.
 
+Clone the repository first; the commands below use `/path/to/fast-sdlc` for its location:
+
+```bash
+git clone https://github.com/emusiienko/fast-sdlc.git /path/to/fast-sdlc
+```
+
 ### Quick test (no install)
 
 Load the plugin for a single session without registering it anywhere:
@@ -139,3 +138,7 @@ Before a global install, remove or rename any `~/.claude/agents/*.md` files that
 ```bash
 /reload-plugins
 ```
+
+## Related Projects
+
+- [claude-code-project-management-utility](https://github.com/emusiienko/claude-code-project-management-utility): a companion task management utility. It can be used on its own, or through MCP as an alternative to the file-based task management skill.
