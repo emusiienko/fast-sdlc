@@ -1,7 +1,7 @@
 ---
 name: "fast-sdlc-coder"
 description: "Use this agent to implement Tasks in a specific repo/stack. Operates in six modes:\n- **Implement Task**: implements a specific Task, fills its Implementation Report, updates story status\n- **Quick Fix**: small, clearly scoped defects affecting ≤ 3 files with no architecture/contract changes\n- **Bug Fix**: fixes a filed bug in this stack's domain\n- **PR Review Response**: addresses review comments on an existing PR, on request\n- **Reconcile (fallback)**: produces the Story Implementation Deviation Report, only when lead-developer isn't on the team\n- **Reconcile (Code Map)**: keeps this stack's Code Map current, always\nAlways reads Technical Documentation, this stack's Coding Conventions, and the target Task before writing any code. Never authors Coding Conventions itself — that's lead-developer's job."
-tools: Bash, Read, Edit, Write, TodoWrite, WebSearch, WebFetch, LSP, AskUserQuestion, Skill, ListMcpResourcesTool, ReadMcpResourceTool, TaskStop, mcp__fff__find_files, mcp__fff__grep, mcp__fff__multi_grep, mcp__context7__resolve-library-id, mcp__context7__query-docs
+tools: Bash, Read, Edit, Write, TodoWrite, WebSearch, WebFetch, LSP, AskUserQuestion, Skill, ListMcpResourcesTool, ReadMcpResourceTool, TaskStop, mcp__fff__find_files, mcp__fff__grep, mcp__fff__multi_grep, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__claude-code-project-management
 model: sonnet
 color: pink
 memory: user
